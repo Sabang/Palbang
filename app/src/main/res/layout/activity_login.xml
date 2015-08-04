@@ -1,17 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context="com.sabang.sp.login"
+    android:layout_height="match_parent"
+    tools:context="com.sabang.sp.login"
     android:background="#FFFFFF"
     android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/login_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#ffb2d2ff"
+        />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180sp"
+        android:layout_marginTop="180dp"
         android:layout_gravity="center">
         <TextView
             android:layout_width="match_parent"
@@ -20,8 +25,8 @@
 
 
         <EditText
-            android:layout_width="180sp"
-            android:layout_height="20sp"/>
+            android:layout_width="180dp"
+            android:layout_height="20dp"/>
 
 
     </LinearLayout>
@@ -30,7 +35,7 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center">
         <TextView
             android:layout_width="match_parent"
@@ -38,8 +43,8 @@
             android:text="비밀번호"/>
 
         <EditText
-            android:layout_width="180sp"
-            android:layout_height="20sp"/>
+            android:layout_width="180dp"
+            android:layout_height="20dp"/>
 
 
     </LinearLayout>
@@ -49,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="20sp">
+        android:layout_margin="20dp">
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
