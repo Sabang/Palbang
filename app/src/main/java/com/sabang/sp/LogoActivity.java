@@ -18,7 +18,7 @@ public class LogoActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
 
-        final Intent intent = new Intent(this,login.class);
+        final Intent intent = new Intent(this,LoginActivity.class);
 
         Handler hd = new Handler()
         {

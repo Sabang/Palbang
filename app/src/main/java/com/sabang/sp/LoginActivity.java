@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 
 
-public class login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
