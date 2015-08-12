@@ -11,19 +11,18 @@ import android.view.MenuItem;
 /**
  * Created by yoo2 on 15. 8. 4..
  */
-public class LogoActivity extends AppCompatActivity{
+public class LogoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
 
-        final Intent intent = new Intent(this,LoginActivity.class);
+        final Intent intent = new Intent(this, MainActivity.class);
 
-        Handler hd = new Handler()
-        {
+        Handler hd = new Handler() {
             @Override
-            public void handleMessage(Message msg){
+            public void handleMessage(Message msg) {
                 startActivity(intent);
                 finish();
             }
