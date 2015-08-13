@@ -4,5 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">login</string>
+    <string name="title_activity_board_content">board_content</string>
+    <string name="title_activity_board_modify">board_modify</string>
 
 </resources>
