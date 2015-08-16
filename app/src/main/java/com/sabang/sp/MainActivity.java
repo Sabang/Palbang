@@ -76,6 +76,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewpager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         nowButton = 0;
         button_main.setBackgroundResource(R.drawable.main_on);
+
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setButtonOn(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     //change images : all button off -> index button on
