@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Parcelable;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -69,9 +73,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_board.setOnClickListener(this);
         button_setting.setOnClickListener(this);
         viewpager = (ViewPager) findViewById(R.id.viewpager);
-        viewpager.setAdapter(new ViewPagerAdapter(this));
+        viewpager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         nowButton = 0;
         button_main.setBackgroundResource(R.drawable.main_on);
+
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setButtonOn(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     //change images : all button off -> index button on
@@ -106,62 +127,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private class ViewPagerAdapter extends PagerAdapter {
+    private class PagerAdapter extends FragmentPagerAdapter {
 
-        private LayoutInflater mLayoutInFlater;
+        public PagerAdapter(FragmentManager supportFragmentManager) {
+            super(supportFragmentManager);
+        }
 
-        public ViewPagerAdapter(Context context) {
-            super();
-            mLayoutInFlater = LayoutInflater.from(context);
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0)
+                return MainFragment.newInstance();
+            else if (position == 1) {
+                return BoardFragment.newInstance();
+            }
+            else{
+                return SettingFragment.newInstance();
+            }
         }
 
         @Override
         public int getCount() {
             return 3;
         }
-
-        public Object instantiateItem(View pager, int index) {
-            View view = null;
-
-
-            if (index == 0) {
-                view = mLayoutInFlater.inflate(R.layout.fragment_main, null);
-            } else if (index == 1) {
-                view = mLayoutInFlater.inflate(R.layout.fragment_board, null);
-            } else {
-                view = mLayoutInFlater.inflate(R.layout.fragment_setting, null);
-            }
-            ((ViewPager) pager).addView(view, 0);
-            return view;
-        }
-
-
-        public void destroyItem(View pager, int position, Object view) {
-            ((ViewPager) pager).removeView((View) view);
-        }
-
-        @Override
-        public boolean isViewFromObject(View pager, Object obj) {
-            return pager == obj;
-        }
-
-        public void restoreState(Parcelable arg0, ClassLoader arg1) {
-        }
-
-        @Override
-        public Parcelable saveState() {
-            return null;
-        }
-
-        public void startUpdate(View arg0) {
-        }
-
-        ;
-
-        public void finishUpdate(View arg0) {
-        }
-
-        ;
     }
 
     @Override
