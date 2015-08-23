@@ -21,11 +21,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text="[말머리]"
-            android:textSize="13pt"/>
+            android:textSize="12pt"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13pt"
+            android:textSize="12pt"
             android:layout_marginLeft="5dp"
             android:text="제목"/>
 
@@ -167,7 +167,11 @@
 
     </LinearLayout>
 
-
+    <ImageSwitcher
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageSwitcher"
+        android:layout_gravity="right" />
 
 
 </LinearLayout>
