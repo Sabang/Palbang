@@ -1,12 +1,17 @@
 package com.sabang.sp;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class BoardWriteActivity extends AppCompatActivity {
@@ -25,7 +30,44 @@ public class BoardWriteActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
     }
+
+    public void onClick(View view){
+        switch (view.getId())
+        {
+            case R.id.enroll:
+
+                EditText edittitle = (EditText) findViewById(R.id.title);
+                String title = edittitle.getText().toString();
+                EditText editcontent = (EditText) findViewById(R.id.content);
+                String content = editcontent.getText().toString();
+
+
+                if (title.equals("")){
+                    Toast toast = Toast.makeText(this, "제목을 입력해주세요.",Toast.LENGTH_SHORT);
+                    toast.show();
+                    break;
+                }
+                else if (content.equals("")){
+                    Toast toast = Toast.makeText(this, "내용을 입력해주세요.",Toast.LENGTH_SHORT);
+                    toast.show();
+                    break;
+                }
+                else{
+                    Intent intent = new Intent(this,Boards.class);
+                    intent.putExtra("title", title);
+                    intent.putExtra("content", content);
+                    finish();
+                    break;
+                }
+
+            case R.id.cancel:
+                finish();
+                break;
+        }
+    }
+
 
 
     @Override
