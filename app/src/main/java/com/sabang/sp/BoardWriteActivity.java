@@ -1,15 +1,11 @@
 package com.sabang.sp;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -55,17 +51,21 @@ public class BoardWriteActivity extends AppCompatActivity {
                     break;
                 }
                 else{
-                    Intent intent = new Intent(this,Boards.class);
-                    intent.putExtra("title", title);
-                    intent.putExtra("content", content);
+                    Intent intent = new Intent(this,MainActivity.class);
+                    intent.putExtra("title+content", new BoardModel(title,content));
+                    startActivity(intent);
                     finish();
                     break;
                 }
+
 
             case R.id.cancel:
                 finish();
                 break;
         }
+
+
+
     }
 
 
