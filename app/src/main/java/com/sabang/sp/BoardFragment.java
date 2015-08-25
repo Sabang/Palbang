@@ -26,9 +26,6 @@ import android.widget.ListView;
 public class BoardFragment extends Fragment {
 
     private Activity activity;
-    private String[] boardArray = {"1st", "2nd", "3rd", "4rd", "5", "6", "7"};
-    private ListView boardListView;
-    private ArrayAdapter arrayAdapter;
 
     // TODO: Rename and change types of parameters
 

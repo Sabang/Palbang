@@ -1,12 +1,17 @@
 package com.sabang.sp;
 
 import android.app.Activity;
+import android.app.ListFragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -49,6 +54,29 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        //config listview   by cyc
+        ListView listView = (ListView)activity.findViewById(R.id.listview_room);
+
+        ArrayList<RoomListviewitem> data = new ArrayList<>();
+        RoomListviewitem room1 = new RoomListviewitem(R.drawable.room1,"Room1");
+        RoomListviewitem room2 = new RoomListviewitem(R.drawable.room2,"Room2");
+        RoomListviewitem room3 = new RoomListviewitem(R.drawable.room3,"Room3");
+
+        data.add(room1);
+        data.add(room2);
+        data.add(room3);
+        data.add(room3);
+        data.add(room3);
+        data.add(room3);
+        data.add(room3);
+        data.add(room3);
+        data.add(room3);
+        data.add(room3);
+        data.add(room3);
+        data.add(room3);
+
+        ListviewAdapter adapter = new ListviewAdapter(activity.getBaseContext(), R.layout.roomitem,data);
+        listView.setAdapter(adapter);
 
     }
 
@@ -63,6 +91,7 @@ public class MainFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = activity;
+
     }
 
     @Override

@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
 
             @Override
+            //when other page seleted, set selleted Button On
             public void onPageSelected(int position) {
                 setButtonOn(position);
             }
