@@ -1,6 +1,7 @@
 package com.sabang.sp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,23 +15,21 @@ import java.util.ArrayList;
  * Created by cyc on 2015-08-19.
  */
 public class ListviewAdapter extends BaseAdapter{
-    private LayoutInflater inflater;
-    private ArrayList<RoomListviewitem> data;
-    private int layout;
+    private LayoutInflater mInflater;
+    private ArrayList<RoomListviewitem> mData;
 
-    public ListviewAdapter(Context context, int layout, ArrayList<RoomListviewitem> data){
-        this.inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.data = data;
-        this.layout = layout;
+    public ListviewAdapter(Context context, ArrayList<RoomListviewitem> data){
+        mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mData = data;
     }
     @Override
     public int getCount() {
-        return data.size();
+        return mData.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return data.get(position).getName();
+        return mData.get(position);
     }
 
     @Override
@@ -41,17 +40,30 @@ public class ListviewAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView==null){
-            convertView = inflater.inflate(layout, parent, false);
+            ViewHolder vh = new ViewHolder();
+            convertView = mInflater.inflate(R.layout.roomitem, parent, false);
+            vh.icon = (ImageView)convertView.findViewById(R.id.room_imageview);
+            vh.price = (TextView)convertView.findViewById(R.id.room_textview1);
+            vh.area = (TextView)convertView.findViewById(R.id.room_textview2);
+            convertView.setTag(vh);
         }
 
-        RoomListviewitem roomlistviewitem = data.get(position);
+        RoomListviewitem item = (RoomListviewitem) getItem(position);
+        ViewHolder vh = (ViewHolder) convertView.getTag();
 
-        ImageView icon = (ImageView)convertView.findViewById(R.id.imageview_room);
-        icon.setImageResource(roomlistviewitem.getIcon());
 
-        TextView name = (TextView)convertView.findViewById(R.id.textview_room);
-        name.setText(roomlistviewitem.getName());
+        vh.icon.setImageResource(item.icon);
+        vh.price.setText(item.price);
+        vh.area.setText(item.area);
+
 
         return convertView;
+    }
+
+    private static class ViewHolder {
+        public ImageView icon;
+        public TextView price;
+        public TextView area;
+
     }
 }

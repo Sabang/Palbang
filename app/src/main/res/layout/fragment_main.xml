@@ -14,7 +14,7 @@
             android:id="@+id/listview_room"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="#ffcc22"
+            android:divider="#888888"
             android:dividerHeight="1.5dp"
             android:choiceMode="singleChoice"></ListView>
     </LinearLayout>

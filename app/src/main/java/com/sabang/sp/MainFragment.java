@@ -5,6 +5,7 @@ import android.app.ListFragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,24 +59,26 @@ public class MainFragment extends Fragment {
         ListView listView = (ListView)activity.findViewById(R.id.listview_room);
 
         ArrayList<RoomListviewitem> data = new ArrayList<>();
-        RoomListviewitem room1 = new RoomListviewitem(R.drawable.room1,"Room1");
-        RoomListviewitem room2 = new RoomListviewitem(R.drawable.room2,"Room2");
-        RoomListviewitem room3 = new RoomListviewitem(R.drawable.room3,"Room3");
+        RoomListviewitem room1 = new RoomListviewitem();
+        room1.icon = R.drawable.room1;
+        room1.price = "200/30";
+        room1.area = "40m(13p)";
+
+        RoomListviewitem room2 = new RoomListviewitem();
+        room2.icon = R.drawable.room2;
+        room2.price = "300/40";
+        room2.area = "50m(15p)";
+
+        RoomListviewitem room3 = new RoomListviewitem();
+        room3.icon = R.drawable.room3;
+        room3.price = "500/40";
+        room3.area = "60m(17p)";
 
         data.add(room1);
         data.add(room2);
         data.add(room3);
-        data.add(room3);
-        data.add(room3);
-        data.add(room3);
-        data.add(room3);
-        data.add(room3);
-        data.add(room3);
-        data.add(room3);
-        data.add(room3);
-        data.add(room3);
 
-        ListviewAdapter adapter = new ListviewAdapter(activity.getBaseContext(), R.layout.roomitem,data);
+        ListviewAdapter adapter = new ListviewAdapter(getActivity(), data);
         listView.setAdapter(adapter);
 
     }
