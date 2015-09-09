@@ -28,5 +28,13 @@
         android:layout_gravity="right|bottom"
         android:background="@drawable/to_map"/>
 
+    <Button
+        android:id="@+id/button_search_filter"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:text="검색 필터링"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="20dp"/>
+
 
 </FrameLayout>

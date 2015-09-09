@@ -1,16 +1,22 @@
 package com.sabang.sp;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ListFragment;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -23,7 +29,8 @@ import java.util.ArrayList;
  * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFragment extends Fragment {
+
+public class MainFragment extends Fragment{
     private Activity activity;
     private OnFragmentInteractionListener mListener;
 
@@ -51,14 +58,7 @@ public class MainFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        //config listview   by cyc
-        ListView listView = (ListView)activity.findViewById(R.id.listview_room);
-
-        ArrayList<RoomListviewitem> data = new ArrayList<>();
+    public void makeDummyData(ArrayList<RoomListviewitem> data){
         RoomListviewitem room1 = new RoomListviewitem();
         room1.icon = R.drawable.room1;
         room1.price = "200/30";
@@ -77,9 +77,48 @@ public class MainFragment extends Fragment {
         data.add(room1);
         data.add(room2);
         data.add(room3);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //config listview   by cyc
+        ListView listView = (ListView)activity.findViewById(R.id.listview_room);
+
+        ArrayList<RoomListviewitem> data = new ArrayList<>();
+
+        //for test, not yet server
+        makeDummyData(data);
 
         ListviewAdapter adapter = new ListviewAdapter(getActivity(), data);
         listView.setAdapter(adapter);
+
+
+        ImageButton to_map = (ImageButton) getActivity().findViewById(R.id.button_to_map);
+
+        to_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button button_search_filter = (Button) getActivity().findViewById(R.id.button_search_filter);
+
+        //make dialog to search filter
+        button_search_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SearchFilterDialog dialog = new SearchFilterDialog();
+                MainActivity mainActivity = (MainActivity) getActivity();
+                dialog.setSearchFilterData(mainActivity.getSearchFilterData());
+                dialog.show(getFragmentManager(),"dialog");
+
+            }
+        });
 
     }
 
@@ -118,4 +157,10 @@ public class MainFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+    //result of SearchFilterDialog
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 }
