@@ -7,39 +7,33 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
+        style="@style/MyToolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#ff0000"
-        />
+        android:layout_height="?attr/actionBarSize" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/map"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/map"
             android:layout_below="@+id/toolbar"
             android:scaleType="fitCenter"
-            android:src="@drawable/map"
-            />
+            android:src="@drawable/map" />
+
         <ImageView
+            android:id="@+id/map_mask"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:id="@+id/map_mask"
             android:layout_below="@+id/toolbar"
             android:scaleType="fitCenter"
             android:src="@drawable/map_mask"
-            android:visibility="invisible"
-            />
-
-
-
+            android:visibility="invisible" />
 
 
     </FrameLayout>
-
 
 
 </LinearLayout>

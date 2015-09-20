@@ -1,0 +1,233 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    tools:context=".RoomActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:background="#ffffff">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/MyToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            />
+
+        <LinearLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#f5f5f5"
+            android:orientation="vertical">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+
+                <ViewFlipper
+                    android:id="@+id/viewFlipper"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:id="@+id/mapimageview1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/room2" />
+
+                    <ImageView
+                        android:id="@+id/mapimageview2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/map" />
+
+                    <ImageView
+                        android:id="@+id/mapimageview3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/room1" />
+                </ViewFlipper>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="#ffffff"
+                            android:text="@string/option1"
+                            android:layout_width="match_parent" />
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="11"
+                            android:background="#ffffff"
+                            android:text=""
+                            android:layout_width="match_parent" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="#ffffff"
+                            android:text="@string/option2"
+                            />
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="11"
+                            android:background="#ffffff"
+                            android:text=""
+                            />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="#ffffff"
+                            android:text="@string/option3"
+                            />
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="11"
+                            android:background="#ffffff"
+                            android:text=""
+                            />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="#ffffff"
+                            android:text="@string/room_size"
+                            />
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="11"
+                            android:background="#ffffff"
+                            android:text=""
+                            />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="#ffffff"
+                            android:text="@string/room_price"
+                            />
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="11"
+                            android:background="#ffffff"
+                            android:id="@+id/room_price" />
+
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="#ffffff"
+                            android:text="@string/contract_term"
+                            />
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="11"
+                            android:background="#ffffff"
+                            android:text=""
+                            />
+
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <Button
+                    android:layout_width="80dp"
+                    android:layout_height="36dp"
+                    android:text="문의하기"
+                    android:id="@+id/button"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"
+                    />
+            </FrameLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+                <ImageView
+                    android:id="@+id/mapimageview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/map" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

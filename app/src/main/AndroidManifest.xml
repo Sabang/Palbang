@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sabang.sp" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,6 +44,20 @@
             android:name=".MapActivity"
             android:label="지도" >
         </activity>
+        <activity
+            android:name=".RoomActivity"
+            android:label="방 보기" >
+        </activity>
+        <activity
+            android:name=".sibal"
+            android:label="@string/title_activity_sibal" >
+        </activity>
+        <activity
+            android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.nhn.android.naverlogin.ui.OAuthLoginInAppBrowserActivity"
+            android:label="OAuth2.0 In-app" />
     </application>
 
 </manifest>

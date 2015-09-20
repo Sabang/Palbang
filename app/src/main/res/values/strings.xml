@@ -8,7 +8,19 @@
     <string name="title_activity_board_write">글쓰기</string>
     <string name="title_activity_map">MapActivity</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="title_fragment_main">방 찾기</string>
+    <string name="title_fragment_board">게시판</string>
+    <string name="title_fragment_setting">설정</string>
 
-    <string name="title_dialog_search_finter">검색 필터링</string>
+    <string name="option1">옵션1</string>
+    <string name="option2">옵션2</string>
+    <string name="option3">옵션3</string>
+    <string name="room_size">방 크기</string>
+    <string name="room_price">방 가격</string>
+    <string name="contract_term">계약기간</string>
+
+    <string name="title_dialog_search_filter">검색 조건</string>
+    <string name="title_activity_sibal">sibal</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

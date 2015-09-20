@@ -1,10 +1,14 @@
 package com.sabang.sp;
 
+import java.io.Serializable;
+
 /**
  * Created by cyc on 2015-08-19.
  */
-public class RoomListviewitem {
+public class RoomListviewitem implements Serializable{
     public int icon;
-    public String price;
-    public String area;
+    public int area;
+    public int security;
+    public int monthly;
+
 }

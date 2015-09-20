@@ -1,18 +1,16 @@
 package com.sabang.sp;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Spinner;
-
-import java.lang.reflect.Array;
 
 /**
  * Created by cyc on 2015-09-06.
@@ -35,23 +33,43 @@ public class SearchFilterDialog extends DialogFragment implements View.OnClickLi
 
     SearchFilterData data;
 
-    public SearchFilterDialog()
-    {
-        // Empty constructor required for DialogFragment
-    }
-
-    public void setSearchFilterData(SearchFilterData data){
-        this.data = data;
-    }
+    FragmentDialogListener callback;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.dialog_search_filter, container);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        getDialog().setTitle(R.string.title_dialog_search_finter);
+        try {
+            callback = (FragmentDialogListener) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Calling fragment must implement DialogClickListener interface");
+        }
+    }
 
+    @NonNull
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
+        //add by http://stackoverflow.com/questions/7508185/problem-inflating-custom-view-for-alertdialog-in-dialogfragment
+        //http://stackoverflow.com/questions/17487929/androidruntimeexception-requestfeature-must-be-called-before-adding-content
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_search_filter,null);
+        builder.setView(view);
+
+        builder.setMessage(R.string.title_dialog_search_filter)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        callback.onYesClick();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                callback.onNoClick();
+            }
+        });
+
+        builder.setTitle(R.string.title_dialog_search_filter);
 
         checkBox_A =  (CheckBox) view.findViewById(R.id.dialogfragment_checkBox_A);
         checkBox_B =  (CheckBox) view.findViewById(R.id.dialogfragment_checkBox_B);
@@ -87,9 +105,19 @@ public class SearchFilterDialog extends DialogFragment implements View.OnClickLi
         acceptButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
 
-        return view;
-
+        return builder.create();
     }
+
+    public SearchFilterDialog()
+    {
+        // Empty constructor required for DialogFragment
+    }
+
+    public void setSearchFilterData(SearchFilterData data){
+        this.data = data;
+    }
+
+
 
     @Override
     public void onClick(View v)
@@ -98,11 +126,14 @@ public class SearchFilterDialog extends DialogFragment implements View.OnClickLi
         {
             setDataCheckBox();
             setDataSpinner();
+            callback.onYesClick();
 
             this.dismiss();
         }
         else if (v == cancelButton)
         {
+            callback.onNoClick();
+
             this.dismiss();
         }
     }
