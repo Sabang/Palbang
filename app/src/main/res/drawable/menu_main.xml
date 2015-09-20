@@ -4,5 +4,5 @@
     <item android:drawable="@drawable/main_on"
         android:state_selected="true" />
     <!-- When not selected, use gray-->
-    <item android:drawable="@drawable/main_off" />
+    <item android:drawable="@drawable/main_off"/>
 </selector>

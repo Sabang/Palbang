@@ -1,9 +1,9 @@
 package com.sabang.sp;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -37,9 +37,12 @@ public class MapActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        toolbar.setTitleTextColor(Color.WHITE);
 
         map = (ImageView)findViewById(R.id.map);
         map.setOnTouchListener(mTouchListener);
+
+
 
     }
 
@@ -81,19 +84,26 @@ public class MapActivity extends AppCompatActivity {
                     // (3)
                     //for test only
                     String str = "select : ";
-                    boolean bInArea = false;
                     for(int i=0;i<6;i++){
                         if(closeMatch(color[i], touchColor, tolerance)){
                             str+= (i+1)+"area";
-                            bInArea = true;
+
+
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    str, Toast.LENGTH_SHORT);
+                            toast.setGravity(Gravity.CENTER, 0, 0);
+                            toast.show();
+
+
+                            Intent intent = getIntent();
+                            intent.putExtra("area", i);
+
+                            startActivity(intent);
+
+                            finish();
+
                             break;
                         }
-                    }
-                    if(bInArea) {
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                str, Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.CENTER, 0, 0);
-                        toast.show();
                     }
 
                     break;

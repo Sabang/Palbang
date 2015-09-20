@@ -4,6 +4,8 @@ package com.sabang.sp;
  * Created by cyc on 2015-09-06.
  */
 public class SearchFilterData {
+
+    //go to array
     public boolean check_A;
     public boolean check_B;
     public boolean check_C;
@@ -11,10 +13,13 @@ public class SearchFilterData {
     public boolean check_E;
     public boolean check_F;
 
+
+    //will delete.
     public boolean isSecurity_min;
     public boolean isSecurity_max;
     public boolean isMonthly_min;
     public boolean isMonthly_max;
+
     public String security_min;
     public String security_max;
     public String montly_min;

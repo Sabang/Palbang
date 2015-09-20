@@ -1,7 +1,6 @@
 package com.sabang.sp;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +52,8 @@ public class ListviewAdapter extends BaseAdapter{
 
 
         vh.icon.setImageResource(item.icon);
-        vh.price.setText(item.price);
-        vh.area.setText(item.area);
+        vh.price.setText(item.security+"/"+item.monthly);
+        vh.area.setText(""+item.area);
 
 
         return convertView;
