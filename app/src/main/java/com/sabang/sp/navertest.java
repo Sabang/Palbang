@@ -22,7 +22,7 @@ import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
  * @author naver
  *
  */
-public class sibal extends Activity {
+public class navertest extends Activity {
 
     private static final String TAG = "OAuthSampleActivity";
 
@@ -50,7 +50,7 @@ public class sibal extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sibal);
+        setContentView(R.layout.activity_navertest);
 
         OAuthLoginDefine.DEVELOPER_VERSION = true;
 
@@ -135,7 +135,7 @@ public class sibal extends Activity {
 
         switch (v.getId()) {
             case R.id.buttonOAuth: {
-                mOAuthLoginInstance.startOauthLoginActivity(sibal.this, mOAuthLoginHandler);
+                mOAuthLoginInstance.startOauthLoginActivity(navertest.this, mOAuthLoginHandler);
                 break;
             }
             case R.id.buttonVerifier: {

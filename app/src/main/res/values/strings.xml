@@ -20,7 +20,8 @@
     <string name="contract_term">계약기간</string>
 
     <string name="title_dialog_search_filter">검색 조건</string>
-    <string name="title_activity_sibal">sibal</string>
+    <string name="title_activity_navertest">navertest</string>
 
     <string name="hello_world">Hello world!</string>
+
 </resources>
