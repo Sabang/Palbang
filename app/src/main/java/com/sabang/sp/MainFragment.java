@@ -14,11 +14,13 @@ import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.sabang.sp.api.RoomModel;
 import com.sabang.sp.api.RoomRequest;
 import com.sabang.sp.common.SPLog;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -30,6 +32,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
     private Activity activity;
     private ArrayList<RoomData> roomDatas;
     private SearchFilterData filterData;
+    private List<RoomModel> mRooms = new ArrayList<>();
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -64,8 +67,9 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
         RoomRequest.newInstance(new Response.Listener<RoomRequest.Model>() {
             @Override
             public void onResponse(RoomRequest.Model model) {
-                SPLog.d(model.rooms.get(0).detail);
-                SPLog.d(model.rooms.get(0).term);
+                SPLog.d(model.rooms.get(2).detail);
+                SPLog.d(model.rooms.get(2).term);
+                mRooms = model.rooms;
             }
         }, new Response.ErrorListener() {
             @Override

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cyc on 2015-08-19.
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class ListviewAdapter2 extends BaseAdapter{
     private LayoutInflater mInflater;
     private ArrayList<BoardListviewitem> mData;
+
 
     public ListviewAdapter2(Context context, ArrayList<BoardListviewitem> data){
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

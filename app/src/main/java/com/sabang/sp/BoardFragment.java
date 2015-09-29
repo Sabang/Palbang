@@ -63,7 +63,7 @@ public class BoardFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button write = (Button) getActivity().findViewById(R.id.button_write);
+
 
         ListView listView = (ListView) activity.findViewById(R.id.listview_board);
 
@@ -103,14 +103,6 @@ public class BoardFragment extends Fragment {
 
 
 
-        write.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getActivity(), BoardWriteActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override
