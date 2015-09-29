@@ -16,11 +16,16 @@ import java.util.ArrayList;
 public class ListviewAdapter extends BaseAdapter{
     private LayoutInflater mInflater;
     private ArrayList<RoomListviewitem> mData;
+    private ArrayList<BoardListviewitem> mData2;
 
     public ListviewAdapter(Context context, ArrayList<RoomListviewitem> data){
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mData = data;
     }
+
+
+
+
     @Override
     public int getCount() {
         return mData.size();

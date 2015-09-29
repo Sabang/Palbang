@@ -50,8 +50,8 @@
             android:label="방 보기" >
         </activity>
         <activity
-            android:name=".sibal"
-            android:label="@string/title_activity_sibal" >
+            android:name=".navertest"
+            android:label="@string/title_activity_navertest" >
         </activity>
         <activity
             android:name="com.nhn.android.naverlogin.ui.OAuthLoginActivity"
