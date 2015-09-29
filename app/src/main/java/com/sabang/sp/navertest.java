@@ -25,14 +25,9 @@ import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 public class navertest extends Activity {
 
     private static final String TAG = "OAuthSampleActivity";
-
-    /**
-     * client 정보를 넣어준다.
-     */
     private static String OAUTH_CLIENT_ID = "w9jtNkiVROYyQ8TbzKGo";
     private static String OAUTH_CLIENT_SECRET = "2uHCDckP2n";
     private static String OAUTH_CLIENT_NAME = "네이버 아이디로 로그인";
-
 
     private static OAuthLogin mOAuthLoginInstance;
     private static Context mContext;

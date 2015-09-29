@@ -23,9 +23,6 @@ public class ListviewAdapter extends BaseAdapter{
         mData = data;
     }
 
-
-
-
     @Override
     public int getCount() {
         return mData.size();
