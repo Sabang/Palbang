@@ -22,6 +22,8 @@
     <string name="title_dialog_search_filter">검색 조건</string>
     <string name="title_activity_navertest">navertest</string>
 
+    <string name="title_activity_sold">판매완료</string>
+
     <string name="hello_world">Hello world!</string>
 
 </resources>

@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -44,10 +46,9 @@ public class MainActivity extends AppCompatActivity{
         toolbar.setTitleTextColor(Color.WHITE);
         viewpager.setCurrentItem(0);
         toolbar.setTitle(R.string.title_fragment_main);
-
-
         tabLayout = (TabLayout) findViewById(R.id.main_tablayout);
 
+        toolbar.inflateMenu(R.menu.actionbar_button_filter);
 
         //can't fix bug yet
         // set tab0 as menu_main, when run app first time, don't turn on
@@ -69,15 +70,19 @@ public class MainActivity extends AppCompatActivity{
 
                 switch(position){
                     case 0:
+                        toolbar.getMenu().clear();
+                        toolbar.inflateMenu(R.menu.actionbar_button_filter);
                         toolbar.setTitle(R.string.title_fragment_main);
                         viewpager.setCurrentItem(0);
                         break;
                     case 1:
+                        toolbar.getMenu().clear();
+                        toolbar.inflateMenu(R.menu.actionbar_button_write);
                         toolbar.setTitle(R.string.title_fragment_board);
                         viewpager.setCurrentItem(1);
                         break;
                     case 2:
-                        toolbar.setTitle(R.string.title_fragment_setting);
+                        toolbar.getMenu().clear();
                         viewpager.setCurrentItem(2);
                         break;
                     default:
@@ -93,6 +98,22 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+
+
+
+
+
+        });
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.action_filter:
+
+                }
+                return false;
             }
         });
 
@@ -125,6 +146,7 @@ public class MainActivity extends AppCompatActivity{
 
             switch (position){
                 case 0:
+
                     fragment = MainFragment.newInstance();
                     toolbar.inflateMenu(R.menu.menu_main_toolbar);
                     break;
