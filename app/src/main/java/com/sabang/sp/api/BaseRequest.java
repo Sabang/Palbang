@@ -95,7 +95,8 @@ public class BaseRequest<T> extends Request<T> {
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String json = new String(response.data,
-                    HttpHeaderParser.parseCharset(response.headers));
+                    "UTF-8");
+
             Log.i("SP", getUrl() + "\n" + json);
             return Response.success(mGsonBuilder.create().fromJson(json, mClazz),
                     HttpHeaderParser.parseCacheHeaders(response));
