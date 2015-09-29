@@ -186,6 +186,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
         super.onDetach();
     }
 
+    //memory
 
     private void setListview(ArrayList<RoomListviewitem> data, ArrayList<RoomData> roomDatas, SearchFilterData filter){
 

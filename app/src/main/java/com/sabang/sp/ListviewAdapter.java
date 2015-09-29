@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public class ListviewAdapter extends BaseAdapter{
     private LayoutInflater mInflater;
     private ArrayList<RoomListviewitem> mData;
-    private ArrayList<BoardListviewitem> mData2;
 
     public ListviewAdapter(Context context, ArrayList<RoomListviewitem> data){
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -60,7 +59,7 @@ public class ListviewAdapter extends BaseAdapter{
             vh.icon.setImageBitmap(null);
         }
         vh.price.setText(item.security+"/"+item.monthly);
-        vh.area.setText(""+item.area);
+        vh.area.setText("" + item.area);
 
 
         return convertView;

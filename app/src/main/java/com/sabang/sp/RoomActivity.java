@@ -57,7 +57,6 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
 
         RoomListviewitem room = (RoomListviewitem)temp;
 
-
         String str = ""+((RoomListviewitem) temp).monthly;
         Toast toast = Toast.makeText(getApplicationContext(),
                 str, Toast.LENGTH_SHORT);
