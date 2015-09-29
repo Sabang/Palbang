@@ -56,7 +56,12 @@ public class ListviewAdapter extends BaseAdapter{
         ViewHolder vh = (ViewHolder) convertView.getTag();
 
 
-        vh.icon.setImageResource(item.icon);
+        try {
+            vh.icon.setImageResource(item.icon);
+        }
+        catch(OutOfMemoryError e){
+            vh.icon.setImageBitmap(null);
+        }
         vh.price.setText(item.security+"/"+item.monthly);
         vh.area.setText(""+item.area);
 

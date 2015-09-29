@@ -57,8 +57,12 @@ public class ListviewAdapter2 extends BaseAdapter{
         BoardListviewitem item = (BoardListviewitem) getItem(position);
         ViewHolder vh = (ViewHolder) convertView.getTag();
 
-
-        vh.icon.setImageResource(item.icon);
+        try {
+            vh.icon.setImageResource(item.icon);
+        }
+        catch(OutOfMemoryError e){
+            vh.icon.setImageBitmap(null);
+        }
         vh.price.setText(item.name + " / " + item.price);
         vh.date.setText(item.year + "." + item.month + "." + item.day);
         if(item.state ==1){
