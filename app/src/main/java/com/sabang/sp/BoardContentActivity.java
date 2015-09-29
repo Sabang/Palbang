@@ -11,11 +11,13 @@ import android.view.View;
 
 public class BoardContentActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_content);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -26,12 +28,19 @@ public class BoardContentActivity extends AppCompatActivity {
         });
         toolbar.setTitleTextColor(Color.WHITE);
 
+
+
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_board_content, menu);
+
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.actionbar_button_sold); // 판매자일 경우만 보여준다. (수정해야함)
+        toolbar.setTitle(R.string.title_activity_board_content);
         return true;
     }
 
