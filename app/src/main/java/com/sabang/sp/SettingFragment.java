@@ -1,17 +1,17 @@
 package com.sabang.sp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
-
-import com.nhn.android.naverlogin.OAuthLogin;
 
 import java.util.ArrayList;
 
@@ -80,6 +80,15 @@ public class SettingFragment extends Fragment {
             }
         });
 
+        Button naverTest = (Button)rootView.findViewById(R.id.button_naverTest);
+        naverTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //naver test
+                Intent intent = new Intent(getActivity(), navertest.class);
+                startActivity(intent);
+            }
+        });
 
 
         return rootView;

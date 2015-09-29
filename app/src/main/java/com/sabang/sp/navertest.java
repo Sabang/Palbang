@@ -15,10 +15,10 @@ import com.nhn.android.naverlogin.OAuthLoginDefine;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 
-/// ³×ÀÌ¹ö ¾ÆÀÌµğ·Î ·Î±×ÀÎ »ùÇÃ¾Û
+/// ë„¤ì´ë²„ ì•„ì´ë””ë¡œ ë¡œê·¸ì¸ ìƒ˜í”Œì•±
 /**
- * <br/> OAuth2.0 ÀÎÁõÀ» ÅëÇØ Access TokenÀ» ¹ß±Ş¹Ş´Â ¿¹Á¦, ¿¬µ¿ÇØÁ¦ÇÏ´Â ¿¹Á¦,
- * <br/> ¹ß±ŞµÈ TokenÀ» È°¿ëÇÏ¿© Get µîÀÇ ¸í·ÉÀ» ¼öÇàÇÏ´Â ¿¹Á¦, ³×¾Æ·Î Ä¿½ºÅÍ¸¶ÀÌÂ¡ ¹öÆ°À» »ç¿ëÇÏ´Â ¿¹Á¦ µîÀÌ Æ÷ÇÔµÇ¾î ÀÖ´Ù.
+ * <br/> OAuth2.0 ì¸ì¦ì„ í†µí•´ Access Tokenì„ ë°œê¸‰ë°›ëŠ” ì˜ˆì œ, ì—°ë™í•´ì œí•˜ëŠ” ì˜ˆì œ,
+ * <br/> ë°œê¸‰ëœ Tokenì„ í™œìš©í•˜ì—¬ Get ë“±ì˜ ëª…ë ¹ì„ ìˆ˜í–‰í•˜ëŠ” ì˜ˆì œ, ë„¤ì•„ë¡œ ì»¤ìŠ¤í„°ë§ˆì´ì§• ë²„íŠ¼ì„ ì‚¬ìš©í•˜ëŠ” ì˜ˆì œ ë“±ì´ í¬í•¨ë˜ì–´ ìˆë‹¤.
  * @author naver
  *
  */
@@ -27,17 +27,17 @@ public class navertest extends Activity {
     private static final String TAG = "OAuthSampleActivity";
 
     /**
-     * client Á¤º¸¸¦ ³Ö¾îÁØ´Ù.
+     * client ì •ë³´ë¥¼ ë„£ì–´ì¤€ë‹¤.
      */
-    private static String OAUTH_CLIENT_ID = "jyvqXeaVOVmV";
-    private static String OAUTH_CLIENT_SECRET = "527300A0_COq1_XV33cf";
-    private static String OAUTH_CLIENT_NAME = "³×ÀÌ¹ö ¾ÆÀÌµğ·Î ·Î±×ÀÎ";
+    private static String OAUTH_CLIENT_ID = "w9jtNkiVROYyQ8TbzKGo";
+    private static String OAUTH_CLIENT_SECRET = "2uHCDckP2n";
+    private static String OAUTH_CLIENT_NAME = "ë„¤ì´ë²„ ì•„ì´ë””ë¡œ ë¡œê·¸ì¸";
 
 
     private static OAuthLogin mOAuthLoginInstance;
     private static Context mContext;
 
-    /** UI ¿ä¼Òµé */
+    /** UI ìš”ì†Œë“¤ */
     private TextView mApiResultText;
     private static TextView mOauthAT;
     private static TextView mOauthRT;
@@ -69,8 +69,8 @@ public class navertest extends Activity {
 
         mOAuthLoginInstance.init(mContext, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME);
 		/*
-		 * 2015³â 8¿ù ÀÌÀü¿¡ µî·ÏÇÏ°í ¾Û Á¤º¸ °»½ÅÀ» ¾ÈÇÑ °æ¿ì ±âÁ¸¿¡ ¼³Á¤ÇØÁØ callback intent url À» ³Ö¾îÁà¾ß ·Î±×ÀÎÇÏ´Âµ¥ ¹®Á¦°¡ ¾È»ı±ä´Ù.
-		 * 2015³â 8¿ù ÀÌÈÄ¿¡ µî·ÏÇß°Å³ª ±× µÚ¿¡ ¾Û Á¤º¸ °»½ÅÀ» ÇÏ¸é¼­ package name À» ³Ö¾îÁØ °æ¿ì callback intent url À» »ı·«ÇØµµ µÈ´Ù.
+		 * 2015ë…„ 8ì›” ì´ì „ì— ë“±ë¡í•˜ê³  ì•± ì •ë³´ ê°±ì‹ ì„ ì•ˆí•œ ê²½ìš° ê¸°ì¡´ì— ì„¤ì •í•´ì¤€ callback intent url ì„ ë„£ì–´ì¤˜ì•¼ ë¡œê·¸ì¸í•˜ëŠ”ë° ë¬¸ì œê°€ ì•ˆìƒê¸´ë‹¤.
+		 * 2015ë…„ 8ì›” ì´í›„ì— ë“±ë¡í–ˆê±°ë‚˜ ê·¸ ë’¤ì— ì•± ì •ë³´ ê°±ì‹ ì„ í•˜ë©´ì„œ package name ì„ ë„£ì–´ì¤€ ê²½ìš° callback intent url ì„ ìƒëµí•´ë„ ëœë‹¤.
 		 */
         //mOAuthLoginInstance.init(mContext, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME, OAUTH_callback_intent_url);
 
@@ -108,7 +108,7 @@ public class navertest extends Activity {
     }
 
     /**
-     * startOAuthLoginActivity() È£Ãâ½Ã ÀÎÀÚ·Î ³Ñ±â°Å³ª, OAuthLoginButton ¿¡ µî·ÏÇØÁÖ¸é ÀÎÁõÀÌ Á¾·áµÇ´Â °É ¾Ë ¼ö ÀÖ´Ù.
+     * startOAuthLoginActivity() í˜¸ì¶œì‹œ ì¸ìë¡œ ë„˜ê¸°ê±°ë‚˜, OAuthLoginButton ì— ë“±ë¡í•´ì£¼ë©´ ì¸ì¦ì´ ì¢…ë£Œë˜ëŠ” ê±¸ ì•Œ ìˆ˜ ìˆë‹¤.
      */
     static private OAuthLoginHandler mOAuthLoginHandler = new OAuthLoginHandler() {
         @Override
@@ -167,8 +167,8 @@ public class navertest extends Activity {
             boolean isSuccessDeleteToken = mOAuthLoginInstance.logoutAndDeleteToken(mContext);
 
             if (!isSuccessDeleteToken) {
-                // ¼­¹ö¿¡¼­ token »èÁ¦¿¡ ½ÇÆĞÇß¾îµµ Å¬¶óÀÌ¾ğÆ®¿¡ ÀÖ´Â token Àº »èÁ¦µÇ¾î ·Î±×¾Æ¿ôµÈ »óÅÂÀÌ´Ù
-                // ½ÇÆĞÇß¾îµµ Å¬¶óÀÌ¾ğÆ® »ó¿¡ token Á¤º¸°¡ ¾ø±â ¶§¹®¿¡ Ãß°¡ÀûÀ¸·Î ÇØÁÙ ¼ö ÀÖ´Â °ÍÀº ¾øÀ½
+                // ì„œë²„ì—ì„œ token ì‚­ì œì— ì‹¤íŒ¨í–ˆì–´ë„ í´ë¼ì´ì–¸íŠ¸ì— ìˆëŠ” token ì€ ì‚­ì œë˜ì–´ ë¡œê·¸ì•„ì›ƒëœ ìƒíƒœì´ë‹¤
+                // ì‹¤íŒ¨í–ˆì–´ë„ í´ë¼ì´ì–¸íŠ¸ ìƒì— token ì •ë³´ê°€ ì—†ê¸° ë•Œë¬¸ì— ì¶”ê°€ì ìœ¼ë¡œ í•´ì¤„ ìˆ˜ ìˆëŠ” ê²ƒì€ ì—†ìŒ
                 Log.d(TAG, "errorCode:" + mOAuthLoginInstance.getLastErrorCode(mContext));
                 Log.d(TAG, "errorDesc:" + mOAuthLoginInstance.getLastErrorDesc(mContext));
             }

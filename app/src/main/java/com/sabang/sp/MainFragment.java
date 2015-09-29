@@ -94,9 +94,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
             public void onClick(View v) {
 
 
-                //Intent intent = new Intent(getActivity(), MapActivity.class);
-                //naver test
-                Intent intent = new Intent(getActivity(), navertest.class);
+                Intent intent = new Intent(getActivity(), MapActivity.class);
                 startActivity(intent);
             }
         });
