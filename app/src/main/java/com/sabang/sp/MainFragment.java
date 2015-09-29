@@ -12,6 +12,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.sabang.sp.api.RoomRequest;
+import com.sabang.sp.common.SPLog;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -53,8 +58,27 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
 
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        RoomRequest.newInstance(new Response.Listener<RoomRequest.Model>() {
+            @Override
+            public void onResponse(RoomRequest.Model model) {
+                SPLog.d(model.rooms.get(0).detail);
+                SPLog.d(model.rooms.get(0).term);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                SPLog.e(error.toString());
+            }
+        }).send();
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
 
         //config listview   by cyc
         ListView listView = (ListView) activity.findViewById(R.id.listview_room);
@@ -86,6 +110,8 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
                 startActivity(myIntent);
             }
         });
+
+
         
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
