@@ -117,7 +117,11 @@ public class MapActivity extends AppCompatActivity {
         img.setDrawingCacheEnabled(true);
         Bitmap hotspots = Bitmap.createBitmap(img.getDrawingCache());
         img.setDrawingCacheEnabled(false);
-        return hotspots.getPixel(x, y);
+        int temp = hotspots.getPixel(x, y);
+        //release bitmap, don't waste memory.
+        hotspots.recycle();
+
+        return temp;
     }
     public boolean closeMatch (int color1, int color2, int tolerance) {
         if ((int) Math.abs (Color.red(color1) - Color.red (color2)) > tolerance )
