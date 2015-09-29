@@ -15,18 +15,7 @@ import com.nhn.android.naverlogin.OAuthLoginDefine;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 
-<<<<<<< HEAD:app/src/main/java/com/sabang/sp/sibal.java
-public class sibal extends Activity {
-=======
-/// 네이버 아이디로 로그인 샘플앱
-/**
- * <br/> OAuth2.0 인증을 통해 Access Token을 발급받는 예제, 연동해제하는 예제,
- * <br/> 발급된 Token을 활용하여 Get 등의 명령을 수행하는 예제, 네아로 커스터마이징 버튼을 사용하는 예제 등이 포함되어 있다.
- * @author naver
- *
- */
 public class navertest extends Activity {
->>>>>>> 967ee6eca60cbf92e17d6a9fc07ceb4bdf43ba3c:app/src/main/java/com/sabang/sp/navertest.java
 
     private static final String TAG = "OAuthSampleActivity";
 
