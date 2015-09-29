@@ -14,7 +14,7 @@ public class RoomRequest extends BaseRequest<RoomRequest.Model>{
     }
 
     private RoomRequest(Response.Listener<Model> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, "http://hanyang24.vps.phps.kr:8000/room/", Model.class, listener, errorListener);
+        super(Method.GET, "http://hanyang24.vps.phps.kr/room/", Model.class, listener, errorListener);
     }
 
     public static class Model {

@@ -17,7 +17,6 @@ import com.android.volley.VolleyError;
 import com.sabang.sp.api.RoomRequest;
 import com.sabang.sp.common.SPLog;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -30,6 +29,8 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
     private Activity activity;
     private ArrayList<RoomData> roomDatas;
     private SearchFilterData filterData;
+
+    ListView listView;
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -64,6 +65,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
         RoomRequest.newInstance(new Response.Listener<RoomRequest.Model>() {
             @Override
             public void onResponse(RoomRequest.Model model) {
+
                 SPLog.d(model.rooms.get(0).detail);
                 SPLog.d(model.rooms.get(0).term);
             }
@@ -81,9 +83,9 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
 
 
         //config listview   by cyc
-        ListView listView = (ListView) activity.findViewById(R.id.listview_room);
+               listView = (ListView) activity.findViewById(R.id.listview_room);
 
-        final ArrayList<RoomListviewitem> listviewitems = new ArrayList<>();
+        ArrayList<RoomListviewitem> listviewitems = new ArrayList<>();
 
         //for test, temporarily server
         roomDatas = new ArrayList<RoomData>();
@@ -94,22 +96,6 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
         filterData = mainActivity.getSearchFilterData();
 
         setListview(listviewitems, roomDatas, filterData);
-
-
-        ListviewAdapter adapter = new ListviewAdapter(getActivity(), listviewitems);
-        listView.setAdapter(adapter);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(getActivity(), RoomActivity.class);
-
-                myIntent.putExtra("roomItem", (Serializable) listviewitems.get(position));
-
-                startActivity(myIntent);
-            }
-        });
 
 
         
@@ -164,9 +150,6 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
 
         setListview(listviewitems, roomDatas, filterData);
 
-        ListviewAdapter adapter = new ListviewAdapter(getActivity(), listviewitems);
-        listView.setAdapter(adapter);
-
     }
 
     @Override
@@ -204,6 +187,23 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
                 data.add(room);
             }
         }
+
+        ListviewAdapter adapter = new ListviewAdapter(getActivity(), data);
+        listView.setAdapter(adapter);
+
+
+        final ArrayList<RoomListviewitem> temp = data;
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent = new Intent(getActivity(), RoomActivity.class);
+
+                myIntent.putExtra("roomItem", temp.get(position));
+
+                startActivity(myIntent);
+            }
+        });
+
     }
 
     //in option, return true
