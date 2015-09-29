@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity{
         //can't fix bug yet
         // set tab0 as menu_main, when run app first time, don't turn on
         tabLayout.setupWithViewPager(viewpager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.main_on);
+        tabLayout.getTabAt(0).setIcon(R.drawable.menu_main);
         tabLayout.getTabAt(1).setIcon(R.drawable.menu_board);
         tabLayout.getTabAt(2).setIcon(R.drawable.menu_setting);
 
@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity{
             switch (position){
                 case 0:
                     fragment = MainFragment.newInstance();
+                    toolbar.inflateMenu(R.menu.menu_main_toolbar);
                     break;
                 case 1:
                     fragment = BoardFragment.newInstance();
