@@ -31,33 +31,12 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp">
 
-                <ViewFlipper
-                    android:id="@+id/viewFlipper"
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/pager"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_marginBottom="10dp">
-
-                    <ImageView
-                        android:id="@+id/mapimageview1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/room2" />
-
-                    <ImageView
-                        android:id="@+id/mapimageview2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/map" />
-
-                    <ImageView
-                        android:id="@+id/mapimageview3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/room1" />
-                </ViewFlipper>
+                </android.support.v4.view.ViewPager>
             </LinearLayout>
 
             <LinearLayout
