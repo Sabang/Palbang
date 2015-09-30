@@ -1,6 +1,7 @@
 package com.sabang.sp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -123,6 +124,50 @@ public class MainActivity extends AppCompatActivity{
         return searchFilterData;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 10:
+                    int area = data.getExtras().getInt("area");
+
+                    //init to all false, and set selected area true
+                    searchFilterData.check_A = false;
+                    searchFilterData.check_B = false;
+                    searchFilterData.check_C = false;
+                    searchFilterData.check_D = false;
+                    searchFilterData.check_E = false;
+                    searchFilterData.check_F = false;
+                    switch (area) {
+                        case 0:
+                            searchFilterData.check_A = true;
+                            break;
+                        case 1:
+                            searchFilterData.check_B = true;
+                            break;
+                        case 2:
+                            searchFilterData.check_C = true;
+                            break;
+                        case 3:
+                            searchFilterData.check_D = true;
+                            break;
+                        case 4:
+                            searchFilterData.check_E = true;
+                            break;
+                        case 5:
+                            searchFilterData.check_F = true;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 
     public class MyAdapter extends FragmentPagerAdapter
     {

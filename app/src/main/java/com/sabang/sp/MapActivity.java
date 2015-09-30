@@ -1,18 +1,19 @@
 package com.sabang.sp;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.sabang.sp.common.SPLog;
 
 
 public class MapActivity extends AppCompatActivity {
@@ -86,21 +87,20 @@ public class MapActivity extends AppCompatActivity {
                     String str = "select : ";
                     for(int i=0;i<6;i++){
                         if(closeMatch(color[i], touchColor, tolerance)){
-                            str+= (i+1)+"area";
+                            str+= (i)+"area";
 
 
-                            Toast toast = Toast.makeText(getApplicationContext(),
-                                    str, Toast.LENGTH_SHORT);
-                            toast.setGravity(Gravity.CENTER, 0, 0);
-                            toast.show();
+                            //post data to mainfragment.startActivityForResult()
+                            Activity activity = MapActivity.this;
+                            Bundle extra = new Bundle();
+                            Intent intent = new Intent();
 
-
-                            Intent intent = getIntent();
-                            intent.putExtra("area", i);
-
-                            startActivity(intent);
-
-                            finish();
+                            extra.putInt("area", i);
+                            intent.putExtras(extra);
+                            SPLog.d("########2in Map : " + extra.size());
+                            SPLog.d("value : "+intent.getExtras().getInt("area"));
+                            activity.setResult(RESULT_OK, intent);
+                            activity.finish();
 
                             break;
                         }

@@ -1,9 +1,11 @@
 package com.sabang.sp.api;
 
+import java.io.Serializable;
+
 /**
  * Created by yoo2 on 15. 9. 20..
  */
-public class RoomModel {
+public class RoomModel implements Serializable{
     public int location;
     public int floor;
     public int securityDeposit;

@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sabang.sp.api.RoomModel;
+
 import java.io.Serializable;
 
 public class RoomActivity extends AppCompatActivity implements View.OnTouchListener, OnClickListener {
@@ -25,11 +27,12 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
     int location;
 
 
-    public int[] mRes = new int[] {
+    public int[] mRes = new int[]{
             R.drawable.room1, R.drawable.room2, R.drawable.room3, R.drawable.room4
 
 
     };
+
     /**
      * Called when the activity is first created.
      */
@@ -58,12 +61,12 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
 
         Intent intent = getIntent();
 
-        Serializable temp = (Serializable) intent.getSerializableExtra("roomItem");
+        Serializable temp = (Serializable) intent.getSerializableExtra("roomModel");
 
-        RoomListviewitem room = (RoomListviewitem) temp;
+        RoomModel room = (RoomModel) temp;
 
-        location = ((RoomListviewitem) temp).area;
-        String price = "" + ((RoomListviewitem) temp).security+"/"+ ((RoomListviewitem) temp).monthly;
+        location = ((RoomModel) temp).area;
+        String price = "" + ((RoomModel) temp).securityDeposit + "/" + ((RoomModel) temp).monthPrice;
 
         changeimage(location);
         TextView roomPrice = (TextView) findViewById(R.id.room_price);
@@ -97,6 +100,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
             ((ViewPager) container).removeView((ImageView) object);
         }
     }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         // 터치 이벤트가 일어난 뷰가 ViewFlipper가 아니면 return

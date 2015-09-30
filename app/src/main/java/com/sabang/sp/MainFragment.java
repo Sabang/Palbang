@@ -29,9 +29,12 @@ import java.util.List;
 
 public class MainFragment extends Fragment implements FragmentDialogListener {
     private Activity activity;
-    private ArrayList<RoomData> roomDatas;
-    private SearchFilterData filterData;
+    private SearchFilterData mFilterData;
     private List<RoomModel> mRooms = new ArrayList<>();
+    private List<RoomModel> mFilteredRooms = new ArrayList<>();
+
+
+    ListviewAdapter mAdapter;
 
     ListView listView;
 
@@ -56,6 +59,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false);
     }
@@ -70,7 +74,15 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
             public void onResponse(RoomRequest.Model model) {
                 SPLog.d(model.rooms.get(2).detail);
                 SPLog.d(model.rooms.get(2).term);
-                mRooms = model.rooms;
+
+                mRooms.clear();
+
+                for(int i = 0; i < model.rooms.size();i++){
+                    mRooms.add(model.rooms.get(i));
+                }
+                filtering(mFilteredRooms, mRooms, mFilterData);
+                //if(change is exist) -> notify~() run.
+                mAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -86,31 +98,24 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
 
 
         //config listview   by cyc
-               listView = (ListView) activity.findViewById(R.id.listview_room);
-
-        ArrayList<RoomListviewitem> listviewitems = new ArrayList<>();
-
-        //for test, temporarily server
-        roomDatas = new ArrayList<RoomData>();
-        makeDummyData(roomDatas);
-
+        //listView = (ListView) activity.findViewById(R.id.listview_room);
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        filterData = mainActivity.getSearchFilterData();
+        mFilterData = mainActivity.getSearchFilterData();
 
-        setListview(listviewitems, roomDatas, filterData);
+        //listView.setAdapter(mAdapter);
+        mAdapter = new ListviewAdapter(getActivity(), mFilteredRooms);
+        listView = (ListView) activity.findViewById(R.id.listview_room);
 
+        listView.setAdapter(mAdapter);
 
-        
 
         FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent intent = new Intent(getActivity(), MapActivity.class);
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, 10);
             }
         });
 
@@ -132,6 +137,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
 
     }
 
+
     private void showDialog() {
 
         SearchFilterDialog dialog = new SearchFilterDialog();
@@ -144,14 +150,10 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
     @Override
     public void onYesClick() {
 
-        ListView listView = (ListView) activity.findViewById(R.id.listview_room);
-
-        ArrayList<RoomListviewitem> listviewitems = new ArrayList<>();
-
         MainActivity mainActivity = (MainActivity) getActivity();
-        filterData = mainActivity.getSearchFilterData();
+        mFilterData = mainActivity.getSearchFilterData();
 
-        setListview(listviewitems, roomDatas, filterData);
+        filtering(mFilteredRooms, mRooms, mFilterData);
 
     }
 
@@ -174,34 +176,34 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
 
     //memory
 
-    private void setListview(ArrayList<RoomListviewitem> data, ArrayList<RoomData> roomDatas, SearchFilterData filter){
+    private void filtering(List<RoomModel> result, List<RoomModel> original, SearchFilterData filter){
 
 
         //in app
-        for (int i = 0; i < roomDatas.size(); i++) {
-            RoomData temp = roomDatas.get(i);
+        result.clear();
+        for (int i = 0; i < original.size(); i++) {
+            RoomModel temp = original.get(i);
             if(isFiltered(temp, filter) == true) {
-                RoomListviewitem room = new RoomListviewitem();
-                room.icon = temp.icon;
-                room.area = temp.area;
-                room.monthly = temp.monthly;
-                room.security = temp.security;
+                RoomModel room = new RoomModel();
+                //image
 
-                data.add(room);
+                room.area = temp.area;
+                room.monthPrice = temp.monthPrice;
+                room.securityDeposit = temp.securityDeposit;
+
+                result.add(room);
             }
         }
 
-        ListviewAdapter adapter = new ListviewAdapter(getActivity(), data);
-        listView.setAdapter(adapter);
 
+        mAdapter.notifyDataSetChanged();
 
-        final ArrayList<RoomListviewitem> temp = data;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(getActivity(), RoomActivity.class);
 
-                myIntent.putExtra("roomItem", temp.get(position));
+                myIntent.putExtra("roomModel", mFilteredRooms.get(position));
 
                 startActivity(myIntent);
             }
@@ -210,7 +212,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
     }
 
     //in option, return true
-    private boolean isFiltered(RoomData room, SearchFilterData filter){
+    private boolean isFiltered(RoomModel room, SearchFilterData filter){
         boolean pass = true;
 
         //check by area
@@ -240,22 +242,22 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
         if(pass == true){
             if(filter.isMonthly_max == true){
                 int max = Integer.parseInt(filter.montly_max);
-                if(max < room.monthly){   pass = false;   }
+                if(max < room.monthPrice){   pass = false;   }
             }
             if(filter.isMonthly_min == true){
                 int min = Integer.parseInt(filter.montly_min);
-                if(min > room.monthly)  {   pass = false;   }
+                if(min > room.monthPrice)  {   pass = false;   }
             }
         }
         //check security
         if(pass == true){
             if(filter.isSecurity_max == true){
                 int max = Integer.parseInt(filter.security_max);
-                if(max < room.security){    pass = false;   }
+                if(max < room.securityDeposit){    pass = false;   }
             }
             if(filter.isSecurity_min == true){
                 int min = Integer.parseInt(filter.security_min);
-                if(min > room.security){    pass = false;   }
+                if(min > room.securityDeposit){    pass = false;   }
             }
         }
 
@@ -282,31 +284,4 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
     }
 
 
-    public void makeDummyData(ArrayList<RoomData> roomDatas) {
-
-        //in server
-        //id, area(0~5), security, monthly, image
-        roomDatas.add(new RoomData(0, 0, 100, 10, R.drawable.room1));
-        roomDatas.add(new RoomData(1, 1, 200, 20, R.drawable.room2));
-        roomDatas.add(new RoomData(2, 2, 300, 30, R.drawable.room3));
-        roomDatas.add(new RoomData(3, 3, 400, 40, R.drawable.room4));
-        roomDatas.add(new RoomData(4, 4, 500, 50, R.drawable.room2));
-        roomDatas.add(new RoomData(5, 5, 230, 20, R.drawable.room3));
-        roomDatas.add(new RoomData(6, 5, 1000, 100, R.drawable.room1));
-        roomDatas.add(new RoomData(7, 5, 100, 10, R.drawable.room1));
-        roomDatas.add(new RoomData(8, 5, 220, 20, R.drawable.room4));
-        roomDatas.add(new RoomData(9, 1, 30, 30, R.drawable.room4));
-        roomDatas.add(new RoomData(10, 2, 300, 30, R.drawable.room1));
-        roomDatas.add(new RoomData(11, 3, 50, 10, R.drawable.room3));
-        roomDatas.add(new RoomData(12, 4, 650, 60, R.drawable.room1));
-        roomDatas.add(new RoomData(13, 0, 640, 60, R.drawable.room2));
-        roomDatas.add(new RoomData(14, 2, 320, 70, R.drawable.room3));
-        roomDatas.add(new RoomData(15, 3, 120, 50, R.drawable.room4));
-        roomDatas.add(new RoomData(16, 0, 340, 40, R.drawable.room3));
-        roomDatas.add(new RoomData(17, 1, 50, 30, R.drawable.room3));
-        roomDatas.add(new RoomData(18, 0, 70, 20, R.drawable.room1));
-
-
-
-    }
 }
