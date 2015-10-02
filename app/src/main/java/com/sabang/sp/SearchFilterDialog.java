@@ -1,11 +1,8 @@
 package com.sabang.sp;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,7 +12,7 @@ import android.widget.Spinner;
 /**
  * Created by cyc on 2015-09-06.
  */
-public class SearchFilterDialog extends DialogFragment implements View.OnClickListener
+public class SearchFilterDialog extends Dialog
 {
     private Button acceptButton;
     private Button cancelButton;
@@ -29,113 +26,79 @@ public class SearchFilterDialog extends DialogFragment implements View.OnClickLi
     private Spinner spinner_security_max;
     private Spinner spinner_monthly_min;
     private Spinner spinner_monthly_max;
-
-
+    private Context context;
     SearchFilterData data;
 
-    FragmentDialogListener callback;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        try {
-            callback = (FragmentDialogListener) getTargetFragment();
-        } catch (ClassCastException e) {
-            throw new ClassCastException("Calling fragment must implement DialogClickListener interface");
-        }
+    // this is your interface for what you want to do on the calling activity
+    public interface ICustomDialogEventListener {
+        public void customDialogEvent();
     }
 
-    @NonNull
+    private ICustomDialogEventListener onCustomDialogEventListener;
+
+    // In the constructor, you set the callback
+    public SearchFilterDialog(Context context, SearchFilterData data,  ICustomDialogEventListener onCustomDialogEventListener) {
+        super(context);
+        this.context =context;
+        this.data = data;
+        this.onCustomDialogEventListener = onCustomDialogEventListener;
+    }
+
+
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        //add by http://stackoverflow.com/questions/7508185/problem-inflating-custom-view-for-alertdialog-in-dialogfragment
-        //http://stackoverflow.com/questions/17487929/androidruntimeexception-requestfeature-must-be-called-before-adding-content
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_search_filter,null);
-        builder.setView(view);
+        setContentView(R.layout.dialog_search_filter);
 
-        builder.setMessage(R.string.title_dialog_search_filter)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        callback.onYesClick();
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                callback.onNoClick();
-            }
-        });
-
-        builder.setTitle(R.string.title_dialog_search_filter);
-
-        checkBox_A =  (CheckBox) view.findViewById(R.id.dialogfragment_checkBox_A);
-        checkBox_B =  (CheckBox) view.findViewById(R.id.dialogfragment_checkBox_B);
-        checkBox_C =  (CheckBox) view.findViewById(R.id.dialogfragment_checkBox_C);
-        checkBox_D =  (CheckBox) view.findViewById(R.id.dialogfragment_checkBox_D);
-        checkBox_E =  (CheckBox) view.findViewById(R.id.dialogfragment_checkBox_E);
-        checkBox_F =  (CheckBox) view.findViewById(R.id.dialogfragment_checkBox_F);
+        checkBox_A =  (CheckBox) this.findViewById(R.id.dialogfragment_checkBox_A);
+        checkBox_B =  (CheckBox) this.findViewById(R.id.dialogfragment_checkBox_B);
+        checkBox_C =  (CheckBox) this.findViewById(R.id.dialogfragment_checkBox_C);
+        checkBox_D =  (CheckBox) this.findViewById(R.id.dialogfragment_checkBox_D);
+        checkBox_E =  (CheckBox) this.findViewById(R.id.dialogfragment_checkBox_E);
+        checkBox_F =  (CheckBox) this.findViewById(R.id.dialogfragment_checkBox_F);
         getDataCheckBox();
 
 
 
 
-        spinner_security_min = (Spinner) view.findViewById(R.id.dialogfragment_spinner_security_min);
-        spinner_security_max = (Spinner) view.findViewById(R.id.dialogfragment_spinner_security_max);
-        spinner_monthly_min = (Spinner) view.findViewById(R.id.dialogfragment_spinner_monthly_min);
-        spinner_monthly_max = (Spinner) view.findViewById(R.id.dialogfragment_spinner_monthly_max);
+        spinner_security_min = (Spinner) this.findViewById(R.id.dialogfragment_spinner_security_min);
+        spinner_security_max = (Spinner) this.findViewById(R.id.dialogfragment_spinner_security_max);
+        spinner_monthly_min = (Spinner) this.findViewById(R.id.dialogfragment_spinner_monthly_min);
+        spinner_monthly_max = (Spinner) this.findViewById(R.id.dialogfragment_spinner_monthly_max);
         spinner_security_min.setAdapter(ArrayAdapter.createFromResource(
-                view.getContext(), R.array.security_money, android.R.layout.simple_spinner_dropdown_item));
+                this.getContext(), R.array.security_money, android.R.layout.simple_spinner_dropdown_item));
         spinner_security_max.setAdapter(ArrayAdapter.createFromResource(
-                view.getContext(), R.array.security_money, android.R.layout.simple_spinner_dropdown_item));
+                this.getContext(), R.array.security_money, android.R.layout.simple_spinner_dropdown_item));
         spinner_monthly_min.setAdapter(ArrayAdapter.createFromResource(
-                view.getContext(), R.array.monthly_money, android.R.layout.simple_spinner_dropdown_item));
+                this.getContext(), R.array.monthly_money, android.R.layout.simple_spinner_dropdown_item));
         spinner_monthly_max.setAdapter(ArrayAdapter.createFromResource(
-                view.getContext(), R.array.monthly_money, android.R.layout.simple_spinner_dropdown_item));
+                this.getContext(), R.array.monthly_money, android.R.layout.simple_spinner_dropdown_item));
         getDataSpinner();
 
 
 
 
 
-        acceptButton = (Button) view.findViewById(R.id.dialogfragment_acceptbtn);
-        cancelButton = (Button) view.findViewById(R.id.dialogfragment_canceltbtn);
-        acceptButton.setOnClickListener(this);
-        cancelButton.setOnClickListener(this);
+        acceptButton = (Button) this.findViewById(R.id.dialogfragment_acceptbtn);
+        cancelButton = (Button) this.findViewById(R.id.dialogfragment_canceltbtn);
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDataCheckBox();
+                setDataSpinner();
+                onCustomDialogEventListener.customDialogEvent();
 
-        return builder.create();
-    }
+                dismiss();
+            }
+        });
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
 
-    public SearchFilterDialog()
-    {
-        // Empty constructor required for DialogFragment
-    }
-
-    public void setSearchFilterData(SearchFilterData data){
-        this.data = data;
-    }
-
-
-
-    @Override
-    public void onClick(View v)
-    {
-        if (v == acceptButton)
-        {
-            setDataCheckBox();
-            setDataSpinner();
-            callback.onYesClick();
-
-            this.dismiss();
-        }
-        else if (v == cancelButton)
-        {
-            callback.onNoClick();
-
-            this.dismiss();
-        }
     }
 
     public void getDataCheckBox(){
@@ -155,8 +118,8 @@ public class SearchFilterDialog extends DialogFragment implements View.OnClickLi
         data.check_F = checkBox_F.isChecked();
     }
     public void getDataSpinner(){
-        String[] array_security = getResources().getStringArray(R.array.security_money);
-        String[] array_monthly =getResources().getStringArray(R.array.monthly_money);
+        String[] array_security = context.getResources().getStringArray(R.array.security_money);
+        String[] array_monthly = context.getResources().getStringArray(R.array.monthly_money);
 
         if(data.isSecurity_min == false) {
             spinner_security_min.setSelection(0);
@@ -201,8 +164,8 @@ public class SearchFilterDialog extends DialogFragment implements View.OnClickLi
     }
 
     public void setDataSpinner(){
-        String securityFirstElement = getResources().getStringArray(R.array.security_money)[0];
-        String monthlyFristElement = getResources().getStringArray(R.array.monthly_money)[0];
+        String securityFirstElement = context.getResources().getStringArray(R.array.security_money)[0];
+        String monthlyFristElement = context.getResources().getStringArray(R.array.monthly_money)[0];
 
         String security_min = (String) spinner_security_min.getSelectedItem();
         String security_max = (String) spinner_security_max.getSelectedItem();
@@ -239,6 +202,5 @@ public class SearchFilterDialog extends DialogFragment implements View.OnClickLi
             data.montly_max = monthly_max;
         }//end else
     }//end func
-
 
 }

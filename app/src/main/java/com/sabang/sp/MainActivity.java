@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity{
     private SearchFilterData searchFilterData;
     Toolbar toolbar;
     TabLayout tabLayout;
+    MyAdapter adapter;
+    ViewPager viewpager;
     //bug
     // need to fix tabLayout.getTabAt(0).setIcon(R.drawable.main_on);
     boolean bug = true;
@@ -27,18 +29,17 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
-
         searchFilterData = new SearchFilterData();
-
         initLayout();
     }
 
     private void initLayout() {
 
-        final ViewPager viewpager = (ViewPager) findViewById(R.id.viewpager);
-        MyAdapter adapter = new MyAdapter(getSupportFragmentManager(),MainActivity.this);
+        viewpager = (ViewPager) findViewById(R.id.viewpager);
+        adapter = new MyAdapter(getSupportFragmentManager(),MainActivity.this);
 
         viewpager.setAdapter(adapter);
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity{
         //can't fix bug yet
         // set tab0 as menu_main, when run app first time, don't turn on
         tabLayout.setupWithViewPager(viewpager);
-        tabLayout.getTabAt(0).setIcon(R.drawable.menu_main);
+        tabLayout.getTabAt(0).setIcon(R.drawable.main_on);
         tabLayout.getTabAt(1).setIcon(R.drawable.menu_board);
         tabLayout.getTabAt(2).setIcon(R.drawable.menu_setting);
 
@@ -111,13 +112,30 @@ public class MainActivity extends AppCompatActivity{
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.action_filter:
+                        showDialog();
 
+                        return true;
                 }
                 return false;
             }
         });
 
     }
+
+
+
+    public void showDialog(){
+        SearchFilterDialog dialog = new SearchFilterDialog(this, getSearchFilterData(), new SearchFilterDialog.ICustomDialogEventListener() {
+            @Override
+            public void customDialogEvent() {
+                Intent intent = new Intent("Dialog");
+                sendBroadcast(intent);
+            }
+        });
+        dialog.show();
+    }
+
+
 
     //return search filter data
     public SearchFilterData getSearchFilterData() {

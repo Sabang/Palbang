@@ -1,7 +1,10 @@
 package com.sabang.sp;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -33,7 +36,28 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
     private List<RoomModel> mRooms = new ArrayList<>();
     private List<RoomModel> mFilteredRooms = new ArrayList<>();
 
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            update();
+            SPLog.d("#####Broadcast Catch");
+        }
+    };
+    @Override
+    public void onResume() {
+        super.onResume();
+        //broadcast
+        IntentFilter intentFilter = new IntentFilter("Dialog");
+        getActivity().registerReceiver(this.broadcastReceiver, intentFilter);
 
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(this.broadcastReceiver);
+    }
     ListviewAdapter mAdapter;
 
     ListView listView;
@@ -45,6 +69,12 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
 
     public MainFragment() {
         // Required empty public constructor
+    }
+
+    public void update(){
+        filtering(mFilteredRooms, mRooms, mFilterData);
+        //if(change is exist) -> notify~() run.
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -77,7 +107,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
 
                 mRooms.clear();
 
-                for(int i = 0; i < model.rooms.size();i++){
+                for (int i = 0; i < model.rooms.size(); i++) {
                     mRooms.add(model.rooms.get(i));
                 }
                 filtering(mFilteredRooms, mRooms, mFilterData);
@@ -91,6 +121,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
             }
         }).send();
     }
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -119,13 +150,13 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
             }
         });
 
+
         Button button_search_filter = (Button) getActivity().findViewById(R.id.button_search_filter);
 
         //make dialog to search filter
         button_search_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
 
             }
         });
@@ -138,14 +169,6 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
     }
 
 
-    private void showDialog() {
-
-        SearchFilterDialog dialog = new SearchFilterDialog();
-        MainActivity mainActivity = (MainActivity) getActivity();
-        dialog.setSearchFilterData(mainActivity.getSearchFilterData());
-        dialog.setTargetFragment(this, 0);
-        dialog.show(getFragmentManager(), "dialog");
-    }
 
     @Override
     public void onYesClick() {
