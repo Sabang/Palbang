@@ -15,6 +15,14 @@ import com.nhn.android.naverlogin.OAuthLoginDefine;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 /// 네이버 아이디로 로그인 샘플앱
 /**
  * <br/> OAuth2.0 인증을 통해 Access Token을 발급받는 예제, 연동해제하는 예제,
@@ -61,7 +69,6 @@ public class navertest extends Activity {
 
     private void initData() {
         mOAuthLoginInstance = OAuthLogin.getInstance();
-
         mOAuthLoginInstance.init(mContext, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME);
 		/*
 		 * 2015년 8월 이전에 등록하고 앱 정보 갱신을 안한 경우 기존에 설정해준 callback intent url 을 넣어줘야 로그인하는데 문제가 안생긴다.
@@ -89,6 +96,7 @@ public class navertest extends Activity {
 
     private void updateView() {
         mOauthAT.setText(mOAuthLoginInstance.getAccessToken(mContext));
+        mOAuthLoginInstance.getAccessToken(mContext);
         mOauthRT.setText(mOAuthLoginInstance.getRefreshToken(mContext));
         mOauthExpires.setText(String.valueOf(mOAuthLoginInstance.getExpiresAt(mContext)));
         mOauthTokenType.setText(mOAuthLoginInstance.getTokenType(mContext));
@@ -175,6 +183,7 @@ public class navertest extends Activity {
         }
     }
 
+
     private class RequestApiTask extends AsyncTask<Void, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -182,12 +191,23 @@ public class navertest extends Activity {
         }
         @Override
         protected String doInBackground(Void... params) {
-            String url = "https://apis.naver.com/nidlogin/nid/getHashId_v2.xml";
+           // String url = "https://apis.naver.com/nidlogin/nid/getHashId_v2.xml";
+            String url = "https://openapi.naver.com/v1/nid/getUserProfile.xml";
             String at = mOAuthLoginInstance.getAccessToken(mContext);
             return mOAuthLoginInstance.requestApi(mContext, at, url);
         }
         protected void onPostExecute(String content) {
-            mApiResultText.setText((String) content);
+            //mApiResultText.setText((String) content);
+            try {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document document = builder.parse(new InputSource(new StringReader(content)));
+                //텍스트가 한번더 감싸져잇어서 getFirstChild로 한번더 벗겨줌
+                mApiResultText.setText(document.getElementsByTagName("name").item(0).getFirstChild().getNodeValue());
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
