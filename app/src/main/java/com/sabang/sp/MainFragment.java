@@ -5,12 +5,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,11 +33,14 @@ import java.util.List;
  * Activities that contain this fragment must implement the
  */
 
-public class MainFragment extends Fragment implements FragmentDialogListener {
+public class MainFragment extends Fragment implements FragmentDialogListener, SwipeRefreshLayout.OnRefreshListener {
     private Activity activity;
     private SearchFilterData mFilterData;
     private List<RoomModel> mRooms = new ArrayList<>();
     private List<RoomModel> mFilteredRooms = new ArrayList<>();
+    private SwipeRefreshLayout mSwipeRefresh;
+    ListviewAdapter mAdapter;
+    ListView listView;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -58,9 +64,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
         super.onPause();
         getActivity().unregisterReceiver(this.broadcastReceiver);
     }
-    ListviewAdapter mAdapter;
 
-    ListView listView;
 
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
@@ -89,6 +93,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main, container, false);
@@ -162,11 +167,14 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
         });
 
 
-
-
-
-
+        mSwipeRefresh = (SwipeRefreshLayout)activity.findViewById(R.id.fragmentMain_layout);
+        mSwipeRefresh.setOnRefreshListener(this);
+        mSwipeRefresh.setColorSchemeColors(Color.RED, Color.RED, Color.RED, Color.RED);
     }
+
+
+
+
 
 
 
@@ -229,6 +237,20 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
                 myIntent.putExtra("roomModel", mFilteredRooms.get(position));
 
                 startActivity(myIntent);
+            }
+        });
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int topRowVerticalPosition =
+                        (listView == null || listView.getChildCount() == 0) ?
+                                0 : listView.getChildAt(0).getTop();
+                mSwipeRefresh.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
             }
         });
 
@@ -307,4 +329,32 @@ public class MainFragment extends Fragment implements FragmentDialogListener {
     }
 
 
+    @Override
+    public void onRefresh() {
+        RoomRequest.newInstance(new Response.Listener<RoomRequest.Model>() {
+            @Override
+            public void onResponse(RoomRequest.Model model) {
+                SPLog.d(model.rooms.get(2).detail);
+                SPLog.d(model.rooms.get(2).term);
+
+                mRooms.clear();
+
+                for (int i = 0; i < model.rooms.size(); i++) {
+                    mRooms.add(model.rooms.get(i));
+                }
+                filtering(mFilteredRooms, mRooms, mFilterData);
+                //if(change is exist) -> notify~() run.
+                mAdapter.notifyDataSetChanged();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                SPLog.e(error.toString());
+            }
+        }).send();
+        mAdapter.notifyDataSetChanged();
+
+
+        mSwipeRefresh.setRefreshing(false);
+    }
 }

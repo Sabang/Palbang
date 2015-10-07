@@ -30,7 +30,9 @@ public class SettingFragment extends Fragment {
     private ArrayList<String> mChildListContent = null;
 
     private OnFragmentInteractionListener mListener;
-    private Activity activity;
+    private static Activity activity;
+
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -58,6 +60,8 @@ public class SettingFragment extends Fragment {
 
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,17 +74,16 @@ public class SettingFragment extends Fragment {
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecking) {
-                String str =  String.valueOf(isChecking);
-                if(isChecking){
+                String str = String.valueOf(isChecking);
+                if (isChecking) {
                     Toast.makeText(getActivity(), "ON", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(getActivity(),"OFF",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "OFF", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        Button naverTest = (Button)rootView.findViewById(R.id.button_naverTest);
+        Button naverTest = (Button) rootView.findViewById(R.id.button_naverTest);
         naverTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +96,13 @@ public class SettingFragment extends Fragment {
 
         return rootView;
     }
+
+
+
+
+
+
+
 
 
 

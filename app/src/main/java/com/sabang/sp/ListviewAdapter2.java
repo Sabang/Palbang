@@ -11,17 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by cyc on 2015-08-19.
  */
 public class ListviewAdapter2 extends BaseAdapter{
     private LayoutInflater mInflater;
-    private ArrayList<BoardListviewitem> mData;
+    private ArrayList<BoardData> mData;
 
 
-    public ListviewAdapter2(Context context, ArrayList<BoardListviewitem> data){
+    public ListviewAdapter2(Context context, ArrayList<BoardData> data){
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mData = data;
     }
@@ -56,7 +55,7 @@ public class ListviewAdapter2 extends BaseAdapter{
             convertView.setTag(vh);
         }
 
-        BoardListviewitem item = (BoardListviewitem) getItem(position);
+        BoardData item = (BoardData) getItem(position);
         ViewHolder vh = (ViewHolder) convertView.getTag();
 
         try {

@@ -12,12 +12,25 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
+import com.sabang.sp.common.SPLog;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity{
 
+    private OAuthLoginButton mOAuthLoginButton;
+
+
 
     private SearchFilterData searchFilterData;
+    private ArrayList<BoardData> boardDatas;
+    private static final int BOARD_WRITE = 0;
+
+
     Toolbar toolbar;
     TabLayout tabLayout;
     MyAdapter adapter;
@@ -33,7 +46,18 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         searchFilterData = new SearchFilterData();
+        boardDatas = new ArrayList<>();
         initLayout();
+
+
+        View settingFragment = (View) getLayoutInflater().
+                inflate(R.layout.fragment_setting, null);
+        mOAuthLoginButton = (OAuthLoginButton)settingFragment.findViewById(R.id.buttonOAuthLoginImg);
+
+        /*if(mOAuthLoginButton == null)
+            SPLog.d("");
+        else
+            SPLog.d("");*/
     }
 
     private void initLayout() {
@@ -64,12 +88,12 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
-                if(bug){
+                if (bug) {
                     tabLayout.getTabAt(0).setIcon(R.drawable.menu_main);
                     bug = false;
                 }
 
-                switch(position){
+                switch (position) {
                     case 0:
                         toolbar.getMenu().clear();
                         toolbar.inflateMenu(R.menu.actionbar_button_filter);
@@ -102,9 +126,6 @@ public class MainActivity extends AppCompatActivity{
             }
 
 
-
-
-
         });
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -114,6 +135,12 @@ public class MainActivity extends AppCompatActivity{
                     case R.id.action_filter:
                         showDialog();
 
+                        return true;
+
+                    case R.id.action_write:
+                        Intent intent = new Intent(MainActivity.this, BoardWriteActivity.class);
+
+                        startActivityForResult(intent, BOARD_WRITE);
                         return true;
                 }
                 return false;
@@ -135,21 +162,22 @@ public class MainActivity extends AppCompatActivity{
         dialog.show();
     }
 
-
-
     //return search filter data
     public SearchFilterData getSearchFilterData() {
         return searchFilterData;
     }
+    public ArrayList<BoardData> getBoardData(){
+        return boardDatas;
+    }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
 
         if(resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 10:
-                    int area = data.getExtras().getInt("area");
+                    int area = intent.getExtras().getInt("area");
 
                     //init to all false, and set selected area true
                     searchFilterData.check_A = false;
@@ -181,6 +209,13 @@ public class MainActivity extends AppCompatActivity{
                             break;
                     }
                     break;
+
+                case BOARD_WRITE:
+                    SPLog.d("값가져옴!@#$");
+                    BoardData newOne = (BoardData)intent.getExtras().getSerializable("data");
+
+                    boardDatas.add(newOne);
+                    SPLog.d(boardDatas.get(boardDatas.size()-1).title);
                 default:
                     break;
             }

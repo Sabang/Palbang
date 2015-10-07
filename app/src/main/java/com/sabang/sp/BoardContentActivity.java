@@ -1,5 +1,6 @@
 package com.sabang.sp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 public class BoardContentActivity extends AppCompatActivity {
@@ -28,7 +30,10 @@ public class BoardContentActivity extends AppCompatActivity {
         });
         toolbar.setTitleTextColor(Color.WHITE);
 
-
+        Intent intent = getIntent();
+        BoardData data = (BoardData)intent.getSerializableExtra("BoardItem");
+        TextView boardTitle = (TextView)findViewById(R.id.board_title);
+        boardTitle.setText(data.title);
 
     }
 

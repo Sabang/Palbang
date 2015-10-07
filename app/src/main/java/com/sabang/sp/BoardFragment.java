@@ -2,20 +2,17 @@ package com.sabang.sp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -27,13 +24,15 @@ import java.util.ArrayList;
  * Use the {@link BoardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BoardFragment extends Fragment {
+public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private Activity activity;
-    private ArrayList<BoardData> boardDatas;
     private SearchFilterData filterData;
+    ArrayList<BoardData> boardDatas;
+    private SwipeRefreshLayout mSwipeRefresh;
+    ListView listView;
+    ListviewAdapter2 mAdapter;
 
 
-    private OnFragmentInteractionListener mListener;
 
 
     public static BoardFragment newInstance() {
@@ -65,23 +64,18 @@ public class BoardFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
 
-        ListView listView = (ListView) activity.findViewById(R.id.listview_board);
-
-        final ArrayList<BoardListviewitem> listviewitems = new ArrayList<>();
+        listView = (ListView) activity.findViewById(R.id.listview_board);
 
         //for test, temporarily server
-        boardDatas = new ArrayList<BoardData>();
+        MainActivity mainActivity = (MainActivity) getActivity();
+        boardDatas = mainActivity.getBoardData();
         makeDummyData(boardDatas);
 
 
-        MainActivity mainActivity = (MainActivity) getActivity();
         filterData = mainActivity.getSearchFilterData();
 
-        setListview(listviewitems, boardDatas, filterData);
-
-
-        ListviewAdapter2 adapter = new ListviewAdapter2(getActivity(), listviewitems);
-        listView.setAdapter(adapter);
+        mAdapter = new ListviewAdapter2(getActivity(), boardDatas);
+        listView.setAdapter(mAdapter);
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,12 +83,25 @@ public class BoardFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent myIntent = new Intent(getActivity(), BoardContentActivity.class);
 
-                myIntent.putExtra("BoardItem", (Serializable) listviewitems.get(position));
+                myIntent.putExtra("BoardItem", boardDatas.get(position));
 
                 startActivity(myIntent);
             }
         });
+       /* listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
 
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int topRowVerticalPosition =
+                        (listView == null || listView.getChildCount() == 0) ?
+                                0 : listView.getChildAt(0).getTop();
+                mSwipeRefresh.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
+            }
+        });*/
 
 
 
@@ -102,6 +109,10 @@ public class BoardFragment extends Fragment {
         Intent intent = getActivity().getIntent();
 
 
+
+        mSwipeRefresh = (SwipeRefreshLayout)activity.findViewById(R.id.fragmentBoard_layout);
+        mSwipeRefresh.setOnRefreshListener(this);
+        mSwipeRefresh.setColorSchemeColors(Color.RED, Color.RED, Color.RED, Color.RED);
 
     }
 
@@ -114,29 +125,8 @@ public class BoardFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
-    private void setListview(ArrayList<BoardListviewitem> data, ArrayList<BoardData> BoardDatas, SearchFilterData filter) {
 
-
-        //in app
-        for (int i = 0; i < BoardDatas.size(); i++) {
-            BoardData temp = BoardDatas.get(i);
-
-            BoardListviewitem board = new BoardListviewitem();
-            board.icon = temp.icon;
-            board.year = temp.year;
-            board.month = temp.month;
-            board.day = temp.day;
-            board.name = temp.name;
-            board.price = temp.price;
-            board.state = temp.state;
-            data.add(board);
-
-        }
-
-
-    }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
@@ -147,16 +137,27 @@ public class BoardFragment extends Fragment {
 
         //in server
         //id, area(0~5), security, monthly, image
-        BoardDatas.add(new BoardData(0, 0, 2015, 10,8,1, R.drawable.board1, "카메라", 25));
-        BoardDatas.add(new BoardData(1, 0, 2015, 10,12,1, R.drawable.board2, "이어폰", 7));
-        BoardDatas.add(new BoardData(2, 0, 2015, 9,8,2, R.drawable.board3, "그릇", 10));
-        BoardDatas.add(new BoardData(3, 0, 2015, 12,8,3, R.drawable.board4, "건조대", 0));
-        BoardDatas.add(new BoardData(4, 0, 2015, 10,8,1, R.drawable.board5, "재사용 봉투", 1));
-        BoardDatas.add(new BoardData(5, 0, 2015, 10,38,1, R.drawable.board1, "카메라", 25));
-        BoardDatas.add(new BoardData(6, 0, 2015, 7,22,1, R.drawable.board2,"이어폰", 10));
-        BoardDatas.add(new BoardData(7, 0, 2015, 4,9,1, R.drawable.board3,"그릇", 10));
-        BoardDatas.add(new BoardData(8, 0, 2015, 4,21,1, R.drawable.board1, "카메라", 25));
+        BoardDatas.add(new BoardData(0, "a@a.com", 2015, 10,8,1, R.drawable.board1, "카메라", 25,"카메라 싸게판다"));
+        BoardDatas.add(new BoardData(1, "a@a.com", 2015, 10,12,1, R.drawable.board2, "이어폰", 7,"카메라 싸게판다"));
+        BoardDatas.add(new BoardData(2, "a@a.com", 2015, 9,8,2, R.drawable.board3, "그릇", 10,"카메라 싸게판다"));
+        BoardDatas.add(new BoardData(3, "a@a.com", 2015, 12,8,3, R.drawable.board4, "건조대", 0,"카메라 싸게판다"));
+        BoardDatas.add(new BoardData(4, "a@a.com", 2015, 10,8,1, R.drawable.board5, "재사용 봉투", 1,"카메라 싸게판다"));
+        BoardDatas.add(new BoardData(5, "a@a.com", 2015, 10,38,1, R.drawable.board1, "카메라", 25,"카메라 싸게판다"));
+        BoardDatas.add(new BoardData(6, "a@a.com", 2015, 7,22,1, R.drawable.board2,"이어폰", 10,"카메라 싸게판다"));
+        BoardDatas.add(new BoardData(7, "a@a.com", 2015, 4,9,1, R.drawable.board3,"그릇", 10,"카메라 싸게판다"));
+        BoardDatas.add(new BoardData(8, "a@a.com", 2015, 4,21,1, R.drawable.board1, "카메라", 25,"카메라 싸게판다"));
 
+    }
+
+
+
+    @Override
+    public void onRefresh() {
+
+        mAdapter.notifyDataSetChanged();
+
+
+        mSwipeRefresh.setRefreshing(false);
     }
 
 }

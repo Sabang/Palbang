@@ -42,13 +42,17 @@ public class navertest extends Activity {
 
     /** UI 요소들 */
     private TextView mApiResultText;
-    private static TextView mOauthAT;
-    private static TextView mOauthRT;
-    private static TextView mOauthExpires;
-    private static TextView mOauthTokenType;
-    private static TextView mOAuthState;
+    //private static TextView mOauthAT;
+    //private static TextView mOauthRT;
+    //private static TextView mOauthExpires;
+    //private static TextView mOauthTokenType;
+    //private static TextView mOAuthState;
 
     private OAuthLoginButton mOAuthLoginButton;
+
+    public static OAuthLogin getLoginInstance(){
+        return mOAuthLoginInstance;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,26 +85,27 @@ public class navertest extends Activity {
     private void initView() {
         mApiResultText = (TextView) findViewById(R.id.api_result_text);
 
-        mOauthAT = (TextView) findViewById(R.id.oauth_access_token);
-        mOauthRT = (TextView) findViewById(R.id.oauth_refresh_token);
-        mOauthExpires = (TextView) findViewById(R.id.oauth_expires);
-        mOauthTokenType = (TextView) findViewById(R.id.oauth_type);
-        mOAuthState = (TextView) findViewById(R.id.oauth_state);
+        //mOauthAT = (TextView) findViewById(R.id.oauth_access_token);
+        //mOauthRT = (TextView) findViewById(R.id.oauth_refresh_token);
+        //mOauthExpires = (TextView) findViewById(R.id.oauth_expires);
+        //mOauthTokenType = (TextView) findViewById(R.id.oauth_type);
+        //mOAuthState = (TextView) findViewById(R.id.oauth_state);
 
-        mOAuthLoginButton = (OAuthLoginButton) findViewById(R.id.buttonOAuthLoginImg);
+        mOAuthLoginButton = (OAuthLoginButton) findViewById(R.id.buttonOAuthLoginImg2);
         mOAuthLoginButton.setOAuthLoginHandler(mOAuthLoginHandler);
+
 
         updateView();
     }
 
 
     private void updateView() {
-        mOauthAT.setText(mOAuthLoginInstance.getAccessToken(mContext));
-        mOAuthLoginInstance.getAccessToken(mContext);
-        mOauthRT.setText(mOAuthLoginInstance.getRefreshToken(mContext));
-        mOauthExpires.setText(String.valueOf(mOAuthLoginInstance.getExpiresAt(mContext)));
-        mOauthTokenType.setText(mOAuthLoginInstance.getTokenType(mContext));
-        mOAuthState.setText(mOAuthLoginInstance.getState(mContext).toString());
+        //mOauthAT.setText(mOAuthLoginInstance.getAccessToken(mContext));
+        //mOAuthLoginInstance.getAccessToken(mContext);
+        //mOauthRT.setText(mOAuthLoginInstance.getRefreshToken(mContext));
+        //mOauthExpires.setText(String.valueOf(mOAuthLoginInstance.getExpiresAt(mContext)));
+        //mOauthTokenType.setText(mOAuthLoginInstance.getTokenType(mContext));
+        //mOAuthState.setText(mOAuthLoginInstance.getState(mContext).toString());
     }
 
     @Override
@@ -121,11 +126,11 @@ public class navertest extends Activity {
                 String refreshToken = mOAuthLoginInstance.getRefreshToken(mContext);
                 long expiresAt = mOAuthLoginInstance.getExpiresAt(mContext);
                 String tokenType = mOAuthLoginInstance.getTokenType(mContext);
-                mOauthAT.setText(accessToken);
-                mOauthRT.setText(refreshToken);
-                mOauthExpires.setText(String.valueOf(expiresAt));
-                mOauthTokenType.setText(tokenType);
-                mOAuthState.setText(mOAuthLoginInstance.getState(mContext).toString());
+                //mOauthAT.setText(accessToken);
+                //mOauthRT.setText(refreshToken);
+                //mOauthExpires.setText(String.valueOf(expiresAt));
+                //mOauthTokenType.setText(tokenType);
+                //mOAuthState.setText(mOAuthLoginInstance.getState(mContext).toString());
             } else {
                 String errorCode = mOAuthLoginInstance.getLastErrorCode(mContext).getCode();
                 String errorDesc = mOAuthLoginInstance.getLastErrorDesc(mContext);
@@ -135,7 +140,7 @@ public class navertest extends Activity {
     };
 
     public void onButtonClick(View v) throws Throwable {
-
+/*
         switch (v.getId()) {
             case R.id.buttonOAuth: {
                 mOAuthLoginInstance.startOauthLoginActivity(navertest.this, mOAuthLoginHandler);
@@ -160,7 +165,7 @@ public class navertest extends Activity {
             }
             default:
                 break;
-        }
+        }*/
     }
 
 
