@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
@@ -48,8 +49,10 @@ public class ListviewAdapter extends BaseAdapter {
             ViewHolder vh = new ViewHolder();
             convertView = mInflater.inflate(R.layout.roomitem, parent, false);
             vh.icon = (NetworkImageView) convertView.findViewById(R.id.room_imageview);
-            vh.price = (TextView) convertView.findViewById(R.id.room_textview1);
-            vh.area = (TextView) convertView.findViewById(R.id.room_textview2);
+            vh.securityDeposit = (TextView) convertView.findViewById(R.id.room_textview1);
+            vh.monthPrice = (TextView) convertView.findViewById(R.id.room_textview2);
+            vh.hashTag =  (TextView) convertView.findViewById(R.id.room_textview3);
+            vh.mapImageView = (ImageView) convertView.findViewById(R.id.roomItemMap);
             convertView.setTag(vh);
         }
 
@@ -62,16 +65,22 @@ public class ListviewAdapter extends BaseAdapter {
 
         vh.icon.setImageUrl(item.images[0], VolleySingleton.getInstance().getImageLoader());
 
-        vh.price.setText(item.securityDeposit + "/" + item.monthPrice);
-        vh.area.setText("" + item.area);
+        vh.securityDeposit.setText("보증금　:　" + item.securityDeposit);
+        vh.monthPrice.setText(      "월　세　:　" +item.monthPrice);
+        vh.hashTag.setText("#애완동물　#베란다　#햇빛");
 
+        if(true){
+            vh.mapImageView.setImageResource(R.drawable.first_zone_map);
+        }
 
         return convertView;
     }
 
     private static class ViewHolder {
         public NetworkImageView icon;
-        public TextView price;
-        public TextView area;
+        public TextView securityDeposit;
+        public TextView monthPrice;
+        public TextView hashTag;
+        public ImageView mapImageView;
     }
 }

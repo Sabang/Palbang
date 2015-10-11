@@ -1,13 +1,11 @@
 package com.sabang.sp;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -50,9 +48,10 @@ public class ListviewAdapter2 extends BaseAdapter{
             convertView = mInflater.inflate(R.layout.boarditem, parent, false);
             vh.icon = (ImageView)convertView.findViewById(R.id.board_imageview);
             vh.title = (TextView)convertView.findViewById(R.id.board_textview0);
-            vh.price = (TextView)convertView.findViewById(R.id.board_textview1);
-            vh.date = (TextView)convertView.findViewById(R.id.board_textview2);
-            vh.back = (LinearLayout)convertView.findViewById(R.id.boarditem_background);
+            vh.name = (TextView)convertView.findViewById(R.id.board_textview1);
+            vh.price = (TextView)convertView.findViewById(R.id.board_textview2);
+            vh.date = (TextView)convertView.findViewById(R.id.board_textview3);
+
             convertView.setTag(vh);
         }
 
@@ -66,25 +65,18 @@ public class ListviewAdapter2 extends BaseAdapter{
             vh.icon.setImageBitmap(null);
         }
         vh.title.setText(item.title);
-        vh.price.setText(item.name + " / " + item.price);
+        vh.name.setText(    "제품명　:　"+item.name);
+        vh.price.setText(   "가　격　:　"+item.price+" 만");
         vh.date.setText(item.year + "." + item.month + "." + item.day);
-        if(item.state ==1){
-            vh.back.setBackgroundColor(Color.rgb(227,255,220));
-        }
-        else if(item.state ==2){
-            vh.back.setBackgroundColor(Color.rgb(255,240,240));
-        }
-        else{
-            vh.back.setBackgroundColor(Color.rgb(255,255,210));
-        }
+
         return convertView;
     }
 
     private static class ViewHolder {
         public ImageView icon;
+        public TextView title;
+        public TextView name;
         public TextView price;
         public TextView date;
-        public TextView title;
-        public LinearLayout back;
     }
 }
