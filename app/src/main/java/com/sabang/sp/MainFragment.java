@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -146,7 +144,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
         listView.setAdapter(mAdapter);
 
 
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+       /* FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,7 +152,6 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
                 getActivity().startActivityForResult(intent, 10);
             }
         });
-
 
         Button button_search_filter = (Button) getActivity().findViewById(R.id.button_search_filter);
 
@@ -166,6 +163,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
             }
         });
 
+*/
 
         mSwipeRefresh = (SwipeRefreshLayout)activity.findViewById(R.id.fragmentMain_layout);
         mSwipeRefresh.setOnRefreshListener(this);
