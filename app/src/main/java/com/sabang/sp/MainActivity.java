@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity{
 
 
                 Intent intent = new Intent(MainActivity.this, BoardWriteActivity.class);
+                email = email.substring(0,email.length()-10);
                 intent.putExtra("email", email);
                 startActivityForResult(intent, BOARD_WRITE);
             }

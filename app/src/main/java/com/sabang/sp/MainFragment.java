@@ -18,10 +18,8 @@ import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.NetworkImageView;
 import com.sabang.sp.api.RoomModel;
 import com.sabang.sp.api.RoomRequest;
-import com.sabang.sp.api.VolleySingleton;
 import com.sabang.sp.common.SPLog;
 
 import java.util.ArrayList;
@@ -216,7 +214,10 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
             if(isFiltered(temp, filter) == true) {
                 RoomModel room = new RoomModel();
                 //image
-
+                room.images = new String[temp.images.length];
+                for(int j=0;j<room.images.length;j++){
+                    room.images[j] = temp.images[j];
+                }
                 room.area = temp.area;
                 room.monthPrice = temp.monthPrice;
                 room.securityDeposit = temp.securityDeposit;
@@ -345,10 +346,6 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
 
 
 
-                //TODO: REMOVE
-                NetworkImageView test = (NetworkImageView) getActivity().findViewById(R.id.test);
-                SPLog.d(model.rooms.get(0).images[0]);
-                test.setImageUrl(model.rooms.get(0).images[0], VolleySingleton.getInstance().getImageLoader());
 
             }
         }, new Response.ErrorListener() {

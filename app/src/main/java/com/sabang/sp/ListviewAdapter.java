@@ -5,10 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.sabang.sp.api.RoomModel;
+import com.sabang.sp.api.VolleySingleton;
 
 import java.util.List;
 
@@ -18,8 +19,10 @@ import java.util.List;
 public class ListviewAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<RoomModel> mData;
+    private Context context;
 
     public ListviewAdapter(Context context, List<RoomModel> data) {
+        this.context = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mData = data;
     }
@@ -44,7 +47,7 @@ public class ListviewAdapter extends BaseAdapter {
         if (convertView == null) {
             ViewHolder vh = new ViewHolder();
             convertView = mInflater.inflate(R.layout.roomitem, parent, false);
-            vh.icon = (ImageView) convertView.findViewById(R.id.room_imageview);
+            vh.icon = (NetworkImageView) convertView.findViewById(R.id.room_imageview);
             vh.price = (TextView) convertView.findViewById(R.id.room_textview1);
             vh.area = (TextView) convertView.findViewById(R.id.room_textview2);
             convertView.setTag(vh);
@@ -56,29 +59,9 @@ public class ListviewAdapter extends BaseAdapter {
 
         //need fix random image to roomlist
         //vh.icon.setImageBitmap(null);
-        Integer icon = R.drawable.room1;
-        int r = (int)(Math.random()*4);
-        switch(r){
-            case 0:
-                break;
-            case 1:
-                icon = R.drawable.room2;
-                break;
-            case 2:
-                icon = R.drawable.room3;
-                break;
-            case 3:
-                icon = R.drawable.room4;
-                break;
-            default:
-                break;
-        }
-        try {
-            vh.icon.setImageResource(icon);
-        }
-        catch(OutOfMemoryError e){
-            vh.icon.setImageBitmap(null);
-        }
+
+        vh.icon.setImageUrl(item.images[0], VolleySingleton.getInstance().getImageLoader());
+
         vh.price.setText(item.securityDeposit + "/" + item.monthPrice);
         vh.area.setText("" + item.area);
 
@@ -87,9 +70,8 @@ public class ListviewAdapter extends BaseAdapter {
     }
 
     private static class ViewHolder {
-        public ImageView icon;
+        public NetworkImageView icon;
         public TextView price;
         public TextView area;
-
     }
 }

@@ -15,7 +15,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.sabang.sp.api.RoomModel;
+import com.sabang.sp.api.VolleySingleton;
 
 import java.io.Serializable;
 
@@ -27,11 +29,12 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
     int location;
 
 
-    public int[] mRes = new int[]{
+    String[] mRes;
+    /*public int[] mRes = new int[]{
             R.drawable.room1, R.drawable.room2, R.drawable.room3, R.drawable.room4
 
 
-    };
+    };*/
 
     /**
      * Called when the activity is first created.
@@ -43,6 +46,25 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mapimageview = (ImageView) findViewById(R.id.mapimageview);
+
+
+        Intent intent = getIntent();
+
+        Serializable temp = (Serializable) intent.getSerializableExtra("roomModel");
+
+        RoomModel room = (RoomModel) temp;
+
+        location = room.area;
+        String price = "" + room.securityDeposit + "/" + ((RoomModel) temp).monthPrice;
+
+        changeimage(location);
+        TextView roomPrice = (TextView) findViewById(R.id.room_price);
+        roomPrice.setText(price);
+        mRes = room.images;
+
+
+
+
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         ImageAdapter adapter2 = new ImageAdapter();
@@ -59,18 +81,6 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
         });
         toolbar.setTitleTextColor(Color.WHITE);
 
-        Intent intent = getIntent();
-
-        Serializable temp = (Serializable) intent.getSerializableExtra("roomModel");
-
-        RoomModel room = (RoomModel) temp;
-
-        location = ((RoomModel) temp).area;
-        String price = "" + ((RoomModel) temp).securityDeposit + "/" + ((RoomModel) temp).monthPrice;
-
-        changeimage(location);
-        TextView roomPrice = (TextView) findViewById(R.id.room_price);
-        roomPrice.setText(price);
     }
 
     // View.OnTouchListener의 abstract method
@@ -89,8 +99,11 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
+            /*
             ImageView imageView = new ImageView(getApplicationContext());
-            imageView.setImageResource(mRes[position]);
+            imageView.setImageResource(mRes[position]);*/
+            NetworkImageView imageView = new NetworkImageView(getApplicationContext());
+            imageView.setImageUrl(mRes[position], VolleySingleton.getInstance().getImageLoader());
             ((ViewPager) container).addView(imageView, 0);
             return imageView;
         }

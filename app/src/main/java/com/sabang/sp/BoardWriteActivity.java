@@ -40,7 +40,27 @@ public class BoardWriteActivity extends AppCompatActivity {
         intent = getIntent();
 
         mTextView = (TextView)findViewById(R.id.email);
-        mTextView.setText(intent.getStringExtra("email"));
+        String email = intent.getStringExtra("email");
+
+        int length = email.length();
+        if(length < 8){
+            if(length == 3){
+                int n0 = email.charAt(0)-'A';
+                int n1 = email.charAt(1)-'A';
+                int n2 = email.charAt(2)-'A';
+                int a = (n0+n1+n2)%52;
+                email += ('A'+a);
+                length++;
+            }
+
+            while(length<8){
+                email += "*";
+                length++;
+            }
+        }
+
+        String hide = email.substring(0, length-4)+"****";
+        mTextView.setText(hide);
 
 
     }
