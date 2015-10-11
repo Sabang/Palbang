@@ -64,9 +64,9 @@ public class ListviewAdapter2 extends BaseAdapter{
         catch(OutOfMemoryError e){
             vh.icon.setImageBitmap(null);
         }
-        vh.title.setText(item.title);
-        vh.name.setText(    "제품명　:　"+item.name);
-        vh.price.setText(   "가　격　:　"+item.price+" 만");
+        vh.title.setText(""+item.title);
+        vh.name.setText(""+item.name);
+        vh.price.setText(""+item.price+" 만");
         vh.date.setText(item.year + "." + item.month + "." + item.day);
 
         return convertView;

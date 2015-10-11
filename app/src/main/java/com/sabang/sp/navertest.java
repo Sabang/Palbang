@@ -1,8 +1,8 @@
 package com.sabang.sp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,10 +11,23 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginDefine;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
+import com.sabang.sp.api.BaseModel;
+import com.sabang.sp.api.UserRequest;
+import com.sabang.sp.common.SPLog;
+
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+
+import java.io.StringReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /// 네이버 아이디로 로그인 샘플앱
 /**
@@ -129,7 +142,10 @@ public class navertest extends AppCompatActivity {
                 long expiresAt = mOAuthLoginInstance.getExpiresAt(mContext);
                 String tokenType = mOAuthLoginInstance.getTokenType(mContext);
 
-                ((Activity)mContext).finish();
+                new RequestApiTask().execute();
+
+
+                //((Activity)mContext).finish();
 
                 //mOauthAT.setText(accessToken);
                 //mOauthRT.setText(refreshToken);
@@ -143,6 +159,56 @@ public class navertest extends AppCompatActivity {
             }
         };
     };
+
+    private static class RequestApiTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected void onPreExecute() {
+        }
+        @Override
+        protected String doInBackground(Void... params) {
+            // String url = "https://apis.naver.com/nidlogin/nid/getHashId_v2.xml";
+
+            String url="";
+            String at="";
+            try {
+                url = "https://openapi.naver.com/v1/nid/getUserProfile.xml";
+                at = mOAuthLoginInstance.getAccessToken(mContext);
+
+                return mOAuthLoginInstance.requestApi(mContext, at, url);
+            }
+            catch (Exception e){
+            }
+
+            return "";
+        }
+        protected void onPostExecute(String content) {
+            //mApiResultText.setText((String) content);
+            try {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document document = builder.parse(new InputSource(new StringReader(content)));
+                //텍스트가 한번더 감싸져잇어서 getFirstChild로 한번더 벗겨줌
+                String email = (document.getElementsByTagName("email").item(0).getFirstChild().getNodeValue());
+                email = email.substring(0,email.length()-10);
+
+
+                UserRequest.newInstance(email, new Response.Listener<BaseModel>() {
+                    @Override
+                    public void onResponse(BaseModel response) {
+                        SPLog.d("success");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        SPLog.e(error.toString());
+                    }
+                }).send();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 
   /*  public void onButtonClick(View v) throws Throwable {
 

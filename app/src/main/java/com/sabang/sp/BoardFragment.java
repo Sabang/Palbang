@@ -137,15 +137,15 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
         //in server
         //id, area(0~5), security, monthly, image
-        BoardDatas.add(new BoardData(0, "a@a.com", 2015, 10,8,1, R.drawable.board1, "카메라", 25,"카메라 싸게판다"));
-        BoardDatas.add(new BoardData(1, "a@a.com", 2015, 10,12,1, R.drawable.board2, "이어폰", 7,"카메라 싸게판다"));
-        BoardDatas.add(new BoardData(2, "a@a.com", 2015, 9,8,2, R.drawable.board3, "그릇", 10,"카메라 싸게판다"));
-        BoardDatas.add(new BoardData(3, "a@a.com", 2015, 12,8,3, R.drawable.board4, "건조대", 0,"카메라 싸게판다"));
-        BoardDatas.add(new BoardData(4, "a@a.com", 2015, 10,8,1, R.drawable.board5, "재사용 봉투", 1,"카메라 싸게판다"));
-        BoardDatas.add(new BoardData(5, "a@a.com", 2015, 10,38,1, R.drawable.board1, "카메라", 25,"카메라 싸게판다"));
-        BoardDatas.add(new BoardData(6, "a@a.com", 2015, 7,22,1, R.drawable.board2,"이어폰", 10,"카메라 싸게판다"));
-        BoardDatas.add(new BoardData(7, "a@a.com", 2015, 4,9,1, R.drawable.board3,"그릇", 10,"카메라 싸게판다"));
-        BoardDatas.add(new BoardData(8, "a@a.com", 2015, 4,21,1, R.drawable.board1, "카메라", 25,"카메라 싸게판다"));
+        BoardDatas.add(new BoardData(0, "a1a2a3a4", 2015, 10,8,1, R.drawable.board1, "카메라", 25,"카메라 싸게판다"));
+        BoardDatas.add(new BoardData(1, "asdf", 2015, 10,12,1, R.drawable.board2, "이어폰", 7,"저 귀지없음"));
+        BoardDatas.add(new BoardData(2, "1124qwe", 2015, 9,8,2, R.drawable.board3, "그릇", 10,"반짞빤짞"));
+        BoardDatas.add(new BoardData(3, "ahgn", 2015, 12,8,3, R.drawable.board4, "건조대", 0,"햇볕 쩅쨍"));
+        BoardDatas.add(new BoardData(4, "4ay5", 2015, 10,8,1, R.drawable.board5, "재사용 봉투", 1,"ㅆㄺㅆㄺ"));
+        BoardDatas.add(new BoardData(5, "cxbv", 2015, 10,38,1, R.drawable.board1, "카메라", 25,"카메라 더 싸게판다"));
+        BoardDatas.add(new BoardData(6, "ah4", 2015, 7,22,1, R.drawable.board2,"이어폰", 10,"최고급 이어폰 급처"));
+        BoardDatas.add(new BoardData(7, "h6m", 2015, 4,9,1, R.drawable.board3,"그릇", 10,"그릇 3개 팝니다"));
+        BoardDatas.add(new BoardData(8, "57m", 2015, 4,21,1, R.drawable.board1, "카메라", 25,"카메라 급처"));
 
     }
 

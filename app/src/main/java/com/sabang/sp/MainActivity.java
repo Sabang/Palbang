@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity{
     MyAdapter adapter;
     ViewPager viewpager;
     Context mContext;
-    String email;
+
     //bug
     // need to fix tabLayout.getTabAt(0).setIcon(R.drawable.main_on);
     boolean bug = true;
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity{
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 Document document = builder.parse(new InputSource(new StringReader(content)));
                 //텍스트가 한번더 감싸져잇어서 getFirstChild로 한번더 벗겨줌
-                email = (document.getElementsByTagName("email").item(0).getFirstChild().getNodeValue());
+                String email = (document.getElementsByTagName("email").item(0).getFirstChild().getNodeValue());
 
 
                 Intent intent = new Intent(MainActivity.this, BoardWriteActivity.class);
@@ -218,7 +218,16 @@ public class MainActivity extends AppCompatActivity{
 
 
     public void showDialog(){
-        SearchFilterDialog dialog = new SearchFilterDialog(this, getSearchFilterData(), new SearchFilterDialog.ICustomDialogEventListener() {
+        /*SearchFilterDialog dialog = new SearchFilterDialog(this, getSearchFilterData(), new SearchFilterDialog.ICustomDialogEventListener() {
+            @Override
+            public void customDialogEvent() {
+                Intent intent = new Intent("Dialog");
+                sendBroadcast(intent);
+            }
+        });
+        dialog.show();*/
+
+        testDialog dialog = new testDialog(this, getSearchFilterData(), new testDialog.ICustomDialogEventListener() {
             @Override
             public void customDialogEvent() {
                 Intent intent = new Intent("Dialog");

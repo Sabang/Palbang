@@ -42,21 +42,48 @@
                     android:layout_weight="2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/room_textview1"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="left|center_vertical"
-                        android:textSize="18dp"/>
-                    <TextView
-                        android:id="@+id/room_textview2"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:textStyle="bold"
+                            android:text="보증금"
+                            android:gravity="left|center_vertical"
+                            android:textSize="18dp"/>
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/room_textview1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:textSize="18dp"/>
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="left|center_vertical"
-                        android:textSize="18dp" />
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="월세"
+                            android:gravity="left|center_vertical"
+                            android:textStyle="bold"
+                            android:textSize="18dp"/>
+                        <TextView
+                            android:layout_marginLeft="10dp"
+                            android:id="@+id/room_textview2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:textSize="18dp" />
+                    </LinearLayout>
                 </LinearLayout>
                 <ImageView
                     android:id="@+id/roomItemMap"

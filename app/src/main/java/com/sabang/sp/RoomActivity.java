@@ -55,16 +55,27 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
         RoomModel room = (RoomModel) temp;
 
         location = room.area;
-        String price = "" + room.securityDeposit + "/" + ((RoomModel) temp).monthPrice;
-
         changeimage(location);
+
+
         TextView roomPrice = (TextView) findViewById(R.id.room_price);
+        String price = "" + room.securityDeposit + "/" + ((RoomModel) temp).monthPrice;
         roomPrice.setText(price);
+
+        //제곱미터 ÷ 3.3058 = 평수
+        TextView roomSize = (TextView) findViewById(R.id.room_size);
+        double p = Double.parseDouble(String.format("%.1f", room.size/3.3058));
+        String size = "" + room.size+"m²("+p+"평)";
+        roomSize.setText(size);
+
+        TextView roomTerm = (TextView) findViewById(R.id.room_term);
+        roomTerm.setText(room.term + "개월");
+
+
+
+
+
         mRes = room.images;
-
-
-
-
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         ImageAdapter adapter2 = new ImageAdapter();

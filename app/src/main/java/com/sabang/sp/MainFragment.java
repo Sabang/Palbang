@@ -212,17 +212,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
         for (int i = 0; i < original.size(); i++) {
             RoomModel temp = original.get(i);
             if(isFiltered(temp, filter) == true) {
-                RoomModel room = new RoomModel();
-                //image
-                room.images = new String[temp.images.length];
-                for(int j=0;j<room.images.length;j++){
-                    room.images[j] = temp.images[j];
-                }
-                room.area = temp.area;
-                room.monthPrice = temp.monthPrice;
-                room.securityDeposit = temp.securityDeposit;
-
-                result.add(room);
+                result.add(temp);
             }
         }
 

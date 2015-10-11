@@ -65,12 +65,42 @@ public class ListviewAdapter extends BaseAdapter {
 
         vh.icon.setImageUrl(item.images[0], VolleySingleton.getInstance().getImageLoader());
 
-        vh.securityDeposit.setText("보증금　:　" + item.securityDeposit);
-        vh.monthPrice.setText(      "월　세　:　" +item.monthPrice);
-        vh.hashTag.setText("#애완동물　#베란다　#햇빛");
+        vh.securityDeposit.setText(""+item.securityDeposit);
+        vh.monthPrice.setText(""+item.monthPrice);
 
-        if(true){
-            vh.mapImageView.setImageResource(R.drawable.first_zone_map);
+        String hash = "";
+        if( !(item.hash1 == null || item.hash1.equals("")) ){
+          hash += "#"+item.hash1+"　";
+        }
+        if( !(item.hash2 == null || item.hash2.equals("")) ){
+            hash += "#"+item.hash2+"　";
+        }
+        if( !(item.hash3 == null || item.hash3.equals("")) ){
+            hash += "#"+item.hash3+"　";
+        }
+        vh.hashTag.setText(hash);
+
+        switch(item.area){
+            case 0:
+                vh.mapImageView.setImageResource(R.drawable.first_zone_map);
+                break;
+            case 1:
+                vh.mapImageView.setImageResource(R.drawable.second_zone_map);
+                break;
+            case 2:
+                vh.mapImageView.setImageResource(R.drawable.third_zone_map);
+                break;
+            case 3:
+                vh.mapImageView.setImageResource(R.drawable.fourth_zone_map);
+                break;
+            case 4:
+                vh.mapImageView.setImageResource(R.drawable.fifth_zone_map);
+                break;
+            case 5:
+                vh.mapImageView.setImageResource(R.drawable.sixth_zone_map);
+                break;
+            default:
+                break;
         }
 
         return convertView;
