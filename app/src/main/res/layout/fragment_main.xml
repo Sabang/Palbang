@@ -13,6 +13,11 @@
         android:layout_height="match_parent"
         android:layout_gravity="left|top">
 
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
         <ListView
             android:id="@+id/listview_room"
             android:layout_width="match_parent"

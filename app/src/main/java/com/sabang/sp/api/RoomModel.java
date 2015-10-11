@@ -20,4 +20,5 @@ public class RoomModel implements Serializable{
     public boolean microwave;
     public boolean twoRoom;
     public int area;
+    public String[] images;
 }

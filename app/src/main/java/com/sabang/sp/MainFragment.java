@@ -20,8 +20,10 @@ import android.widget.ListView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
 import com.sabang.sp.api.RoomModel;
 import com.sabang.sp.api.RoomRequest;
+import com.sabang.sp.api.VolleySingleton;
 import com.sabang.sp.common.SPLog;
 
 import java.util.ArrayList;
@@ -107,8 +109,6 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
         RoomRequest.newInstance(new Response.Listener<RoomRequest.Model>() {
             @Override
             public void onResponse(RoomRequest.Model model) {
-                SPLog.d(model.rooms.get(2).detail);
-                SPLog.d(model.rooms.get(2).term);
 
                 mRooms.clear();
 
@@ -170,6 +170,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
         mSwipeRefresh = (SwipeRefreshLayout)activity.findViewById(R.id.fragmentMain_layout);
         mSwipeRefresh.setOnRefreshListener(this);
         mSwipeRefresh.setColorSchemeColors(Color.RED, Color.RED, Color.RED, Color.RED);
+
     }
 
 
@@ -334,8 +335,6 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
         RoomRequest.newInstance(new Response.Listener<RoomRequest.Model>() {
             @Override
             public void onResponse(RoomRequest.Model model) {
-                SPLog.d(model.rooms.get(2).detail);
-                SPLog.d(model.rooms.get(2).term);
 
                 mRooms.clear();
 
@@ -345,6 +344,14 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
                 filtering(mFilteredRooms, mRooms, mFilterData);
                 //if(change is exist) -> notify~() run.
                 mAdapter.notifyDataSetChanged();
+
+
+
+                //TODO: REMOVE
+                NetworkImageView test = (NetworkImageView) getActivity().findViewById(R.id.test);
+                SPLog.d(model.rooms.get(0).images[0]);
+                test.setImageUrl(model.rooms.get(0).images[0], VolleySingleton.getInstance().getImageLoader());
+
             }
         }, new Response.ErrorListener() {
             @Override
