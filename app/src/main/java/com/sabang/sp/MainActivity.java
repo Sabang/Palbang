@@ -3,6 +3,7 @@ package com.sabang.sp;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -14,10 +15,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 import com.sabang.sp.common.SPLog;
 
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+
+import java.io.StringReader;
 import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -35,6 +44,8 @@ public class MainActivity extends AppCompatActivity{
     TabLayout tabLayout;
     MyAdapter adapter;
     ViewPager viewpager;
+    Context mContext;
+    String email;
     //bug
     // need to fix tabLayout.getTabAt(0).setIcon(R.drawable.main_on);
     boolean bug = true;
@@ -44,6 +55,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        mContext = this;
 
         searchFilterData = new SearchFilterData();
         boardDatas = new ArrayList<>();
@@ -52,7 +64,6 @@ public class MainActivity extends AppCompatActivity{
 
         View settingFragment = (View) getLayoutInflater().
                 inflate(R.layout.fragment_setting, null);
-        mOAuthLoginButton = (OAuthLoginButton)settingFragment.findViewById(R.id.buttonOAuthLoginImg);
 
         /*if(mOAuthLoginButton == null)
             SPLog.d("");
@@ -138,17 +149,71 @@ public class MainActivity extends AppCompatActivity{
                         return true;
 
                     case R.id.action_write:
-                        Intent intent = new Intent(MainActivity.this, BoardWriteActivity.class);
 
-                        startActivityForResult(intent, BOARD_WRITE);
-                        return true;
-                }
+
+                        mOAuthLoginInstance = navertest.getLoginInstance();
+
+
+                        if(mOAuthLoginInstance == null){
+
+                            Intent intent2 = new Intent(MainActivity.this, navertest.class);
+                            startActivity(intent2);
+                        }
+
+                        else{
+                            new RequestApiTask().execute();
+
+
+                        }
+                    return true;
+            }
                 return false;
             }
         });
 
     }
 
+    private static OAuthLogin mOAuthLoginInstance;
+    private class RequestApiTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected void onPreExecute() {
+        }
+        @Override
+        protected String doInBackground(Void... params) {
+            // String url = "https://apis.naver.com/nidlogin/nid/getHashId_v2.xml";
+
+            String url="";
+            String at="";
+            try {
+                url = "https://openapi.naver.com/v1/nid/getUserProfile.xml";
+                at = mOAuthLoginInstance.getAccessToken(mContext);
+
+                return mOAuthLoginInstance.requestApi(mContext, at, url);
+            }
+            catch (Exception e){
+            }
+
+            return "";
+        }
+        protected void onPostExecute(String content) {
+            //mApiResultText.setText((String) content);
+            try {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document document = builder.parse(new InputSource(new StringReader(content)));
+                //텍스트가 한번더 감싸져잇어서 getFirstChild로 한번더 벗겨줌
+                email = (document.getElementsByTagName("email").item(0).getFirstChild().getNodeValue());
+
+
+                Intent intent = new Intent(MainActivity.this, BoardWriteActivity.class);
+                intent.putExtra("email", email);
+                startActivityForResult(intent, BOARD_WRITE);
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 
 
     public void showDialog(){

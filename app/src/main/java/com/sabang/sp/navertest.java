@@ -2,9 +2,10 @@ package com.sabang.sp;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -15,14 +16,6 @@ import com.nhn.android.naverlogin.OAuthLoginDefine;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-
-import java.io.StringReader;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 /// 네이버 아이디로 로그인 샘플앱
 /**
  * <br/> OAuth2.0 인증을 통해 Access Token을 발급받는 예제, 연동해제하는 예제,
@@ -30,7 +23,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * @author naver
  *
  */
-public class navertest extends Activity {
+public class navertest extends AppCompatActivity {
 
     private static final String TAG = "OAuthSampleActivity";
     private static String OAUTH_CLIENT_ID = "w9jtNkiVROYyQ8TbzKGo";
@@ -63,6 +56,16 @@ public class navertest extends Activity {
 
         mContext = this;
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        toolbar.setTitleTextColor(Color.WHITE);
 
         initData();
         initView();
@@ -83,7 +86,6 @@ public class navertest extends Activity {
     }
 
     private void initView() {
-        mApiResultText = (TextView) findViewById(R.id.api_result_text);
 
         //mOauthAT = (TextView) findViewById(R.id.oauth_access_token);
         //mOauthRT = (TextView) findViewById(R.id.oauth_refresh_token);
@@ -126,6 +128,9 @@ public class navertest extends Activity {
                 String refreshToken = mOAuthLoginInstance.getRefreshToken(mContext);
                 long expiresAt = mOAuthLoginInstance.getExpiresAt(mContext);
                 String tokenType = mOAuthLoginInstance.getTokenType(mContext);
+
+                ((Activity)mContext).finish();
+
                 //mOauthAT.setText(accessToken);
                 //mOauthRT.setText(refreshToken);
                 //mOauthExpires.setText(String.valueOf(expiresAt));
@@ -139,8 +144,8 @@ public class navertest extends Activity {
         };
     };
 
-    public void onButtonClick(View v) throws Throwable {
-/*
+  /*  public void onButtonClick(View v) throws Throwable {
+
         switch (v.getId()) {
             case R.id.buttonOAuth: {
                 mOAuthLoginInstance.startOauthLoginActivity(navertest.this, mOAuthLoginHandler);
@@ -165,7 +170,7 @@ public class navertest extends Activity {
             }
             default:
                 break;
-        }*/
+        }
     }
 
 
@@ -224,5 +229,5 @@ public class navertest extends Activity {
         protected void onPostExecute(String res) {
             updateView();
         }
-    }
+    }*/
 }

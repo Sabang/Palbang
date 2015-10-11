@@ -49,6 +49,7 @@ public class ListviewAdapter2 extends BaseAdapter{
             ViewHolder vh = new ViewHolder();
             convertView = mInflater.inflate(R.layout.boarditem, parent, false);
             vh.icon = (ImageView)convertView.findViewById(R.id.board_imageview);
+            vh.title = (TextView)convertView.findViewById(R.id.board_textview0);
             vh.price = (TextView)convertView.findViewById(R.id.board_textview1);
             vh.date = (TextView)convertView.findViewById(R.id.board_textview2);
             vh.back = (LinearLayout)convertView.findViewById(R.id.boarditem_background);
@@ -64,6 +65,7 @@ public class ListviewAdapter2 extends BaseAdapter{
         catch(OutOfMemoryError e){
             vh.icon.setImageBitmap(null);
         }
+        vh.title.setText(item.title);
         vh.price.setText(item.name + " / " + item.price);
         vh.date.setText(item.year + "." + item.month + "." + item.day);
         if(item.state ==1){
@@ -82,6 +84,7 @@ public class ListviewAdapter2 extends BaseAdapter{
         public ImageView icon;
         public TextView price;
         public TextView date;
+        public TextView title;
         public LinearLayout back;
     }
 }

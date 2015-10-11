@@ -11,15 +11,15 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="left|top">
+        android:layout_gravity="left|top"
+        android:background="#dcdcdc">
 
         <ListView
             android:id="@+id/listview_room"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="#888888"
-            android:dividerHeight="1.5dp"
-            android:choiceMode="singleChoice"></ListView>
+            android:choiceMode="singleChoice"
+            android:divider="@null"></ListView>
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
