@@ -14,6 +14,6 @@ public class UserRequest extends BaseRequest<BaseModel> {
     }
 
     private UserRequest(Response.Listener<BaseModel> listener, Response.ErrorListener errorListener) {
-        super(Method.POST, "http://hanyang24.vps.phps.kr:8080/user/", BaseModel.class, listener, errorListener);
+        super(Method.POST, "http://hanyang24.vps.phps.kr/user/", BaseModel.class, listener, errorListener);
     }
 }
