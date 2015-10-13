@@ -77,17 +77,8 @@ public class SettingFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
 
         Switch switch1 = (Switch)rootView.findViewById(R.id.switch1);
-        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecking) {
-                String str = String.valueOf(isChecking);
-                if (isChecking) {
-                    mainActivity.showDialog();
-                } else {
-                    Toast.makeText(getActivity(), "OFF", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        switch1.setOnCheckedChangeListener(myListener);
+        //myListener.onCheckedChanged();
 
         Button naverTest = (Button) rootView.findViewById(R.id.button_naverTest);
         naverTest.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +95,19 @@ public class SettingFragment extends Fragment {
     }
 
 
+    CompoundButton.OnCheckedChangeListener myListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+
+            if (isChecked) {
+                mainActivity.showDialog();
+            } else {
+                Toast.makeText(getActivity(), "OFF", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    };
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
