@@ -206,7 +206,7 @@ public class SearchFilterDialog extends Dialog
     public void getDataCheckBox(){
 
 
-        //data의 구역별 boolean값을 읽어서 0~5구역이 visible인지 invisible인지 설정해줌
+
         firstImageView.setVisibility((data.check_A) ? View.VISIBLE : View.INVISIBLE);
         secondImageView.setVisibility((data.check_B) ? View.VISIBLE : View.INVISIBLE);
         thirdImageView.setVisibility((data.check_C) ? View.VISIBLE : View.INVISIBLE);

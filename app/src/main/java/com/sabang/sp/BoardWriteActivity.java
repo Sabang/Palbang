@@ -1,5 +1,6 @@
 package com.sabang.sp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +22,7 @@ public class BoardWriteActivity extends AppCompatActivity {
     Bundle extra;
     Intent intent;
 
+    Activity activity;
     TextView mTextView;
 
     @Override
@@ -27,6 +30,7 @@ public class BoardWriteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board_write);
 
+        activity = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
@@ -63,17 +67,11 @@ public class BoardWriteActivity extends AppCompatActivity {
 
         String hide = email.substring(0, length-4)+"****";
         mTextView.setText(hide);
-
-
-
-    }
-
-    public void onClick(View view){
-        switch (view.getId())
-        {
-            case R.id.enroll:
-                SPLog.d("a");
-                EditText edittitle = (EditText) findViewById(R.id.title);
+        Button bt = (Button)findViewById(R.id.enroll);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText edittitle = (EditText) findViewById(R.id.board_title);
                 String title = edittitle.getText().toString();
                 EditText editcontent = (EditText) findViewById(R.id.content);
                 String content = editcontent.getText().toString();
@@ -82,28 +80,21 @@ public class BoardWriteActivity extends AppCompatActivity {
                 EditText editCost = (EditText)findViewById(R.id.cost);
                 String cost = editCost.getText().toString();
 
-
-                SPLog.d("b");
-
                 if (title.equals("")){
-                    Toast toast = Toast.makeText(this, "제목을 입력해주세요.",Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(activity, "제목을 입력해주세요.",Toast.LENGTH_SHORT);
                     toast.show();
-                    break;
                 }
                 else if (content.equals("")){
-                    Toast toast = Toast.makeText(this, "내용을 입력해주세요.",Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(activity, "내용을 입력해주세요.",Toast.LENGTH_SHORT);
                     toast.show();
-                    break;
                 }
                 else if (name.equals("")){
-                    Toast toast = Toast.makeText(this, "물품명을 입력해주세요.",Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(activity, "물품명을 입력해주세요.",Toast.LENGTH_SHORT);
                     toast.show();
-                    break;
                 }
                 else if (cost.equals("")){
-                    Toast toast = Toast.makeText(this, "가격을 입력해주세요.",Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(activity, "가격을 입력해주세요.",Toast.LENGTH_SHORT);
                     toast.show();
-                    break;
                 }
 
                 else{
@@ -116,18 +107,27 @@ public class BoardWriteActivity extends AppCompatActivity {
                     extra.putSerializable("data", bd);
                     intent.putExtras(extra);
 
-                    this.setResult(RESULT_OK, intent); // 성공했다는 결과값을 보내면서 데이터 꾸러미를 지고 있는 intent를 함께 전달한다.
+                    activity.setResult(RESULT_OK, intent); // 성공했다는 결과값을 보내면서 데이터 꾸러미를 지고 있는 intent를 함께 전달한다.
 
-                    this.finish();
-                    break;
+                    finish();
                 }
+
+            }
+        });
+    }
+
+    /*
+    public void onClick(View view){
+        switch (view.getId())
+        {
+            case R.id.enroll:
 
 
         }
 
 
 
-    }
+    }*/
 
 
 

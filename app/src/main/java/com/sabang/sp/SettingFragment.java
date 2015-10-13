@@ -2,18 +2,21 @@ package com.sabang.sp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 
 /**
@@ -30,7 +33,8 @@ public class SettingFragment extends Fragment {
     private ArrayList<String> mChildListContent = null;
 
     private OnFragmentInteractionListener mListener;
-    private static Activity activity;
+
+    MainActivity mainActivity;
 
 
     /**
@@ -70,13 +74,15 @@ public class SettingFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
 
+        mainActivity = (MainActivity) getActivity();
+
         Switch switch1 = (Switch)rootView.findViewById(R.id.switch1);
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecking) {
                 String str = String.valueOf(isChecking);
                 if (isChecking) {
-                    Toast.makeText(getActivity(), "ON", Toast.LENGTH_SHORT).show();
+                    mainActivity.showDialog();
                 } else {
                     Toast.makeText(getActivity(), "OFF", Toast.LENGTH_SHORT).show();
                 }
@@ -99,14 +105,6 @@ public class SettingFragment extends Fragment {
 
 
 
-
-
-
-
-
-
-
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -117,7 +115,6 @@ public class SettingFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.activity = activity;
     }
 
     @Override
