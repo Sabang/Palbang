@@ -72,6 +72,14 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
         roomTerm.setText(room.term + "개월");
 
 
+        TextView floor = (TextView) findViewById(R.id.room_floor);
+        int iFloor = room.floor;
+        if(iFloor == -1){
+            floor.setText("지하 1층");
+        }
+        else{
+            floor.setText(iFloor +"층");
+        }
 
 
 
