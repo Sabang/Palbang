@@ -102,7 +102,7 @@ public class BoardWriteActivity extends AppCompatActivity {
                     SPLog.d("c");
                     //bf.boardDatas.add(new BoardData(2, 0, 2015, 9,8,2, R.drawable.board3, "그릇", 10,"카메라 싸게판다 zgzgz"));
                     String email = mTextView.getText().toString();
-                    BoardData bd = new BoardData(1, email, "", R.drawable.board3, "그릇", cost,title,content);
+                    BoardData bd = new BoardData(1, email, "", R.drawable.board3, name, cost,title,content);
 
                     extra.putSerializable("data", bd);
                     intent.putExtras(extra);

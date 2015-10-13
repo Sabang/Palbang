@@ -16,27 +16,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="8">
+        android:weightSum="12">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/round"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="제목"
-                android:padding="11dp"
-                android:textSize="11pt"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
                 android:textStyle="bold"/>
             <EditText
                 android:id="@+id/board_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
                 android:background="@null"/>
 
         </LinearLayout>
@@ -44,38 +50,42 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/round">
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="작성자"
-                android:padding="11dp"
-                android:textSize="11pt"
-
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
                 android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="90dp"
-                android:layout_height="wrap_content"
-
-                android:id="@+id/email"
-                android:padding="11dp"
-                android:textSize="11pt"/>
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
+                android:id="@+id/email"/>
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="날짜"
-                android:padding="11dp"
-                android:textSize="11pt"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="2015.11.21"
-                android:padding="11dp"
-                android:textSize="8pt"/>
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"/>
 
         </LinearLayout>
         <LinearLayout
@@ -83,86 +93,87 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_margin="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/round">
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="물품명"
-                android:padding="11dp"
-                android:textSize="11pt"
-
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
                 android:textStyle="bold"/>
             <EditText
                 android:id="@+id/name"
-                android:layout_width="90dp"
+                android:layout_width="120dp"
                 android:layout_height="match_parent"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
                 android:background="@null"/>
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="가격"
-                android:padding="11dp"
-                android:textSize="11pt"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
                 android:textStyle="bold"/>
             <EditText
                 android:id="@+id/cost"
-                android:layout_width="90dp"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:hint="만원"
-                android:textSize="11pt"/>
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"/>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"
-            android:layout_margin="8dp"
+            android:layout_weight="7"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/round">
             <EditText
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|left"
-                android:padding="13dp"
+                android:padding="8dp"
+                android:textSize="16dp"
                 android:background="@null"/>
 
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingBottom="3dp"
+            android:layout_weight="2"
+            android:padding="15dp"
             android:gravity="center">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:padding="8dp"
+                android:textSize="16dp"
                 android:text="사진첨부"
-                android:layout_marginRight="3dp"
-                android:textSize="10pt"/>
+                android:layout_marginRight="3dp"/>
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:padding="8dp"
+                android:textSize="16dp"
                 android:text="등록"
-                android:id="@+id/enroll"
-                android:textSize="10pt"/>
+                android:id="@+id/enroll"/>
 
         </LinearLayout>
-
-
-
-
-
-
-
-
-
-
 
 
     </LinearLayout>
