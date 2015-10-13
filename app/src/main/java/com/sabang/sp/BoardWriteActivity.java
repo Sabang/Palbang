@@ -103,9 +103,6 @@ public class BoardWriteActivity extends AppCompatActivity {
                 }
 
 
-            case R.id.cancel:
-                finish();
-                break;
         }
 
 
