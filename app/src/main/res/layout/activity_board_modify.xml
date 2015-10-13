@@ -128,13 +128,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:paddingBottom="3dp"
             android:gravity="center">
-
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="수정"
+                android:textSize="10pt"
                 android:id="@+id/enroll"/>
 
         </LinearLayout>
