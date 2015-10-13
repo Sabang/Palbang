@@ -32,8 +32,20 @@ public class BoardContentActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         BoardData data = (BoardData)intent.getSerializableExtra("BoardItem");
+
         TextView boardTitle = (TextView)findViewById(R.id.board_title);
         boardTitle.setText(data.title);
+        TextView boardEmail = (TextView)findViewById(R.id.board_email);
+        boardEmail.setText(data.email);
+        TextView boardDate = (TextView)findViewById(R.id.board_date);
+        boardDate.setText(data.date);
+        TextView boardContents = (TextView)findViewById(R.id.board_content);
+        boardContents.setText(data.contents);
+        TextView boardName = (TextView)findViewById(R.id.board_name);
+        boardName.setText(data.name);
+        TextView boardCost = (TextView)findViewById(R.id.board_cost);
+        boardCost.setText(data.price);
+
 
     }
 

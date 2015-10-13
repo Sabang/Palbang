@@ -67,7 +67,7 @@ public class ListviewAdapter2 extends BaseAdapter{
         vh.title.setText(""+item.title);
         vh.name.setText(""+item.name);
         vh.price.setText(""+item.price+" 만");
-        vh.date.setText(item.year + "." + item.month + "." + item.day);
+        vh.date.setText(item.date);
 
         return convertView;
     }

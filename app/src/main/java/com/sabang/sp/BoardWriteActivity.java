@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sabang.sp.common.SPLog;
+
 public class BoardWriteActivity extends AppCompatActivity {
 
 
@@ -63,18 +65,25 @@ public class BoardWriteActivity extends AppCompatActivity {
         mTextView.setText(hide);
 
 
+
     }
 
     public void onClick(View view){
         switch (view.getId())
         {
             case R.id.enroll:
-
+                SPLog.d("a");
                 EditText edittitle = (EditText) findViewById(R.id.title);
                 String title = edittitle.getText().toString();
                 EditText editcontent = (EditText) findViewById(R.id.content);
                 String content = editcontent.getText().toString();
+                EditText editName = (EditText) findViewById(R.id.name);
+                String name = editName.getText().toString();
+                EditText editCost = (EditText)findViewById(R.id.cost);
+                String cost = editCost.getText().toString();
 
+
+                SPLog.d("b");
 
                 if (title.equals("")){
                     Toast toast = Toast.makeText(this, "제목을 입력해주세요.",Toast.LENGTH_SHORT);
@@ -86,13 +95,24 @@ public class BoardWriteActivity extends AppCompatActivity {
                     toast.show();
                     break;
                 }
+                else if (name.equals("")){
+                    Toast toast = Toast.makeText(this, "물품명을 입력해주세요.",Toast.LENGTH_SHORT);
+                    toast.show();
+                    break;
+                }
+                else if (cost.equals("")){
+                    Toast toast = Toast.makeText(this, "가격을 입력해주세요.",Toast.LENGTH_SHORT);
+                    toast.show();
+                    break;
+                }
 
                 else{
 
+                    SPLog.d("c");
                     //bf.boardDatas.add(new BoardData(2, 0, 2015, 9,8,2, R.drawable.board3, "그릇", 10,"카메라 싸게판다 zgzgz"));
                     String email = mTextView.getText().toString();
+                    BoardData bd = new BoardData(1, email, "", R.drawable.board3, "그릇", cost,title,content);
 
-                    BoardData bd = new BoardData(2, email, 2015,9,8,2, R.drawable.board3, "그릇", 10,"카메라 싸게판다 zgzgz");
                     extra.putSerializable("data", bd);
                     intent.putExtras(extra);
 
@@ -108,6 +128,7 @@ public class BoardWriteActivity extends AppCompatActivity {
 
 
     }
+
 
 
 

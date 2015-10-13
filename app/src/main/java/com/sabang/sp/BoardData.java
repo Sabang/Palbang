@@ -8,26 +8,22 @@ import java.io.Serializable;
 public class BoardData implements Serializable{
     public int id;
     public String email;
-    public int year;
-    public int month;
-    public int day;
-    public int state ; //1 selling 2 sold 3 free
+    public String date;
     public int icon;
     public String name;
-    public int price;
+    public String price;
     public String title;
+    public String contents;
 
 
-    public BoardData(int id, String email, int year, int month, int day, int state, int Image, String name, int price,String title){
+    public BoardData(int id, String email, String date, int Image, String name, String price,String title,String contents){
         this.id = id;
         this.email = email;
-        this.year = year;
-        this.month = month;
-        this.day = day;
-        this.state = state; //1 selling 2 sold 3 free
-        icon = Image;
+        this.date = date;
+        this.icon = Image;
         this.name = name;
         this.price = price;
         this.title = title;
+        this.contents = contents;
     }
 }
