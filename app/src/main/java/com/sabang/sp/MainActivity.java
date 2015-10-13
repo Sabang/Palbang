@@ -3,6 +3,7 @@ package com.sabang.sp;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
@@ -218,23 +220,19 @@ public class MainActivity extends AppCompatActivity{
 
 
     public void showDialog(){
-        /*SearchFilterDialog dialog = new SearchFilterDialog(this, getSearchFilterData(), new SearchFilterDialog.ICustomDialogEventListener() {
+        SearchFilterDialog dialog = new SearchFilterDialog(this, getSearchFilterData(), new SearchFilterDialog.ICustomDialogEventListener() {
             @Override
             public void customDialogEvent() {
                 Intent intent = new Intent("Dialog");
                 sendBroadcast(intent);
             }
         });
-        dialog.show();*/
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        testDialog dialog = new testDialog(this, getSearchFilterData(), new testDialog.ICustomDialogEventListener() {
-            @Override
-            public void customDialogEvent() {
-                Intent intent = new Intent("Dialog");
-                sendBroadcast(intent);
-            }
-        });
         dialog.show();
+
+
     }
 
     //return search filter data
