@@ -2,6 +2,7 @@ package com.sabang.sp;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -99,6 +100,15 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
             }
         });
         toolbar.setTitleTextColor(Color.WHITE);
+
+        //전화하기
+        Button call_button = (Button)findViewById(R.id.room_call);
+        call_button.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent("android.intent.action.DIAL", Uri.parse("tel:031-409-0500")));
+            }
+        });
 
     }
 
