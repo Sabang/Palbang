@@ -270,6 +270,8 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
             case 5:
                 if(!filter.check_F) {   pass = false;   }
                 break;
+            default:
+                pass = false;
         }   //end switch
 
 

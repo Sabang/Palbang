@@ -27,23 +27,4 @@
             android:divider="@null"></ListView>
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:src="@drawable/ic_to_map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:pressedTranslationZ="12dp"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_gravity="right|bottom"
-        app:fabSize="normal"/>
-    <Button
-        android:id="@+id/button_search_filter"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:text="검색 필터링"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="20dp"/>
-
-
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -72,34 +72,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:weightSum="3"
                 android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="2">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textStyle="bold"
-                        android:text="가격"
-                        android:gravity="left|center_vertical"
-                        android:textSize="16dp"/>
-                    <TextView
-                        android:layout_marginLeft="10dp"
-                        android:id="@+id/board_textview2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="left|center_vertical"
-                        android:textSize="16dp"/>
-                </LinearLayout>
+                    android:textStyle="bold"
+                    android:text="가격"
+                    android:gravity="left|center_vertical"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/board_textview2"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center_vertical"
+                    android:singleLine="true"
+                    android:textSize="16dp"/>
                 <TextView
                     android:id="@+id/board_textview3"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="right|bottom"
+                    android:singleLine="true"
                     android:textSize="14dp"/>
             </LinearLayout>
 

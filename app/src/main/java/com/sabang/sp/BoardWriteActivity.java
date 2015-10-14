@@ -15,6 +15,9 @@ import android.widget.Toast;
 
 import com.sabang.sp.common.SPLog;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 public class BoardWriteActivity extends AppCompatActivity {
 
 
@@ -102,7 +105,13 @@ public class BoardWriteActivity extends AppCompatActivity {
                     SPLog.d("c");
                     //bf.boardDatas.add(new BoardData(2, 0, 2015, 9,8,2, R.drawable.board3, "그릇", 10,"카메라 싸게판다 zgzgz"));
                     String email = mTextView.getText().toString();
-                    BoardData bd = new BoardData(1, email, "", R.drawable.board3, name, cost,title,content);
+
+                    // 현재 시간
+                    Date date = new Date(System.currentTimeMillis());
+                    SimpleDateFormat CurDateFormat = new SimpleDateFormat("yyyy.MM.dd");
+                    String sDate = CurDateFormat.format(date);
+
+                    BoardData bd = new BoardData(1, email, sDate, R.drawable.board3, name, cost,title,content);
 
                     extra.putSerializable("data", bd);
                     intent.putExtras(extra);
