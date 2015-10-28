@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-
+        <item name="android:textCursorDrawable">@null</item>
     </style>
 
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
@@ -43,12 +43,12 @@
     </style>
 
     <style name="EditText">
-    <item name="android:paddingLeft">8sp</item>
-    <item name="android:paddingTop">0sp</item>
-    <item name="android:paddingBottom">0sp</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:textSize">14sp</item>
-    <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">8sp</item>
+        <item name="android:paddingTop">0sp</item>
+        <item name="android:paddingBottom">0sp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
 

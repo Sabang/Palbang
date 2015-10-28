@@ -85,28 +85,36 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
 
         //관리비
         TextView roomManagement = (TextView) findViewById(R.id.room_management);
-        roomManagement.setText(room.management_cost+"");
+        roomManagement.setText(room.managementCost+"");
 
         //구조
         TextView roomStructure = (TextView) findViewById(R.id.room_structure);
         String structure = "";
         if(room.veranda == 1)   structure += "베란다ㅇ, ";
         if(room.kitchen == 1)   structure += "부엌분리형, ";
+        else                    structure += "부엌일체형, ";
+        if(room.twoRoom == 1)   structure += "투룸, ";
         structure = removeLastTwo(structure);
         roomStructure.setText(structure);
 
         //가구
         TextView roomFur = (TextView) findViewById(R.id.room_furniture);
         String furniture = "";
-        furniture += "침대, ";
+        if(room.bed == 1)   furniture += "침대, ";
+        if(room.desk == 1)  furniture += "책상, ";
+
         furniture = removeLastTwo(furniture);
         roomFur.setText(furniture);
 
         //가전기기
         TextView roomGadget = (TextView) findViewById(R.id.room_gadget);
         String gadget = "";
-        if(room.tv == 1)        gadget += "TV, ";
-        if(room.microwave == 1) gadget += "전자레인지, ";
+        if(room.tv == 1)            gadget += "TV, ";
+        if(room.microwave == 1)     gadget += "전자레인지, ";
+        if(room.airConditioner == 1)gadget += "에어컨, ";
+        if(room.washer == 1)        gadget += "세탁기, ";
+        if(room.fireType == 1)      gadget += "가스레인지, ";
+        else                        gadget += "쿡탑(인덕션), ";
         gadget += "냉장고, ";
         gadget = removeLastTwo(gadget);
         roomGadget.setText(gadget);
@@ -190,22 +198,22 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
 
     public void changeimage(int x) {
         switch (x) {
-            case 0:
+            case 1:
                 mapimageview.setImageResource(R.drawable.first_zone_map);
                 break;
-            case 1:
+            case 2:
                 mapimageview.setImageResource(R.drawable.second_zone_map);
                 break;
-            case 2:
+            case 3:
                 mapimageview.setImageResource(R.drawable.third_zone_map);
                 break;
-            case 3:
+            case 4:
                 mapimageview.setImageResource(R.drawable.fourth_zone_map);
                 break;
-            case 4:
+            case 5:
                 mapimageview.setImageResource(R.drawable.fifth_zone_map);
                 break;
-            case 5:
+            case 6:
                 mapimageview.setImageResource(R.drawable.sixth_zone_map);
                 break;
         }

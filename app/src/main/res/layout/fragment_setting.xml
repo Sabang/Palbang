@@ -17,5 +17,14 @@
         android:textOff="Off"
         android:checked="false"
         />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/company_info1"
+        android:textStyle="bold"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/company_info2"/>
 
 </LinearLayout>

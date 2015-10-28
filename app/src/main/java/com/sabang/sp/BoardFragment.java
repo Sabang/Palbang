@@ -3,6 +3,7 @@ package com.sabang.sp;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -83,14 +84,15 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         mAdapter = new ListviewAdapter2(getActivity(), searchedDatas);
         listView.setAdapter(mAdapter);
 
+        final EditText searchEditText = (EditText)activity.findViewById(R.id.editText);
+        searchEditText.getBackground().setColorFilter(Color.rgb(198,198,198), PorterDuff.Mode.SRC_ATOP);
         //검색버튼 눌렀을때
         Button searchButton = (Button) activity.findViewById(R.id.button_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText searchTextView = (EditText)activity.findViewById(R.id.editText);
-                String thing = searchTextView.getText().toString();
-                searchTextView.setText("");
+                String thing = searchEditText.getText().toString();
+                searchEditText.setText("");
                 searchedDatas.clear();
                 for(int i=0;i<boardDatas.size();i++){
                     BoardData temp = boardDatas.get(i);

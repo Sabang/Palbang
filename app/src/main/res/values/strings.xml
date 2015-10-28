@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SP</string>
+    <string name="app_name">사방팔방</string>
 
     <string name="action_settings">설정</string>
     <string name="title_activity_login">로그인</string>
@@ -30,5 +30,8 @@
     <string name="title_activity_sold">판매완료</string>
 
     <string name="hello_world">Hello world!</string>
+
+    <string name="company_info1">상호명 : 한양21공인중개사\nTEL : (031) 409-0500</string>
+    <string name="company_info2">대표 : 김상아\n주소 : 경기도 안산시 상록구 한양 대학로 38-1 (사동 1570-5)\n등록번호 : 가3690-공3006</string>
 
 </resources>

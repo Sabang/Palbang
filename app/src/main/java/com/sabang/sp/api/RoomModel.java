@@ -7,11 +7,15 @@ import java.io.Serializable;
  */
 public class RoomModel extends BaseModel implements Serializable{
     public int size;
-    public int management_cost;
+    public int managementCost;
     public int floor;
     public int securityDeposit;
     public int monthPrice;
-    public int pet;
+    public int airConditioner;
+    public int washer;
+    public int bed;
+    public int fireType;
+    public int desk;
     public String term;
     public String detail;
     public String hash1;

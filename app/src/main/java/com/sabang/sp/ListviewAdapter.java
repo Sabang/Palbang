@@ -81,22 +81,22 @@ public class ListviewAdapter extends BaseAdapter {
         vh.hashTag.setText(hash);
 
         switch(item.area){
-            case 0:
+            case 1:
                 vh.mapImageView.setImageResource(R.drawable.first_zone_map);
                 break;
-            case 1:
+            case 2:
                 vh.mapImageView.setImageResource(R.drawable.second_zone_map);
                 break;
-            case 2:
+            case 3:
                 vh.mapImageView.setImageResource(R.drawable.third_zone_map);
                 break;
-            case 3:
+            case 4:
                 vh.mapImageView.setImageResource(R.drawable.fourth_zone_map);
                 break;
-            case 4:
+            case 5:
                 vh.mapImageView.setImageResource(R.drawable.fifth_zone_map);
                 break;
-            case 5:
+            case 6:
                 vh.mapImageView.setImageResource(R.drawable.sixth_zone_map);
                 break;
             default:

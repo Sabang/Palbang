@@ -9,7 +9,7 @@ public class UserRequest extends BaseRequest<BaseModel> {
 
     public static UserRequest newInstance(String userId, Response.Listener<BaseModel> listener, Response.ErrorListener errorListener){
         UserRequest re = new UserRequest(listener, errorListener);
-        re.mBuilder.addTextBody("user_id", userId, UTF_8_TEXT_PLAIN);
+        re.mBuilder.addTextBody("user", userId, UTF_8_TEXT_PLAIN);
         return re;
     }
 
