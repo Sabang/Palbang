@@ -80,15 +80,6 @@ public class SettingFragment extends Fragment {
         switch1.setOnCheckedChangeListener(myListener);
         //myListener.onCheckedChanged();
 
-        Button naverTest = (Button) rootView.findViewById(R.id.button_naverTest);
-        naverTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //naver test
-                Intent intent = new Intent(getActivity(), navertest.class);
-                startActivity(intent);
-            }
-        });
 
 
         return rootView;

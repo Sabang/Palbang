@@ -46,6 +46,27 @@ public class BoardContentActivity extends AppCompatActivity {
         TextView boardCost = (TextView)findViewById(R.id.board_cost);
         boardCost.setText(data.price);
 
+        /*  맨뒤 *로바꾸기
+    String email = item.id;
+    int length = email.length();
+    if(length < 8){
+        if(length == 3){
+            int n0 = email.charAt(0)-'A';
+            int n1 = email.charAt(1)-'A';
+            int n2 = email.charAt(2)-'A';
+            int a = (n0+n1+n2)%52;
+            email += ('A'+a);
+            length++;
+        }
+
+        while(length<8){
+            email += "*";
+            length++;
+        }
+    }
+
+    String hide = email.substring(0, length-4)+"****";*/
+
 
     }
 

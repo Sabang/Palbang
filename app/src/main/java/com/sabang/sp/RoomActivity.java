@@ -65,14 +65,15 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
 
         //제곱미터 ÷ 3.3058 = 평수
         TextView roomSize = (TextView) findViewById(R.id.room_size);
-        double p = Double.parseDouble(String.format("%.1f", room.size/3.3058));
-        String size = "" + room.size+"m²("+p+"평)";
+        double m = Double.parseDouble(String.format("%.1f", room.size*3.3058));
+        String size = "" + room.size+"평("+m+"m²)";
         roomSize.setText(size);
 
+        //계약기간
         TextView roomTerm = (TextView) findViewById(R.id.room_term);
-        roomTerm.setText(room.term + "개월");
+        roomTerm.setText(room.term);
 
-
+        //층수
         TextView floor = (TextView) findViewById(R.id.room_floor);
         int iFloor = room.floor;
         if(iFloor == -1){
@@ -82,6 +83,37 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
             floor.setText(iFloor +"층");
         }
 
+        //관리비
+        TextView roomManagement = (TextView) findViewById(R.id.room_management);
+        roomManagement.setText(room.management_cost+"");
+
+        //구조
+        TextView roomStructure = (TextView) findViewById(R.id.room_structure);
+        String structure = "";
+        if(room.veranda == 1)   structure += "베란다ㅇ, ";
+        if(room.kitchen == 1)   structure += "부엌분리형, ";
+        structure = removeLastTwo(structure);
+        roomStructure.setText(structure);
+
+        //가구
+        TextView roomFur = (TextView) findViewById(R.id.room_furniture);
+        String furniture = "";
+        furniture += "침대, ";
+        furniture = removeLastTwo(furniture);
+        roomFur.setText(furniture);
+
+        //가전기기
+        TextView roomGadget = (TextView) findViewById(R.id.room_gadget);
+        String gadget = "";
+        if(room.tv == 1)        gadget += "TV, ";
+        if(room.microwave == 1) gadget += "전자레인지, ";
+        gadget += "냉장고, ";
+        gadget = removeLastTwo(gadget);
+        roomGadget.setText(gadget);
+
+        //상세정보
+        TextView roomInfo = (TextView) findViewById(R.id.room_information);
+        roomInfo.setText(room.detail);
 
 
         mRes = room.images;
@@ -112,6 +144,13 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
 
     }
 
+    public String removeLastTwo(String str){
+        //맨뒤쉼표없애기 ㅜ
+        int length = str.length();
+        if(length != 0)
+            str = str.substring(0,length-2);
+        return str;
+    }
     // View.OnTouchListener의 abstract method
     // flipper 터지 이벤트 리스너
     class ImageAdapter extends PagerAdapter {

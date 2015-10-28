@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.Window;
 
 import com.nhn.android.naverlogin.OAuthLogin;
-import com.nhn.android.naverlogin.ui.view.OAuthLoginButton;
 import com.sabang.sp.common.SPLog;
 
 import org.w3c.dom.Document;
@@ -33,7 +32,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class MainActivity extends AppCompatActivity{
 
-    private OAuthLoginButton mOAuthLoginButton;
 
 
 
@@ -47,6 +45,7 @@ public class MainActivity extends AppCompatActivity{
     MyAdapter adapter;
     ViewPager viewpager;
     Context mContext;
+
 
     //bug
     // need to fix tabLayout.getTabAt(0).setIcon(R.drawable.main_on);

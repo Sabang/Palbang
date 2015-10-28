@@ -2,7 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    tools:context=".RoomActivity">
+    tools:context=".RoomActivity"
+    android:fillViewport="false"
+    android:id="@+id/activity_room">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -94,6 +96,26 @@
                             android:id="@+id/room_price" />
 
                     </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="#ffffff"
+                            android:text="@string/management_cost"
+                            />
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="11"
+                            android:background="#ffffff"
+                            android:id="@+id/room_management" />
+
+                    </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -126,7 +148,7 @@
                             android:gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="#ffffff"
-                            android:text="@string/option1"
+                            android:text="@string/floor"
                             android:layout_width="match_parent" />
                         <TextView
                             android:id="@+id/room_floor"
@@ -138,6 +160,48 @@
                             android:text=""
                             android:layout_width="match_parent" />
                     </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="#ffffff"
+                            android:text="@string/structure"
+                            android:layout_width="match_parent" />
+                        <TextView
+                            android:id="@+id/room_structure"
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="11"
+                            android:background="#ffffff"
+                            android:text=""
+                            android:layout_width="match_parent" />
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="#ffffff"
+                            android:text="@string/furniture"
+                            android:layout_width="match_parent" />
+                        <TextView
+                            android:id="@+id/room_furniture"
+                            android:textColor="@android:color/black"
+                            android:layout_margin="1dp"
+                            android:gravity="center_horizontal"
+                            android:layout_weight="11"
+                            android:background="#ffffff"
+                            android:text=""
+                            android:layout_width="match_parent" />
+                    </TableRow>
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -148,9 +212,9 @@
                             android:gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="#ffffff"
-                            android:text="@string/option2"
-                            />
+                            android:text="@string/gadget" />
                         <TextView
+                            android:id="@+id/room_gadget"
                             android:textColor="@android:color/black"
                             android:layout_margin="1dp"
                             android:gravity="center_horizontal"
@@ -169,9 +233,10 @@
                             android:gravity="center_horizontal"
                             android:layout_weight="1"
                             android:background="#ffffff"
-                            android:text="@string/option3"
+                            android:text="@string/information"
                             />
                         <TextView
+                            android:id="@+id/room_information"
                             android:textColor="@android:color/black"
                             android:layout_margin="1dp"
                             android:gravity="center_horizontal"

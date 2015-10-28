@@ -18,26 +18,4 @@
         android:checked="false"
         />
 
-    <Button
-        android:id="@+id/button_naverTest"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="#00ff00"
-        android:text="naver test"/>
-
-    <ExpandableListView
-        android:id="@+id/evl1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:text="원하는 방 옵션 설정"
-        android:groupIndicator="@null"
-        />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="계정관리"
-        />
-
 </LinearLayout>

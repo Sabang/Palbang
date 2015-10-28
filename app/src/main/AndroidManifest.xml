@@ -43,10 +43,6 @@
             android:label="@string/title_activity_board_write" >
         </activity>
         <activity
-            android:name=".MapActivity"
-            android:label="지도" >
-        </activity>
-        <activity
             android:name=".RoomActivity"
             android:label="방 보기" >
         </activity>

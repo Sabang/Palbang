@@ -13,12 +13,16 @@
     <string name="title_fragment_setting">설정</string>
 
 
-    <string name="option1">층수</string>
-    <string name="option2">옵션2</string>
-    <string name="option3">옵션3</string>
+
+    <string name="structure">구조</string>
+    <string name="floor">층수</string>
+    <string name="gadget">가전기기</string>
+    <string name="furniture">가구</string>
+    <string name="information">상세정보</string>
     <string name="room_size">방 크기</string>
     <string name="room_price">방 가격</string>
     <string name="contract_term">계약기간</string>
+    <string name="management_cost">관리비</string>
 
     <string name="title_dialog_search_filter">검색 조건</string>
     <string name="title_activity_navertest">navertest</string>

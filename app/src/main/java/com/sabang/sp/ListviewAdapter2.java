@@ -65,6 +65,9 @@ public class ListviewAdapter2 extends BaseAdapter{
             vh.icon.setImageBitmap(null);
         }
         vh.title.setText(""+item.title);
+
+
+
         vh.name.setText(""+item.name);
         vh.price.setText(""+item.price+" 만");
         vh.date.setText(item.date);

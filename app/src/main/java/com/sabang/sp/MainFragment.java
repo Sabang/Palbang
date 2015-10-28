@@ -142,26 +142,7 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
         listView.setAdapter(mAdapter);
 
 
-       /* FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MapActivity.class);
-                getActivity().startActivityForResult(intent, 10);
-            }
-        });
 
-        Button button_search_filter = (Button) getActivity().findViewById(R.id.button_search_filter);
-
-        //make dialog to search filter
-        button_search_filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-*/
 
         mSwipeRefresh = (SwipeRefreshLayout)activity.findViewById(R.id.fragmentMain_layout);
         mSwipeRefresh.setOnRefreshListener(this);
