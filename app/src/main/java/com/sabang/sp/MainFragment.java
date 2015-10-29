@@ -233,22 +233,22 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
 
         //check by area
         switch(room.area){
-            case 0:
+            case 1:
                 if(!filter.check_A){    pass = false;   }
                 break;
-            case 1:
+            case 2:
                 if(!filter.check_B) {   pass = false;   }
                 break;
-            case 2:
+            case 3:
                 if(!filter.check_C) {   pass = false;   }
                 break;
-            case 3:
+            case 4:
                 if(!filter.check_D) {   pass = false;   }
                 break;
-            case 4:
+            case 5:
                 if(!filter.check_E) {   pass = false;   }
                 break;
-            case 5:
+            case 6:
                 if(!filter.check_F) {   pass = false;   }
                 break;
             default:

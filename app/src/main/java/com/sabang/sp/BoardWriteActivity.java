@@ -4,19 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.sabang.sp.api.BaseModel;
+import com.sabang.sp.api.BoardWriteRequest;
+import com.sabang.sp.common.DisableEnableControler;
 import com.sabang.sp.common.SPLog;
-
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 
 public class BoardWriteActivity extends AppCompatActivity {
 
@@ -27,6 +28,8 @@ public class BoardWriteActivity extends AppCompatActivity {
 
     Activity activity;
     TextView mTextView;
+
+    final int REQ_CODE_SELECT_IMAGE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +56,44 @@ public class BoardWriteActivity extends AppCompatActivity {
 
 
         mTextView.setText(email);
+
+        Button imageButton = (Button)findViewById(R.id.boardWriteImage);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,REQ_CODE_SELECT_IMAGE);
+            }
+        });
+
+
         Button bt = (Button)findViewById(R.id.enroll);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText edittitle = (EditText) findViewById(R.id.board_title);
+                DisableEnableControler.call(false, getWindow());
+                BoardWriteRequest.newInstance("kbjb7535","싸게 접시 팝니다","싸게싸게싸게팝니다 학교앞","50","접시",new Response.Listener<BaseModel>() {
+                    @Override
+                    public void onResponse(BaseModel response) {
+                        SPLog.d("success");
+                        DisableEnableControler.call(true, getWindow());
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        SPLog.e(error.toString());
+                        DisableEnableControler.call(true, getWindow());
+                    }
+                }).send();
+
+
+
+
+
+
+                /*EditText edittitle = (EditText) findViewById(R.id.board_title);
                 String title = edittitle.getText().toString();
                 EditText editcontent = (EditText) findViewById(R.id.content);
                 String content = editcontent.getText().toString();
@@ -102,13 +138,19 @@ public class BoardWriteActivity extends AppCompatActivity {
                     activity.setResult(RESULT_OK, intent); // 성공했다는 결과값을 보내면서 데이터 꾸러미를 지고 있는 intent를 함께 전달한다.
 
                     finish();
-                }
+                }*/
 
             }
         });
     }
 
-    /*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+    }
+/*
     public void onClick(View view){
         switch (view.getId())
         {

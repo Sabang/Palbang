@@ -259,22 +259,22 @@ public class MainActivity extends AppCompatActivity{
                     searchFilterData.check_E = false;
                     searchFilterData.check_F = false;
                     switch (area) {
-                        case 0:
+                        case 1:
                             searchFilterData.check_A = true;
                             break;
-                        case 1:
+                        case 2:
                             searchFilterData.check_B = true;
                             break;
-                        case 2:
+                        case 3:
                             searchFilterData.check_C = true;
                             break;
-                        case 3:
+                        case 4:
                             searchFilterData.check_D = true;
                             break;
-                        case 4:
+                        case 5:
                             searchFilterData.check_E = true;
                             break;
-                        case 5:
+                        case 6:
                             searchFilterData.check_F = true;
                             break;
                         default:
