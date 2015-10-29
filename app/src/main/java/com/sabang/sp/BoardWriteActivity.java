@@ -2,6 +2,7 @@ package com.sabang.sp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
@@ -148,6 +150,24 @@ public class BoardWriteActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if(requestCode==REQ_CODE_SELECT_IMAGE){
+            if(resultCode==Activity.RESULT_OK){
+                try{
+                    //Uri에서 이미지이름을 가져오기
+                    //String name_Str = getImageNameToUri(data.getData());
+
+
+                    //이미지 데이터를 비트맵으로 가져오기
+                    Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),data.getData());
+
+                    ImageView imageView  = (ImageView)findViewById(R.id.boardWrite_ImageView);
+                    imageView.setImageBitmap(image_bitmap);
+                }
+                catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
 
     }
 /*
