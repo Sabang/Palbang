@@ -15,7 +15,7 @@
         android:background="#ffffff"
         android:translationZ="4dp">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/board_imageview"
             android:layout_width="0dp"
             android:layout_height="match_parent"

@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.sabang.sp.api.BoardModel;
+
 
 public class BoardContentActivity extends AppCompatActivity {
 
@@ -31,20 +33,20 @@ public class BoardContentActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.WHITE);
 
         Intent intent = getIntent();
-        BoardData data = (BoardData)intent.getSerializableExtra("BoardItem");
+        BoardModel data = (BoardModel)intent.getSerializableExtra("BoardItem");
 
         TextView boardTitle = (TextView)findViewById(R.id.board_title);
         boardTitle.setText(data.title);
         TextView boardEmail = (TextView)findViewById(R.id.board_email);
-        boardEmail.setText(data.email);
+        boardEmail.setText(data.users.user);
         TextView boardDate = (TextView)findViewById(R.id.board_date);
         boardDate.setText(data.date);
         TextView boardContents = (TextView)findViewById(R.id.board_content);
-        boardContents.setText(data.contents);
+        boardContents.setText(data.content);
         TextView boardName = (TextView)findViewById(R.id.board_name);
-        boardName.setText(data.name);
+        boardName.setText(data.item);
         TextView boardCost = (TextView)findViewById(R.id.board_cost);
-        boardCost.setText(data.price);
+        boardCost.setText(data.cost);
 
         /*  맨뒤 *로바꾸기
     String email = item.id;

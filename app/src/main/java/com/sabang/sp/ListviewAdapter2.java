@@ -5,8 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.volley.toolbox.NetworkImageView;
+import com.sabang.sp.api.BoardModel;
+import com.sabang.sp.api.VolleySingleton;
 
 import java.util.ArrayList;
 
@@ -15,10 +18,10 @@ import java.util.ArrayList;
  */
 public class ListviewAdapter2 extends BaseAdapter{
     private LayoutInflater mInflater;
-    private ArrayList<BoardData> mData;
+    private ArrayList<BoardModel> mData;
 
 
-    public ListviewAdapter2(Context context, ArrayList<BoardData> data){
+    public ListviewAdapter2(Context context, ArrayList<BoardModel> data){
         mInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mData = data;
     }
@@ -46,7 +49,7 @@ public class ListviewAdapter2 extends BaseAdapter{
         if(convertView==null){
             ViewHolder vh = new ViewHolder();
             convertView = mInflater.inflate(R.layout.boarditem, parent, false);
-            vh.icon = (ImageView)convertView.findViewById(R.id.board_imageview);
+            vh.icon = (NetworkImageView)convertView.findViewById(R.id.board_imageview);
             vh.title = (TextView)convertView.findViewById(R.id.board_textview0);
             vh.name = (TextView)convertView.findViewById(R.id.board_textview1);
             vh.price = (TextView)convertView.findViewById(R.id.board_textview2);
@@ -55,11 +58,14 @@ public class ListviewAdapter2 extends BaseAdapter{
             convertView.setTag(vh);
         }
 
-        BoardData item = (BoardData) getItem(position);
+        BoardModel item = (BoardModel) getItem(position);
         ViewHolder vh = (ViewHolder) convertView.getTag();
 
         try {
-            vh.icon.setImageResource(item.icon);
+            if(item.images.length == 0)
+                vh.icon.setImageBitmap(null);
+            else
+                vh.icon.setImageUrl(item.images[0], VolleySingleton.getInstance().getImageLoader());
         }
         catch(OutOfMemoryError e){
             vh.icon.setImageBitmap(null);
@@ -68,15 +74,15 @@ public class ListviewAdapter2 extends BaseAdapter{
 
 
 
-        vh.name.setText(""+item.name);
-        vh.price.setText(""+item.price+" 만");
+        vh.name.setText(""+item.item);
+        vh.price.setText(""+item.cost+" 만");
         vh.date.setText(item.date);
 
         return convertView;
     }
 
     private static class ViewHolder {
-        public ImageView icon;
+        public NetworkImageView icon;
         public TextView title;
         public TextView name;
         public TextView price;

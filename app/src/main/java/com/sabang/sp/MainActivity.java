@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.nhn.android.naverlogin.OAuthLogin;
+import com.sabang.sp.api.BoardModel;
 import com.sabang.sp.common.SPLog;
 
 import org.w3c.dom.Document;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity{
 
 
     private SearchFilterData searchFilterData;
-    private ArrayList<BoardData> boardDatas;
+    private ArrayList<BoardModel> boardDatas;
     private static final int BOARD_WRITE = 0;
 
 
@@ -238,7 +239,7 @@ public class MainActivity extends AppCompatActivity{
     public SearchFilterData getSearchFilterData() {
         return searchFilterData;
     }
-    public ArrayList<BoardData> getBoardData(){
+    public ArrayList<BoardModel> getBoardData(){
         return boardDatas;
     }
 
@@ -284,7 +285,7 @@ public class MainActivity extends AppCompatActivity{
 
                 case BOARD_WRITE:
                     SPLog.d("값가져옴!@#$");
-                    BoardData newOne = (BoardData)intent.getExtras().getSerializable("data");
+                    BoardModel newOne = (BoardModel)intent.getExtras().getSerializable("data");
 
                     boardDatas.add(newOne);
                     SPLog.d(boardDatas.get(boardDatas.size()-1).title);

@@ -109,7 +109,7 @@
                 android:gravity="center_vertical"
                 android:textStyle="bold"/>
             <EditText
-                android:id="@+id/name"
+                android:id="@+id/board_name"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:padding="8dp"
@@ -125,7 +125,7 @@
                 android:gravity="center_vertical"
                 android:textStyle="bold"/>
             <EditText
-                android:id="@+id/cost"
+                android:id="@+id/board_cost"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
@@ -138,13 +138,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7"
+            android:layout_weight="6"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/round">
             <EditText
-                android:id="@+id/content"
+                android:id="@+id/board_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="top|left"
@@ -153,19 +153,48 @@
                 android:background="@null"/>
 
         </LinearLayout>
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/round"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="첨부된 파일"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:gravity="center_vertical"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/boardWrite_imageName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:textSize="16dp"
+                android:text="@string/none"
+                android:gravity="center_vertical"
+                android:background="@null"/>
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
             android:padding="15dp"
             android:gravity="center">
 
-            <ImageView
-                android:id="@+id/boardWrite_ImageView"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                />
             <Button
                 android:id="@+id/boardWriteImage"
                 android:layout_width="100dp"

@@ -1,9 +1,11 @@
 package com.sabang.sp.api;
 
+import java.io.Serializable;
+
 /**
  * Created by cyc on 2015-10-29.
  */
-public class BoardModel extends BaseModel {
+public class BoardModel extends BaseModel implements Serializable {
 
     public String[] images;
     public UserModel users;

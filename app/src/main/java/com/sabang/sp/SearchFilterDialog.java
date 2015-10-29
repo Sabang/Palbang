@@ -302,6 +302,8 @@ public class SearchFilterDialog extends Dialog
         img.setDrawingCacheEnabled(true);
         Bitmap hotspots = Bitmap.createBitmap(img.getDrawingCache());
         img.setDrawingCacheEnabled(false);
+        if(x<0) x=0;
+        if(y<0) y=0;
         int temp = hotspots.getPixel(x, y);
         //release bitmap, don't waste memory.
         hotspots.recycle();
