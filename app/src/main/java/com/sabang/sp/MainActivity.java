@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity{
 
                 new RequestApiTask().execute(); //로그인이 성공하면  네이버에 계정값들을 가져온다.
 
+
             } else {
 
                 Toast.makeText(MainActivity.this, "로그인이 취소/실패 하였습니다.!",
@@ -239,8 +240,6 @@ public class MainActivity extends AppCompatActivity{
     private class RequestApiTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
-
-
         }
 
         @Override
@@ -253,6 +252,7 @@ public class MainActivity extends AppCompatActivity{
         }
 
         protected void onPostExecute(Void content) {
+
 
             if (email == null) {
                 Toast.makeText(MainActivity.this,
