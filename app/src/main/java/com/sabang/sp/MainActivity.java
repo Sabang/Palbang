@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity{
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.action_filter:
                         showDialog();
                         return true;
@@ -207,8 +207,8 @@ public class MainActivity extends AppCompatActivity{
                     case R.id.action_write:
                         SPLog.d("Board Write Button 눌림");
 
-                        // access token 이 없는 상태로 로그인 보여 줌
-                        //if (OAuthLoginState.NEED_INIT.equals(OAuthLogin.getInstance().getState(mContext))) {
+                        // email 이 없는 상태면 로그인 보여 줌
+                        if (email.equals("")) {
                             new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("로그인")
                                     .setMessage("네이버 아이디로 로그인 하시겠습니까?")
@@ -223,9 +223,14 @@ public class MainActivity extends AppCompatActivity{
 
                                         }
                                     })
-                        .setNegativeButton(android.R.string.no, null).show();
+                                    .setNegativeButton(android.R.string.no, null).show();
 
-                        //}
+                        } else {
+                            Intent intent = new Intent(mContext, BoardWriteActivity.class);
+                            intent.putExtra("email", email);
+
+                            startActivity(intent);
+                        }
 
 
                         return true;
@@ -254,7 +259,7 @@ public class MainActivity extends AppCompatActivity{
         protected void onPostExecute(Void content) {
 
 
-            if (email == null) {
+            if (email.equals("")) {
                 Toast.makeText(MainActivity.this,
                         "로그인 실패하였습니다.  잠시후 다시 시도해 주세요!!",                 Toast.LENGTH_SHORT)
                         .show();
