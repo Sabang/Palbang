@@ -26,7 +26,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
-import com.nhn.android.naverlogin.data.OAuthLoginState;
 import com.sabang.sp.api.BaseModel;
 import com.sabang.sp.api.BoardModel;
 import com.sabang.sp.api.UserRequest;
@@ -67,9 +66,8 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    //네이버부분 http://ondestroy.tistory.com/category참고
 
-    private static final String TAG = "OAuthSampleActivity";
     private static String OAUTH_CLIENT_ID = "w9jtNkiVROYyQ8TbzKGo";
     private static String OAUTH_CLIENT_SECRET = "2uHCDckP2n";
     private static String OAUTH_CLIENT_NAME = "네이버 아이디로 로그인";
@@ -84,6 +82,26 @@ public class MainActivity extends AppCompatActivity{
         mOAuthLoginInstance = OAuthLogin.getInstance();
         mOAuthLoginInstance.init(mContext, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME);
     }
+
+    static private OAuthLoginHandler mOAuthLoginHandler =new OAuthLoginHandler() {
+        @Override
+        public void run(boolean success) {
+
+            if (success) {
+                SPLog.d("네이버 handler successsssssssss");
+
+            } else {
+                String errorCode = mOAuthLoginInstance.getLastErrorCode(mContext).getCode();
+                String errorDesc = mOAuthLoginInstance.getLastErrorDesc(mContext);
+                Toast.makeText(mContext, "errorCode:" + errorCode
+                        + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT).show();
+            }
+
+
+        };
+    };
+
+
     @Override
     protected void onResume() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -105,8 +123,9 @@ public class MainActivity extends AppCompatActivity{
 
         searchFilterData = new SearchFilterData();
         boardDatas = new ArrayList<>();
-        initLayout();
         initNaver();
+
+        initLayout();
 
 
         View settingFragment = (View) getLayoutInflater().
@@ -199,7 +218,7 @@ public class MainActivity extends AppCompatActivity{
                         SPLog.d("Board Write Button 눌림");
 
                         // access token 이 없는 상태로 로그인 보여 줌
-                        if (OAuthLoginState.NEED_INIT.equals(OAuthLogin.getInstance().getState(mContext))) {
+                        //if (OAuthLoginState.NEED_INIT.equals(OAuthLogin.getInstance().getState(mContext))) {
                             new AlertDialog.Builder(mContext)
                                     .setTitle("로그인")
                                     .setMessage("네이버 아이디로 로그인 하시겠습니까?")
@@ -208,19 +227,22 @@ public class MainActivity extends AppCompatActivity{
 
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             SPLog.d("네이버 로그인 확인 눌림");
-                                            mOAuthLoginInstance.startOauthLoginActivity((Activity) mContext, mOAuthLoginHandler);
+
+                                            mOAuthLoginInstance = OAuthLogin.getInstance();
+                                            mOAuthLoginInstance.init(mContext, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME);
+
+
+                                            mOAuthLoginInstance.startOauthLoginActivity(MainActivity.this, mOAuthLoginHandler);
+                                            /*new RequestApiTask().execute()
+
+                                            Intent intent = new Intent(mContext,BoardWriteActivity.class);
+                                            intent.putExtra("email", email);
+
+                                            startActivity(intent);*/
                                         }
                                     })
                                     .setNegativeButton(android.R.string.no, null).show();
-                        }
-
-                        //로그인 되어잇는상태
-                        new RequestApiTask().execute();
-
-                        Intent intent = new Intent(mContext,BoardWriteActivity.class);
-                        intent.putExtra("email",email);
-
-                        startActivity(intent);
+                        //}
 
 
                         return true;
@@ -236,23 +258,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-    final OAuthLoginHandler mOAuthLoginHandler =new OAuthLoginHandler() {
-        @Override
-        public void run(boolean success) {
-
-            if (success) {
-                SPLog.d("handler successsssssssss");
-
-            } else {
-                String errorCode = mOAuthLoginInstance.getLastErrorCode(mContext).getCode();
-                String errorDesc = mOAuthLoginInstance.getLastErrorDesc(mContext);
-                Toast.makeText(mContext, "errorCode:" + errorCode
-                        + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT).show();
-            }
-
-
-        };
-    };
     private static class RequestApiTask extends AsyncTask<Void, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -276,7 +281,9 @@ public class MainActivity extends AppCompatActivity{
             return "";
         }
         protected void onPostExecute(String content) {
-            //mApiResultText.setText((String) content);
+            //비어있으면 그냥 return
+            if(content.equals(""))
+                return;
             try {
                 SPLog.d("네이버 PostExecute");
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
