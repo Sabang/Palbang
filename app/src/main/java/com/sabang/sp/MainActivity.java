@@ -1,6 +1,5 @@
 package com.sabang.sp;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,30 +15,23 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
-import com.sabang.sp.api.BaseModel;
 import com.sabang.sp.api.BoardModel;
-import com.sabang.sp.api.UserRequest;
-import com.sabang.sp.common.DisableEnableControler;
 import com.sabang.sp.common.SPLog;
 
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.StringReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -73,31 +65,35 @@ public class MainActivity extends AppCompatActivity{
     private static String OAUTH_CLIENT_NAME = "네이버 아이디로 로그인";
 
     private static OAuthLogin mOAuthLoginInstance;
-    private String email;
     private static Context mContext;
 
-    /** UI 요소들 */
+    String email = "";
+    /*String nickname = "";
+    String enc_id = "";
+    String profile_image = "";
+    String age = "";
+    String gender = "";
+    String id = "";
+    String name = "";
+    String birthday = "";*/
 
-    private void initNaver() {
-        mOAuthLoginInstance = OAuthLogin.getInstance();
-        mOAuthLoginInstance.init(mContext, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME);
-    }
+    String accessToken = "";
+    String tokenType;
 
-    static private OAuthLoginHandler mOAuthLoginHandler =new OAuthLoginHandler() {
+    private OAuthLoginHandler mOAuthLoginHandler = new OAuthLoginHandler() {
         @Override
         public void run(boolean success) {
-
             if (success) {
-                SPLog.d("네이버 handler successsssssssss");
+                accessToken = mOAuthLoginInstance.getAccessToken(mContext);
+                tokenType = mOAuthLoginInstance.getTokenType(mContext);
+
+                new RequestApiTask().execute(); //로그인이 성공하면  네이버에 계정값들을 가져온다.
 
             } else {
-                String errorCode = mOAuthLoginInstance.getLastErrorCode(mContext).getCode();
-                String errorDesc = mOAuthLoginInstance.getLastErrorDesc(mContext);
-                Toast.makeText(mContext, "errorCode:" + errorCode
-                        + ", errorDesc:" + errorDesc, Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(MainActivity.this, "로그인이 취소/실패 하였습니다.!",
+                        Toast.LENGTH_SHORT).show();
             }
-
-
         };
     };
 
@@ -110,31 +106,24 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        mContext = this;
 
-        email = "";
+        mContext = getApplicationContext();
+        mOAuthLoginInstance = OAuthLogin.getInstance();
+        mOAuthLoginInstance.init(mContext, OAUTH_CLIENT_ID,
+                OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME);
+
 
         searchFilterData = new SearchFilterData();
         boardDatas = new ArrayList<>();
-        initNaver();
 
         initLayout();
 
 
-        View settingFragment = (View) getLayoutInflater().
-                inflate(R.layout.fragment_setting, null);
-
-        /*if(mOAuthLoginButton == null)
-            SPLog.d("");
-        else
-            SPLog.d("");*/
     }
 
     private void initLayout() {
@@ -219,7 +208,7 @@ public class MainActivity extends AppCompatActivity{
 
                         // access token 이 없는 상태로 로그인 보여 줌
                         //if (OAuthLoginState.NEED_INIT.equals(OAuthLogin.getInstance().getState(mContext))) {
-                            new AlertDialog.Builder(mContext)
+                            new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("로그인")
                                     .setMessage("네이버 아이디로 로그인 하시겠습니까?")
                                     .setIcon(android.R.drawable.ic_dialog_alert)
@@ -228,20 +217,13 @@ public class MainActivity extends AppCompatActivity{
                                         public void onClick(DialogInterface dialog, int whichButton) {
                                             SPLog.d("네이버 로그인 확인 눌림");
 
-                                            mOAuthLoginInstance = OAuthLogin.getInstance();
-                                            mOAuthLoginInstance.init(mContext, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME);
-
-
                                             mOAuthLoginInstance.startOauthLoginActivity(MainActivity.this, mOAuthLoginHandler);
-                                            /*new RequestApiTask().execute()
 
-                                            Intent intent = new Intent(mContext,BoardWriteActivity.class);
-                                            intent.putExtra("email", email);
 
-                                            startActivity(intent);*/
                                         }
                                     })
-                                    .setNegativeButton(android.R.string.no, null).show();
+                        .setNegativeButton(android.R.string.no, null).show();
+
                         //}
 
 
@@ -253,70 +235,121 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    public void setEmail(String email){
-        this.email = email;
-    }
 
-
-    private static class RequestApiTask extends AsyncTask<Void, Void, String> {
+    private class RequestApiTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
-            DisableEnableControler.call(false,((Activity)mContext).getWindow());
+
+
         }
+
         @Override
-        protected String doInBackground(Void... params) {
-            // String url = "https://apis.naver.com/nidlogin/nid/getHashId_v2.xml";
+        protected Void doInBackground(Void... params) {
+            String url = "https://openapi.naver.com/v1/nid/getUserProfile.xml";
+            String at = mOAuthLoginInstance.getAccessToken(mContext);
+            Pasingversiondata(mOAuthLoginInstance.requestApi(mContext, at, url));
 
-            String url="";
-            String at="";
-            try {
-                url = "https://openapi.naver.com/v1/nid/getUserProfile.xml";
-                at = mOAuthLoginInstance.getAccessToken(mContext);
-
-                return mOAuthLoginInstance.requestApi(mContext, at, url);
-            }
-            catch (Exception e){
-            }
-
-            return "";
+            return null;
         }
-        protected void onPostExecute(String content) {
-            //비어있으면 그냥 return
-            if(content.equals(""))
-                return;
+
+        protected void onPostExecute(Void content) {
+
+            if (email == null) {
+                Toast.makeText(MainActivity.this,
+                        "로그인 실패하였습니다.  잠시후 다시 시도해 주세요!!",                 Toast.LENGTH_SHORT)
+                        .show();
+            } else {
+
+                Intent intent = new Intent(mContext,BoardWriteActivity.class);
+                intent.putExtra("email", email);
+
+                startActivity(intent);
+
+            }
+
+        }
+
+        private void Pasingversiondata(String data) { // xml 파싱
+            String f_array[] = new String[9];
+
             try {
-                SPLog.d("네이버 PostExecute");
-                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder builder = factory.newDocumentBuilder();
-                Document document = builder.parse(new InputSource(new StringReader(content)));
-                //텍스트가 한번더 감싸져잇어서 getFirstChild로 한번더 벗겨줌
-                String email = (document.getElementsByTagName("email").item(0).getFirstChild().getNodeValue());
-                email = email.substring(0,email.length()-10);
+                XmlPullParserFactory parserCreator = XmlPullParserFactory
+                        .newInstance();
+                XmlPullParser parser = parserCreator.newPullParser();
+                InputStream input = new ByteArrayInputStream(
+                        data.getBytes("UTF-8"));
+                parser.setInput(input, "UTF-8");
 
-                ((MainActivity)mContext).setEmail(email);
-                SPLog.d(email);
+                int parserEvent = parser.getEventType();
+                String tag;
+                boolean inText = false;
 
-                UserRequest.newInstance(email, new Response.Listener<BaseModel>() {
-                    @Override
-                    public void onResponse(BaseModel response) {
-                        SPLog.d("success");
+                int colIdx = 0;
+
+                while (parserEvent != XmlPullParser.END_DOCUMENT) {
+                    switch (parserEvent) {
+                        case XmlPullParser.START_TAG:
+                            tag = parser.getName();
+                            if (tag.compareTo("xml") == 0) {
+                                inText = false;
+                            } else if (tag.compareTo("data") == 0) {
+                                inText = false;
+                            } else if (tag.compareTo("result") == 0) {
+                                inText = false;
+                            } else if (tag.compareTo("resultcode") == 0) {
+                                inText = false;
+                            } else if (tag.compareTo("message") == 0) {
+                                inText = false;
+                            } else if (tag.compareTo("response") == 0) {
+                                inText = false;
+                            } else {
+                                inText = true;
+
+                            }
+                            break;
+                        case XmlPullParser.TEXT:
+                            if (inText) {
+                                if (parser.getText() == null) {
+                                    f_array[colIdx] = "";
+                                } else {
+                                    f_array[colIdx] = parser.getText().trim();
+                                }
+
+                                colIdx++;
+                            }
+                            inText = false;
+                            break;
+                        case XmlPullParser.END_TAG:
+                            inText = false;
+                            break;
+
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        SPLog.e(error.toString());
-                    }
-                }).send();
-            }
-            catch(Exception e){
-                e.printStackTrace();
+
+                    parserEvent = parser.next();
+                }
+            } catch (Exception e) {
+                Log.e("dd", "Error in network call", e);
             }
 
+            //이메일
+            String temp = f_array[0];
+            email = temp.substring(0,temp.length()-10);
 
-            DisableEnableControler.call(true,((Activity)mContext).getWindow());
+            /*email = f_array[0];
+            nickname = f_array[1];
+            enc_id = f_array[2];
+            profile_image = f_array[3];
+            age = f_array[4];
+            gender = f_array[5];
+            id = f_array[6];
+            name = f_array[7];
+            birthday = f_array[8];*/
 
         }
     }
+
+
+
 
     public void showDialog(){
         SearchFilterDialog dialog = new SearchFilterDialog(this, getSearchFilterData(), new SearchFilterDialog.ICustomDialogEventListener() {
@@ -437,3 +470,37 @@ public class MainActivity extends AppCompatActivity{
     }
 
 }
+
+
+
+
+
+
+//네이버 getProfile parsing하는 소스
+            /*
+            try {
+                DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder builder = factory.newDocumentBuilder();
+                Document document = builder.parse(new InputSource(new StringReader(content)));
+                //텍스트가 한번더 감싸져잇어서 getFirstChild로 한번더 벗겨줌
+                String email = (document.getElementsByTagName("email").item(0).getFirstChild().getNodeValue());
+                email = email.substring(0,email.length()-10);
+
+                ((MainActivity)mContext).setEmail(email);
+                SPLog.d(email);
+
+                UserRequest.newInstance(email, new Response.Listener<BaseModel>() {
+                    @Override
+                    public void onResponse(BaseModel response) {
+                        SPLog.d("success");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        SPLog.e(error.toString());
+                    }
+                }).send();
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }*/
