@@ -43,8 +43,10 @@ public class MainFragment extends Fragment implements FragmentDialogListener, Sw
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             update();
             SPLog.d("#####Broadcast Catch");
+
         }
     };
     @Override

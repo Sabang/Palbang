@@ -3,28 +3,81 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation = "vertical"
+    android:background="#ffffff"
     tools:context="com.sabang.sp.SettingFragment">
 
 
 
     <Switch
+        android:background="@drawable/rectangular"
+        android:textStyle="bold"
+        android:textColor="#747474"
         android:id="@+id/switch1"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:text="푸시알림"
-        android:background="#E9e9e9"
+        android:layout_height="70dp"
+        android:text="푸시알림   ON / OFF"
+        android:paddingLeft="8dp"
+        android:textSize="17dp"
         android:textOn ="On"
         android:textOff="Off"
-        android:checked="false"
-        />
+        android:checked="false"/>
     <TextView
+        android:background="@drawable/rectangular"
+        android:textStyle="bold"
+        android:textColor="#747474"
+        android:id="@+id/setting_pushSetting"
+        android:gravity="left|center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/company_info1"
-        android:textStyle="bold"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/company_info2"/>
+        android:layout_height="70dp"
+        android:text="푸시알림 설정"
+        android:paddingLeft="8dp"
+        android:textSize="17dp"/>
 
+
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/rectangular">
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/naver_white"/>
+        <TextView
+            android:id="@+id/setting_loginState"
+            android:textColor="#747474"
+            android:text="@string/logOff"
+            android:textSize="17dp"
+            android:paddingLeft="7dp"
+            android:gravity="left|center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:paddingBottom="10dp"
+        android:paddingLeft="3dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:textColor="#747474"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/company_info1"
+            android:textStyle="bold"/>
+        <TextView
+            android:textColor="#747474"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/company_info2"/>
+
+
+
+    </LinearLayout>
 </LinearLayout>

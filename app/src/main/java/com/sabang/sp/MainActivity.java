@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity{
     String accessToken = "";
     String tokenType;
 
+
     private OAuthLoginHandler mOAuthLoginHandler = new OAuthLoginHandler() {
         @Override
         public void run(boolean success) {
@@ -175,6 +176,7 @@ public class MainActivity extends AppCompatActivity{
                         break;
                     case 2:
                         toolbar.getMenu().clear();
+                        toolbar.setTitle(R.string.title_fragment_setting);
                         viewpager.setCurrentItem(2);
                         break;
                     default:
@@ -210,9 +212,9 @@ public class MainActivity extends AppCompatActivity{
                         // email 이 없는 상태면 로그인 보여 줌
                         if (email.equals("")) {
                             new AlertDialog.Builder(MainActivity.this)
-                                    .setTitle("로그인")
+                                    .setTitle("글쓰기")
                                     .setMessage("네이버 아이디로 로그인 하시겠습니까?")
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .setIcon(R.drawable.write_grey)
                                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -263,11 +265,17 @@ public class MainActivity extends AppCompatActivity{
                 Toast.makeText(MainActivity.this,
                         "로그인 실패하였습니다.  잠시후 다시 시도해 주세요!!",                 Toast.LENGTH_SHORT)
                         .show();
-            } else {
+            }
+            //requestApi 잘 됐을 때
+            else {
+
+
+
+                Intent broadCast = new Intent("LogOnState");
+                sendBroadcast(broadCast);
 
                 Intent intent = new Intent(mContext,BoardWriteActivity.class);
                 intent.putExtra("email", email);
-
                 startActivity(intent);
 
             }

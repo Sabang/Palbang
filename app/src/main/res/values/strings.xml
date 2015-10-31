@@ -9,7 +9,7 @@
     <string name="title_activity_map">MapActivity</string>
 
     <string name="title_fragment_main">방 찾기</string>
-    <string name="title_fragment_board">게시판</string>
+    <string name="title_fragment_board">중고장터</string>
     <string name="title_fragment_setting">설정</string>
 
 
@@ -36,5 +36,7 @@
 
 
     <string name="none">없음</string>
+
+    <string name="logOff">로그인 되어있지 않음</string>
 
 </resources>

@@ -1,7 +1,10 @@
 package com.sabang.sp;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +19,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sabang.sp.common.SPLog;
+
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
@@ -29,12 +34,10 @@ import java.util.zip.Inflater;
  * create an instance of this fragment.
  */
 public class SettingFragment extends Fragment {
-    private ArrayList<String> mGroupList = null;
-    private ArrayList<ArrayList<String>> mChildList = null;
-    private ArrayList<String> mChildListContent = null;
 
     private OnFragmentInteractionListener mListener;
 
+    View rootView;
     MainActivity mainActivity;
 
 
@@ -65,7 +68,26 @@ public class SettingFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+
+        IntentFilter intentFilter = new IntentFilter("LogOnState");
+        getActivity().registerReceiver(this.broadcastReceiver, intentFilter);
+    }
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String email = mainActivity.email;
+            if(!email.equals("")){
+                TextView tv = (TextView) rootView.findViewById(R.id.setting_loginState);
+                tv.setText(email+"@naver.com");
+            }
+
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,13 +95,24 @@ public class SettingFragment extends Fragment {
 
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
+        rootView = inflater.inflate(R.layout.fragment_setting, container, false);
 
         mainActivity = (MainActivity) getActivity();
 
-        Switch switch1 = (Switch)rootView.findViewById(R.id.switch1);
-        switch1.setOnCheckedChangeListener(myListener);
-        //myListener.onCheckedChanged();
+
+        String email = mainActivity.email;
+        if(!email.equals("")){
+            TextView tv = (TextView) rootView.findViewById(R.id.setting_loginState);
+            tv.setText(email+"@naver.com");
+        }
+
+        TextView tv = (TextView)rootView.findViewById(R.id.setting_pushSetting);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainActivity.showDialog();
+            }
+        });
 
 
 
@@ -93,10 +126,12 @@ public class SettingFragment extends Fragment {
 
 
             if (isChecked) {
-                mainActivity.showDialog();
-            } else {
-                Toast.makeText(getActivity(), "OFF", Toast.LENGTH_SHORT).show();
 
+                //서버로 true 쏴주면됨
+            }
+
+
+            else {
             }
         }
     };
