@@ -76,7 +76,7 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     SPLog.d(model.boards.get(i).toString());
                     boardDatas.add(model.boards.get(i));
                 }
-                mAdapter.notifyDataSetChanged();
+                setSearchedDatas();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -138,15 +138,7 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchedDatas.clear();
-                //검색하기 수정해야함***************************************************
-                for(int i=0;i<boardDatas.size();i++){
-                    BoardModel temp = boardDatas.get(i);
-                    if (temp.users.user.equals("kbjb7535")) {
-                        searchedDatas.add(temp);
-                    }
-                }
-                mAdapter.notifyDataSetChanged();
+                setSearchedDatas();
             }
         });
 
@@ -188,6 +180,17 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     }
 
+    public void setSearchedDatas(){
+        searchedDatas.clear();
+        //검색하기 수정해야함***************************************************
+        for(int i=0;i<boardDatas.size();i++){
+            BoardModel temp = boardDatas.get(i);
+            //if (temp.users.user.equals("kbjb7535")) {
+                searchedDatas.add(temp);
+            //}
+        }
+        mAdapter.notifyDataSetChanged();
+    }
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

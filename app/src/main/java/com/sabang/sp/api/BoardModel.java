@@ -8,10 +8,12 @@ import java.io.Serializable;
 public class BoardModel extends BaseModel implements Serializable {
 
     public String[] images;
-    public UserModel users;
+    public String user;
     public String title;
     public String content;
     public String cost;
     public String item;
     public String date;
+
+    public int id;
 }

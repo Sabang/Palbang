@@ -38,7 +38,7 @@ public class BoardContentActivity extends AppCompatActivity {
         TextView boardTitle = (TextView)findViewById(R.id.board_title);
         boardTitle.setText(data.title);
         TextView boardEmail = (TextView)findViewById(R.id.board_email);
-        boardEmail.setText(data.users.user);
+        boardEmail.setText(data.user);
         TextView boardDate = (TextView)findViewById(R.id.board_date);
         boardDate.setText(data.date);
         TextView boardContents = (TextView)findViewById(R.id.board_content);
