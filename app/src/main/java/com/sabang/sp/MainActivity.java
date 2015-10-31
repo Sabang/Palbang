@@ -15,15 +15,20 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
+import com.sabang.sp.api.BaseModel;
 import com.sabang.sp.api.BoardModel;
+import com.sabang.sp.api.UserRequest;
 import com.sabang.sp.common.SPLog;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -64,10 +69,10 @@ public class MainActivity extends AppCompatActivity{
     private static String OAUTH_CLIENT_SECRET = "2uHCDckP2n";
     private static String OAUTH_CLIENT_NAME = "네이버 아이디로 로그인";
 
-    private static OAuthLogin mOAuthLoginInstance;
-    private static Context mContext;
+    public static OAuthLogin mOAuthLoginInstance;
+    public static Context mContext;
 
-    String email = "";
+    public static String email = "";
     /*String nickname = "";
     String enc_id = "";
     String profile_image = "";
@@ -77,8 +82,8 @@ public class MainActivity extends AppCompatActivity{
     String name = "";
     String birthday = "";*/
 
-    String accessToken = "";
-    String tokenType;
+    public static String accessToken = "";
+    public static String tokenType;
 
 
     private OAuthLoginHandler mOAuthLoginHandler = new OAuthLoginHandler() {
@@ -222,10 +227,11 @@ public class MainActivity extends AppCompatActivity{
 
                                             mOAuthLoginInstance.startOauthLoginActivity(MainActivity.this, mOAuthLoginHandler);
 
-
                                         }
                                     })
                                     .setNegativeButton(android.R.string.no, null).show();
+
+
 
                         } else {
                             Intent intent = new Intent(mContext, BoardWriteActivity.class);
@@ -244,7 +250,9 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-    private class RequestApiTask extends AsyncTask<Void, Void, Void> {
+
+
+    public class RequestApiTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected void onPreExecute() {
         }
@@ -269,6 +277,7 @@ public class MainActivity extends AppCompatActivity{
             //requestApi 잘 됐을 때
             else {
 
+                callUserRequest();
 
 
                 Intent broadCast = new Intent("LogOnState");
@@ -281,72 +290,74 @@ public class MainActivity extends AppCompatActivity{
             }
 
         }
+    }
 
-        private void Pasingversiondata(String data) { // xml 파싱
-            String f_array[] = new String[9];
 
-            try {
-                XmlPullParserFactory parserCreator = XmlPullParserFactory
-                        .newInstance();
-                XmlPullParser parser = parserCreator.newPullParser();
-                InputStream input = new ByteArrayInputStream(
-                        data.getBytes("UTF-8"));
-                parser.setInput(input, "UTF-8");
+    public static void Pasingversiondata(String data) { // xml 파싱
+        String f_array[] = new String[9];
 
-                int parserEvent = parser.getEventType();
-                String tag;
-                boolean inText = false;
+        try {
+            XmlPullParserFactory parserCreator = XmlPullParserFactory
+                    .newInstance();
+            XmlPullParser parser = parserCreator.newPullParser();
+            InputStream input = new ByteArrayInputStream(
+                    data.getBytes("UTF-8"));
+            parser.setInput(input, "UTF-8");
 
-                int colIdx = 0;
+            int parserEvent = parser.getEventType();
+            String tag;
+            boolean inText = false;
 
-                while (parserEvent != XmlPullParser.END_DOCUMENT) {
-                    switch (parserEvent) {
-                        case XmlPullParser.START_TAG:
-                            tag = parser.getName();
-                            if (tag.compareTo("xml") == 0) {
-                                inText = false;
-                            } else if (tag.compareTo("data") == 0) {
-                                inText = false;
-                            } else if (tag.compareTo("result") == 0) {
-                                inText = false;
-                            } else if (tag.compareTo("resultcode") == 0) {
-                                inText = false;
-                            } else if (tag.compareTo("message") == 0) {
-                                inText = false;
-                            } else if (tag.compareTo("response") == 0) {
-                                inText = false;
+            int colIdx = 0;
+
+            while (parserEvent != XmlPullParser.END_DOCUMENT) {
+                switch (parserEvent) {
+                    case XmlPullParser.START_TAG:
+                        tag = parser.getName();
+                        if (tag.compareTo("xml") == 0) {
+                            inText = false;
+                        } else if (tag.compareTo("data") == 0) {
+                            inText = false;
+                        } else if (tag.compareTo("result") == 0) {
+                            inText = false;
+                        } else if (tag.compareTo("resultcode") == 0) {
+                            inText = false;
+                        } else if (tag.compareTo("message") == 0) {
+                            inText = false;
+                        } else if (tag.compareTo("response") == 0) {
+                            inText = false;
+                        } else {
+                            inText = true;
+
+                        }
+                        break;
+                    case XmlPullParser.TEXT:
+                        if (inText) {
+                            if (parser.getText() == null) {
+                                f_array[colIdx] = "";
                             } else {
-                                inText = true;
-
+                                f_array[colIdx] = parser.getText().trim();
                             }
-                            break;
-                        case XmlPullParser.TEXT:
-                            if (inText) {
-                                if (parser.getText() == null) {
-                                    f_array[colIdx] = "";
-                                } else {
-                                    f_array[colIdx] = parser.getText().trim();
-                                }
 
-                                colIdx++;
-                            }
-                            inText = false;
-                            break;
-                        case XmlPullParser.END_TAG:
-                            inText = false;
-                            break;
+                            colIdx++;
+                        }
+                        inText = false;
+                        break;
+                    case XmlPullParser.END_TAG:
+                        inText = false;
+                        break;
 
-                    }
-
-                    parserEvent = parser.next();
                 }
-            } catch (Exception e) {
-                Log.e("dd", "Error in network call", e);
-            }
 
-            //이메일
-            String temp = f_array[0];
-            email = temp.substring(0,temp.length()-10);
+                parserEvent = parser.next();
+            }
+        } catch (Exception e) {
+            Log.e("dd", "Error in network call", e);
+        }
+
+        //이메일
+        String temp = f_array[0];
+        email = temp.substring(0,temp.length()-10);
 
             /*email = f_array[0];
             nickname = f_array[1];
@@ -358,9 +369,26 @@ public class MainActivity extends AppCompatActivity{
             name = f_array[7];
             birthday = f_array[8];*/
 
-        }
     }
 
+
+    private void callUserRequest(){
+
+        TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        String deviceId = tm.getDeviceId();
+
+        UserRequest.newInstance(email, deviceId, new Response.Listener<BaseModel>() {
+            @Override
+            public void onResponse(BaseModel response) {
+                SPLog.d("success");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                SPLog.e(error.toString());
+            }
+        }).send();
+    }
 
 
 

@@ -138,6 +138,7 @@ public class BoardWriteActivity extends AppCompatActivity {
                             DisableEnableControler.call(true, getWindow());
                         }
                     }).send();
+                    finish();
                 }
 
 

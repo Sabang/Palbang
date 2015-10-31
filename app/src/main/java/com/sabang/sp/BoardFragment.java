@@ -155,11 +155,13 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(getActivity(), BoardContentActivity.class);
+                String user = mainActivity.email;
+                    Intent myIntent = new Intent(getActivity(), BoardContentActivity.class);
 
-                myIntent.putExtra("BoardItem", searchedDatas.get(position));
+                    myIntent.putExtra("User",user);
+                    myIntent.putExtra("BoardId", searchedDatas.get(position).id);
 
-                startActivity(myIntent);
+                    startActivity(myIntent);
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -179,6 +181,12 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
 
     }
+
+
+
+
+
+
 
     public void setSearchedDatas(){
         searchedDatas.clear();

@@ -96,7 +96,6 @@ public class SettingFragment extends Fragment {
 
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_setting, container, false);
-
         mainActivity = (MainActivity) getActivity();
 
 
@@ -124,7 +123,10 @@ public class SettingFragment extends Fragment {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-
+            /*Switch
+            switch (buttonView){
+                case buttonView==
+            }
             if (isChecked) {
 
                 //서버로 true 쏴주면됨
@@ -132,7 +134,7 @@ public class SettingFragment extends Fragment {
 
 
             else {
-            }
+            }*/
         }
     };
 

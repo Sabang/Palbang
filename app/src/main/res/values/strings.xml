@@ -39,4 +39,7 @@
 
     <string name="logOff">로그인 되어있지 않음</string>
 
+    <string name="PushMyRoom">방 알림</string>
+    <string name="PushMyRoomSetting">원하는 방 알림 설정</string>
+
 </resources>

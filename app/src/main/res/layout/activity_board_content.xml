@@ -10,167 +10,208 @@
         style="@style/MyToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="12">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/round"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="제목"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/board_title"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="12">
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/round">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="작성자"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:id="@+id/board_email"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="날짜"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="2015.11.21"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical"
-                android:id="@+id/board_date"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/round">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="물품명"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/board_name"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="가격"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/board_cost"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="7"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/round">
-            <TextView
-                android:id="@+id/board_content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:textSize="16dp"/>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:padding="15dp"
-            android:layout_gravity="center"
-            >
-            <EditText
-                android:id="@+id/asdf"
-                android:layout_width="250dp"
-                android:layout_height="50dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_marginLeft="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical|left"
-                />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
                 android:layout_marginRight="8dp"
-                android:text="댓글달기"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:id="@+id/enroll"/>
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="제목"
+                    android:padding="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/board_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="작성자"
+                    android:padding="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/board_email"
+                    android:padding="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="날짜"
+                    android:padding="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="2015.11.21"
+                    android:padding="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/board_date"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="물품명"
+                    android:padding="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/board_name"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="가격"
+                    android:padding="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/board_cost"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round"
+                android:orientation="horizontal"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center">
+                <com.android.volley.toolbox.NetworkImageView
+                    android:id="@+id/boardContent_image"
+                    android:layout_width="200dp"
+                    android:layout_height="150dp"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="7"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/round">
+                <TextView
+                    android:id="@+id/board_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minHeight="280dp"
+                    android:padding="8dp"
+                    android:textSize="16dp"/>
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/board_commentListview"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:divider="@null">
+
+            </ListView>
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:weightSum="8"
+                android:padding="15dp"
+                android:layout_gravity="center"
+                >
+                <EditText
+                    android:id="@+id/board_comment"
+                    android:layout_weight="6"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="16dp"
+                    android:gravity="center_vertical|left"
+                    />
+
+                <Button
+                    android:layout_weight="2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginRight="8dp"
+                    android:text="등록"
+                    android:textSize="16dp"
+                    android:id="@+id/board_commentEnroll"/>
+
+            </LinearLayout>
 
         </LinearLayout>
+    </ScrollView>
 
 
 
@@ -183,6 +224,6 @@
 
 
 
-    </LinearLayout>
+
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.sabang.sp.api;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by cyc on 2015-10-29.
@@ -8,6 +9,8 @@ import java.io.Serializable;
 public class BoardModel extends BaseModel implements Serializable {
 
     public String[] images;
+
+    public ArrayList<CommentModel> comments;
     public String user;
     public String title;
     public String content;

@@ -6,34 +6,6 @@
     android:background="#ffffff"
     tools:context="com.sabang.sp.SettingFragment">
 
-
-
-    <Switch
-        android:background="@drawable/rectangular"
-        android:textStyle="bold"
-        android:textColor="#747474"
-        android:id="@+id/switch1"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:text="푸시알림   ON / OFF"
-        android:paddingLeft="8dp"
-        android:textSize="17dp"
-        android:textOn ="On"
-        android:textOff="Off"
-        android:checked="false"/>
-    <TextView
-        android:background="@drawable/rectangular"
-        android:textStyle="bold"
-        android:textColor="#747474"
-        android:id="@+id/setting_pushSetting"
-        android:gravity="left|center"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:text="푸시알림 설정"
-        android:paddingLeft="8dp"
-        android:textSize="17dp"/>
-
-
     <LinearLayout
         android:padding="5dp"
         android:layout_width="match_parent"
@@ -57,6 +29,34 @@
 
 
     </LinearLayout>
+
+    <Switch
+        android:background="@drawable/rectangular"
+        android:textStyle="bold"
+        android:textColor="#747474"
+        android:id="@+id/setting_RoomPush"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="@string/PushMyRoom"
+        android:paddingLeft="8dp"
+        android:textSize="17dp"
+        android:textOn ="On"
+        android:textOff="Off"
+        android:checked="false"/>
+    <TextView
+        android:background="@drawable/rectangular"
+        android:textStyle="bold"
+        android:textColor="#747474"
+        android:id="@+id/setting_pushSetting"
+        android:gravity="left|center"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="@string/PushMyRoomSetting"
+        android:paddingLeft="8dp"
+        android:textSize="17dp"/>
+
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
