@@ -85,12 +85,21 @@
                             android:textSize="18dp" />
                     </LinearLayout>
                 </LinearLayout>
-                <ImageView
-                    android:id="@+id/roomItemMap"
+                <FrameLayout
                     android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="top|right"/>
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/empty_map"/>
+                    <ImageView
+                        android:id="@+id/roomItemMap"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="top|right"/>
+
+                </FrameLayout>
 
             </LinearLayout>
             <TextView

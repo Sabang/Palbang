@@ -268,12 +268,21 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="300dp">
-                    <ImageView
-                        android:id="@+id/mapimageview"
+
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/empty_map" />
+                        android:scaleType="fitXY">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/empty_map"
+                            android:scaleType="fitXY"/>
+                        <ImageView
+                            android:id="@+id/mapimageview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+                    </FrameLayout>
 
                 </LinearLayout>
             </LinearLayout>

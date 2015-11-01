@@ -26,6 +26,12 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="120dp">
+            <ImageView
+                android:id="@+id/empty_map"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/empty_map" />
 
             <ImageView
                 android:id="@+id/map_mask"
@@ -34,12 +40,6 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/map_mask"
                 android:visibility="invisible" />
-            <ImageView
-                android:id="@+id/empty_map"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                android:src="@drawable/empty_map" />
             <ImageView
                 android:id="@+id/first_zone_map"
                 android:layout_width="match_parent"
