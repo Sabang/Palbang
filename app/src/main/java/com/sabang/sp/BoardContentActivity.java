@@ -41,12 +41,11 @@ import java.util.ArrayList;
 public class BoardContentActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    BoardModel board;
     int id;
     String user;
     Context mContext;
     EditText et;
-    CommentAdapter ca;
+    CommentAdapter commentAdapter;
     ArrayList<CommentModel> comments;
     ListView commentLV;
 
@@ -61,7 +60,7 @@ public class BoardContentActivity extends AppCompatActivity {
         BoardDetailRequest.newInstance(id, new Response.Listener<BoardDetailRequest.Model>() {
             @Override
             public void onResponse(BoardDetailRequest.Model response) {
-                board = response.boardDetail;
+                BoardModel board = response.boardDetail;
 
                 TextView boardTitle = (TextView) findViewById(R.id.board_title);
                 boardTitle.setText(board.title);
@@ -86,8 +85,8 @@ public class BoardContentActivity extends AppCompatActivity {
                 for (int i = 0; i < temp.size(); i++) {
                     comments.add(temp.get(i));
                 }
-                ca.notifyDataSetChanged();
                 height_lv(commentLV);
+                commentAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -145,10 +144,12 @@ public class BoardContentActivity extends AppCompatActivity {
                 //댓글내용 서버로 보내기
                 else {
 
+                    //새로운 댓글 넣기
                     DisableEnableControler.call(false, getWindow());
                     CommentRequest.newInstance(user, id, comment, new Response.Listener<BaseModel>() {
                         @Override
                         public void onResponse(BaseModel response) {
+
                             DisableEnableControler.call(true, getWindow());
                         }
                     }, new Response.ErrorListener() {
@@ -159,8 +160,33 @@ public class BoardContentActivity extends AppCompatActivity {
                         }
                     }).send();
 
+                    //새로운 댓글 다시 가져오기(date가 app에는 없어서 그냥 서버에서 다시 가져옴)
+                    BoardDetailRequest.newInstance(id, new Response.Listener<BoardDetailRequest.Model>() {
+                        @Override
+                        public void onResponse(BoardDetailRequest.Model response) {
+                            ArrayList<CommentModel> temp = response.boardDetail.comments;
+
+                            comments.clear();
+                            for (int i = 0; i < temp.size(); i++) {
+                                comments.add(temp.get(i));
+                            }
+                            height_lv(commentLV);
+                            commentAdapter.notifyDataSetChanged();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            SPLog.e(error.toString());
+                        }
+                    }).send();
+
+
+
                     Toast.makeText(BoardContentActivity.this, "댓글이 등록되었습니다.", Toast.LENGTH_SHORT).show();
                     et.setText("");
+
+
+
 
 
                 }
@@ -193,12 +219,14 @@ public class BoardContentActivity extends AppCompatActivity {
         comments = new ArrayList<>();
 
         commentLV = (ListView) findViewById(R.id.board_commentListview);
-        ca = new CommentAdapter(mContext, comments);
-        commentLV.setAdapter(ca);
+        commentAdapter = new CommentAdapter(mContext, comments);
+        commentLV.setAdapter(commentAdapter);
         //commentLV.setScrollContainer(false);
 
 
     }
+
+
     public void height_lv(ListView lv) {
         ListAdapter adapter = lv.getAdapter();
         if (adapter == null) {
