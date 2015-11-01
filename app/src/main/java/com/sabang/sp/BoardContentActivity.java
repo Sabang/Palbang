@@ -76,7 +76,7 @@ public class BoardContentActivity extends AppCompatActivity {
                 boardName.setText(board.item);
                 TextView boardCost = (TextView) findViewById(R.id.board_cost);
                 boardCost.setText(board.cost);
-                NetworkImageView imageView = (NetworkImageView)findViewById(R.id.boardContent_image);
+                NetworkImageView imageView = (NetworkImageView) findViewById(R.id.boardContent_image);
                 imageView.setImageUrl(board.images[0], VolleySingleton.getInstance().getImageLoader());
 
                 ArrayList<CommentModel> temp = board.comments;
@@ -121,9 +121,11 @@ public class BoardContentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String comment = et.getText().toString();
-                if (comment.equals(""))
+                //내용 비어있을때
+                if (comment.equals("")){
                     Toast.makeText(BoardContentActivity.this, "댓글내용을 입력해주세요", Toast.LENGTH_SHORT).show();
-                    //로그인 안되있으면 시키기
+                }
+                //로그인 안되있으면 시키기
                 else if (user.equals("")) {
 
                     new AlertDialog.Builder(BoardContentActivity.this)
@@ -181,12 +183,8 @@ public class BoardContentActivity extends AppCompatActivity {
                     }).send();
 
 
-
                     Toast.makeText(BoardContentActivity.this, "댓글이 등록되었습니다.", Toast.LENGTH_SHORT).show();
                     et.setText("");
-
-
-
 
 
                 }
@@ -247,67 +245,66 @@ public class BoardContentActivity extends AppCompatActivity {
     }
 
 
-
     private OAuthLoginHandler mOAuthLoginHandler = new OAuthLoginHandler() {
-    @Override
-    public void run(boolean success) {
-        if (success) {
-            MainActivity.accessToken = MainActivity.mOAuthLoginInstance.getAccessToken(BoardContentActivity.this);
-            MainActivity.tokenType = MainActivity.mOAuthLoginInstance.getTokenType(BoardContentActivity.this);
+        @Override
+        public void run(boolean success) {
+            if (success) {
+                MainActivity.accessToken = MainActivity.mOAuthLoginInstance.getAccessToken(BoardContentActivity.this);
+                MainActivity.tokenType = MainActivity.mOAuthLoginInstance.getTokenType(BoardContentActivity.this);
 
-            new RequestApiTask().execute(); //로그인이 성공하면  네이버에 계정값들을 가져온다.
+                new RequestApiTask().execute(); //로그인이 성공하면  네이버에 계정값들을 가져온다.
 
 
-        } else {
+            } else {
 
-            Toast.makeText(BoardContentActivity.this, "로그인이 취소/실패 하였습니다.!",
-                    Toast.LENGTH_SHORT).show();
+                Toast.makeText(BoardContentActivity.this, "로그인이 취소/실패 하였습니다.!",
+                        Toast.LENGTH_SHORT).show();
+            }
         }
-    }
 
-    ;
-};
+        ;
+    };
 
-public class RequestApiTask extends AsyncTask<Void, Void, Void> {
-    @Override
-    protected void onPreExecute() {
-        DisableEnableControler.call(false, getWindow());
-    }
-
-    @Override
-    protected Void doInBackground(Void... params) {
-        String url = "https://openapi.naver.com/v1/nid/getUserProfile.xml";
-        String at = MainActivity.mOAuthLoginInstance.getAccessToken(BoardContentActivity.this);
-        MainActivity.Pasingversiondata(MainActivity.mOAuthLoginInstance.requestApi(BoardContentActivity.this, at, url));
-
-        return null;
-    }
-
-    protected void onPostExecute(Void content) {
-
-
-        if (MainActivity.email.equals("")) {
-            Toast.makeText(BoardContentActivity.this,
-                    "로그인 실패하였습니다.  잠시후 다시 시도해 주세요!!", Toast.LENGTH_SHORT)
-                    .show();
+    public class RequestApiTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            DisableEnableControler.call(false, getWindow());
         }
-        //requestApi 잘 됐을 때
-        else {
 
-            callUserRequest();
+        @Override
+        protected Void doInBackground(Void... params) {
+            String url = "https://openapi.naver.com/v1/nid/getUserProfile.xml";
+            String at = MainActivity.mOAuthLoginInstance.getAccessToken(BoardContentActivity.this);
+            MainActivity.Pasingversiondata(MainActivity.mOAuthLoginInstance.requestApi(BoardContentActivity.this, at, url));
+
+            return null;
+        }
+
+        protected void onPostExecute(Void content) {
 
 
-            Intent broadCast = new Intent("LogOnState");
-            sendBroadcast(broadCast);
-            user = MainActivity.email;
+            if (MainActivity.email.equals("")) {
+                Toast.makeText(BoardContentActivity.this,
+                        "로그인 실패하였습니다.  잠시후 다시 시도해 주세요!!", Toast.LENGTH_SHORT)
+                        .show();
+            }
+            //requestApi 잘 됐을 때
+            else {
 
+                callUserRequest();
+
+
+                Intent broadCast = new Intent("LogOnState");
+                sendBroadcast(broadCast);
+                user = MainActivity.email;
+
+
+            }
+            DisableEnableControler.call(true, getWindow());
 
         }
-        DisableEnableControler.call(true, getWindow());
 
     }
-
-}
 
 
     private void callUserRequest() {

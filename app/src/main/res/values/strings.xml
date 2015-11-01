@@ -26,10 +26,16 @@
 
     <string name="title_dialog_search_filter">검색 조건</string>
     <string name="title_activity_navertest">navertest</string>
-
     <string name="title_activity_sold">판매완료</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="board_content_title">제목</string>
+    <string name="board_content_writer">작성자</string>
+    <string name="board_content_date">날짜</string>
+    <string name="board_content_item">물품명</string>
+    <string name="board_content_cost">가격</string>
+    <string name="board_content_pic">사진</string>
+
+
 
     <string name="company_info1">상호명 : 한양21공인중개사\nTEL : (031) 409-0500</string>
     <string name="company_info2">대표 : 김상아\n주소 : 경기도 안산시 상록구 한양 대학로 38-1 (사동 1570-5)\n등록번호 : 가3690-공3006</string>

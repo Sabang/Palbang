@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="제목"
+                    android:text="@string/board_content_title"
                     android:padding="8dp"
                     android:textSize="16dp"
                     android:gravity="center_vertical"
@@ -60,7 +60,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="작성자"
+                    android:text="@string/board_content_writer"
                     android:padding="8dp"
                     android:textSize="16dp"
                     android:gravity="center_vertical"
@@ -76,7 +76,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="날짜"
+                    android:text="@string/board_content_date"
                     android:padding="8dp"
                     android:textSize="16dp"
                     android:gravity="center_vertical"
@@ -103,7 +103,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="물품명"
+                    android:text="@string/board_content_item"
                     android:padding="8dp"
                     android:textSize="16dp"
                     android:gravity="center_vertical"
@@ -119,7 +119,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="가격"
+                    android:text="@string/board_content_cost"
                     android:padding="8dp"
                     android:textSize="16dp"
                     android:gravity="center_vertical"
@@ -142,13 +142,22 @@
                 android:orientation="horizontal"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:gravity="center">
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/board_content_pic"
+                    android:padding="8dp"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
                 <com.android.volley.toolbox.NetworkImageView
+                    android:padding="8dp"
                     android:id="@+id/boardContent_image"
-                    android:layout_width="200dp"
+                    android:layout_width="fill_parent"
                     android:layout_height="150dp"
                     android:scaleType="fitCenter" />
+
             </LinearLayout>
 
             <LinearLayout
