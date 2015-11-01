@@ -1,13 +1,18 @@
 package com.sabang.sp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +21,16 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.nhn.android.naverlogin.OAuthLoginHandler;
+import com.sabang.sp.api.BaseModel;
 import com.sabang.sp.api.BoardModel;
 import com.sabang.sp.api.BoardRequest;
+import com.sabang.sp.api.UserRequest;
+import com.sabang.sp.common.DisableEnableControler;
 import com.sabang.sp.common.SPLog;
 
 import java.util.ArrayList;
@@ -41,7 +51,11 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     private SwipeRefreshLayout mSwipeRefresh;
     ListView listView;
     ListviewAdapter2 mAdapter;
+    EditText searchEditText;
 
+
+    private final int MY_WRITE = 0;
+    private final int SEARCH = 1;
 
 
 
@@ -76,7 +90,7 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     SPLog.d(model.boards.get(i).toString());
                     boardDatas.add(model.boards.get(i));
                 }
-                setSearchedDatas();
+                setSearchedDatas(SEARCH);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -112,33 +126,26 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         mAdapter = new ListviewAdapter2(getActivity(), searchedDatas);
         listView.setAdapter(mAdapter);
 
-        final EditText searchEditText = (EditText)activity.findViewById(R.id.editText);
+        searchEditText = (EditText)activity.findViewById(R.id.editText);
         searchEditText.getBackground().setColorFilter(Color.rgb(198,198,198), PorterDuff.Mode.SRC_ATOP);
         //검색버튼 눌렀을때
         Button searchButton = (Button) activity.findViewById(R.id.button_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String thing = searchEditText.getText().toString();
-                searchEditText.setText("");
-                searchedDatas.clear();
-                for(int i=0;i<boardDatas.size();i++){
-                    BoardModel temp = boardDatas.get(i);
-                    if (temp.title.contains(thing) || temp.item.contains(thing)) {
-                        searchedDatas.add(temp);
-                    }
-                    else if(thing.equals("")){
-                        searchedDatas.add(temp);
-                    }
-                }
-                mAdapter.notifyDataSetChanged();
+                setSearchedDatas(SEARCH);
             }
         });
-        Button myButton = (Button) activity.findViewById(R.id.button_my_board);
-        myButton.setOnClickListener(new View.OnClickListener() {
+        Button myBoardButton = (Button) activity.findViewById(R.id.button_my_board);
+        myBoardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setSearchedDatas();
+                if(MainActivity.email.equals("")){
+                    makeNaverDialog();
+                }
+                else {
+                    setSearchedDatas(MY_WRITE);
+                }
             }
         });
 
@@ -182,20 +189,48 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
 
     }
 
+    private void makeNaverDialog(){
+        new AlertDialog.Builder(getActivity())
+                .setTitle("내가쓴 글")
+                .setMessage("네이버 아이디로 로그인 하시겠습니까?")
+                .setIcon(R.drawable.write_grey)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        SPLog.d("네이버 로그인 확인 눌림");
+                        MainActivity.mOAuthLoginInstance.startOauthLoginActivity(getActivity(), mOAuthLoginHandler);
+
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
+    }
 
 
 
 
 
 
-    public void setSearchedDatas(){
+    /*type -    MY_WRITE면 이메일로 내가 쓴 글 검색
+                SEARCH면 제목, 제품명으로 글 검색
+     */
+    public void setSearchedDatas(int type){
         searchedDatas.clear();
-        //검색하기 수정해야함***************************************************
-        for(int i=0;i<boardDatas.size();i++){
-            BoardModel temp = boardDatas.get(i);
-            //if (temp.users.user.equals("kbjb7535")) {
-                searchedDatas.add(temp);
-            //}
+        if(type == MY_WRITE){
+            for(int i=0;i<boardDatas.size();i++){
+                BoardModel temp = boardDatas.get(i);
+                if (temp.user.equals(MainActivity.email)) {
+                    searchedDatas.add(temp);
+                }
+            }
+        }
+        else if(type == SEARCH){
+            String text = searchEditText.getText().toString();
+            for(int i=0;i<boardDatas.size();i++){
+                BoardModel temp = boardDatas.get(i);
+                if (temp.title.contains(text) || temp.item.contains(text)) {
+                    searchedDatas.add(temp);
+                }
+            }
         }
         mAdapter.notifyDataSetChanged();
     }
@@ -227,6 +262,82 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     }
 
 
+
+
+    private OAuthLoginHandler mOAuthLoginHandler = new OAuthLoginHandler() {
+        @Override
+        public void run(boolean success) {
+            if (success) {
+                MainActivity.accessToken = MainActivity.mOAuthLoginInstance.getAccessToken(getActivity());
+                MainActivity.tokenType = MainActivity.mOAuthLoginInstance.getTokenType(getActivity());
+
+                new RequestApiTask().execute(); //로그인이 성공하면  네이버에 계정값들을 가져온다.
+
+
+            } else {
+
+                Toast.makeText(getActivity(), "로그인이 취소/실패 하였습니다.!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        ;
+    };
+
+    public class RequestApiTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() {
+            DisableEnableControler.call(false, getView());
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            String url = "https://openapi.naver.com/v1/nid/getUserProfile.xml";
+            String at = MainActivity.mOAuthLoginInstance.getAccessToken(getActivity());
+            MainActivity.Pasingversiondata(MainActivity.mOAuthLoginInstance.requestApi(getActivity(), at, url));
+
+            return null;
+        }
+
+        protected void onPostExecute(Void content) {
+
+
+            if (MainActivity.email.equals("")) {
+            }
+            //requestApi 잘 됐을 때
+            else {
+
+                callUserRequest();
+
+
+                Intent broadCast = new Intent("LogOnState");
+                getActivity().sendBroadcast(broadCast);
+
+
+            }
+            DisableEnableControler.call(true, getView());
+
+        }
+
+    }
+
+    private void callUserRequest() {
+
+        TelephonyManager tm = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        String deviceId = tm.getDeviceId();
+
+        UserRequest.newInstance(MainActivity.email, deviceId, new Response.Listener<BaseModel>() {
+            @Override
+            public void onResponse(BaseModel response) {
+                SPLog.d("success");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                SPLog.e(error.toString());
+            }
+        }).send();
+    }
 
 
 
