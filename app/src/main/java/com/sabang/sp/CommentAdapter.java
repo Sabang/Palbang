@@ -60,8 +60,8 @@ public class CommentAdapter extends BaseAdapter {
 
 
 
-
-        vh.name.setText(item.user);
+        //이메일 뒤에 가려서 출력
+        vh.name.setText(Util.hideEmailBack(item.user));
         vh.content.setText(item.content);
         vh.date.setText(item.date);
 
