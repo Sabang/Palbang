@@ -30,6 +30,9 @@ import com.sabang.sp.common.DisableEnableControler;
 import com.sabang.sp.common.SPLog;
 
 
+//
+//mOAuthLoginInstance.logout(mContext);
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -100,6 +103,7 @@ public class SettingFragment extends Fragment {
 
                 }
                 else{
+                    makeLogoutDialog();
 
                 }
             }
@@ -177,6 +181,20 @@ public class SettingFragment extends Fragment {
                         SPLog.d("네이버 로그인 확인 눌림");
                         MainActivity.mOAuthLoginInstance.startOauthLoginActivity(getActivity(), mOAuthLoginHandler);
 
+                    }
+                })
+                .setNegativeButton(android.R.string.no, null).show();
+    }
+
+    private void makeLogoutDialog(){
+        new AlertDialog.Builder(getActivity())
+                .setTitle("네이버")
+                .setMessage("로그아웃 하시겠습니까?")
+                .setIcon(R.drawable.write_grey)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        MainActivity.mOAuthLoginInstance.logout(getActivity());
                     }
                 })
                 .setNegativeButton(android.R.string.no, null).show();
