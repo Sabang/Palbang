@@ -195,6 +195,9 @@ public class SettingFragment extends Fragment {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
                         MainActivity.mOAuthLoginInstance.logout(getActivity());
+                        MainActivity.email = "";
+                        TextView tv = (TextView)rootView.findViewById(R.id.setting_loginStateTV);
+                        tv.setText(R.string.logOff);
                     }
                 })
                 .setNegativeButton(android.R.string.no, null).show();
