@@ -63,7 +63,12 @@ public class ListviewAdapter extends BaseAdapter {
         //need fix random image to roomlist
         //vh.icon.setImageBitmap(null);
 
-        vh.icon.setImageUrl(item.images[0], VolleySingleton.getInstance().getImageLoader());
+        if(item.images.length==0){
+            vh.icon.setImageBitmap(null);
+        }
+        else {
+            vh.icon.setImageUrl(item.images[0], VolleySingleton.getInstance().getImageLoader());
+        }
 
         vh.securityDeposit.setText(""+item.securityDeposit);
         vh.monthPrice.setText(""+item.monthPrice);

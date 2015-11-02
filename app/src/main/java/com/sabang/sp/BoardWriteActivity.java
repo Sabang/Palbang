@@ -70,7 +70,7 @@ public class BoardWriteActivity extends AppCompatActivity {
         intent = getIntent();
 
         mTextView = (TextView)findViewById(R.id.email);
-        String email = intent.getStringExtra("email");
+        final String email = intent.getStringExtra("email");
 
 
         mTextView.setText(email);
@@ -126,7 +126,7 @@ public class BoardWriteActivity extends AppCompatActivity {
                 //칸들 다 채워져잇을때
                 else {
                     DisableEnableControler.call(false, getWindow());
-                    BoardWriteRequest.newInstance(image,"kbjb7535",title,content,cost,name,new Response.Listener<BaseModel>() {    @Override
+                    BoardWriteRequest.newInstance(image,email,title,content,cost,name,new Response.Listener<BaseModel>() {    @Override
                                                                                                                                                  public void onResponse(BaseModel response) {
                         SPLog.d("success");
                         DisableEnableControler.call(true, getWindow());
