@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sabang.sp.MainActivity;
+import com.sabang.sp.R;
 
 /**
  * Created by cyc on 2015-11-02.
@@ -60,6 +61,7 @@ public class GcmIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
+
     private void sendNotification(String msg) {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -69,11 +71,13 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(android.support.design.R.drawable.notification_template_icon_bg)
-                        .setContentTitle("GCM Notification")
+
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("사방팔방")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
-                        .setContentText(msg);
+                        .setContentText(msg)
+                        .setVibrate(new long[] { 0, 500 });
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

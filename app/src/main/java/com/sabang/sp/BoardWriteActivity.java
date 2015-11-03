@@ -1,6 +1,9 @@
 package com.sabang.sp;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -9,6 +12,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -132,6 +136,10 @@ public class BoardWriteActivity extends AppCompatActivity {
                             DisableEnableControler.call(true, getWindow());
                         }
                     }).send();
+
+
+                    //sendNotification("원하는 방이 올라왔습니다!");
+
                     finish();
                 }
 
@@ -254,5 +262,31 @@ public class BoardWriteActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+
+    private NotificationManager mNotificationManager;
+    private void sendNotification(String msg) {
+        mNotificationManager = (NotificationManager)
+                this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, MainActivity.class), 0);
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("사방팔방")
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(msg))
+                        .setContentText(msg)
+                        .setVibrate(new long[] { 0, 500 });
+
+
+        mBuilder.setContentIntent(contentIntent);
+        mNotificationManager.notify(1, mBuilder.build());
     }
 }

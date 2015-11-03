@@ -28,11 +28,4 @@ public class BoardWriteRequest extends BaseRequest<BaseModel>{
 
 
 }
-/*public File image;
 
-public String user;
-public String title;
-public String content;
-public String cost;
-public String item;
-public String date;*/
