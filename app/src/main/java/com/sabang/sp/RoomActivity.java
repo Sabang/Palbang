@@ -51,7 +51,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
 
         Intent intent = getIntent();
 
-        Serializable temp = (Serializable) intent.getSerializableExtra("roomModel");
+        Serializable temp = intent.getSerializableExtra("roomModel");
 
         RoomModel room = (RoomModel) temp;
 
@@ -90,10 +90,11 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
         //구조
         TextView roomStructure = (TextView) findViewById(R.id.room_structure);
         String structure = "";
-        if(room.veranda == 1)   structure += "베란다ㅇ, ";
+        if(room.veranda == 1)   structure += "베란다O, ";
         if(room.kitchen == 1)   structure += "부엌분리형, ";
         else                    structure += "부엌일체형, ";
         if(room.twoRoom == 1)   structure += "투룸, ";
+        if(room.elevator == 1)  structure += "엘리베이터O, ";
         structure = removeLastTwo(structure);
         roomStructure.setText(structure);
 

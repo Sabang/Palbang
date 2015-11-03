@@ -4,9 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -31,7 +30,6 @@ import java.io.ByteArrayOutputStream;
 public class BoardWriteActivity extends AppCompatActivity {
 
 
-
     Bundle extra;
     Intent intent;
 
@@ -49,8 +47,7 @@ public class BoardWriteActivity extends AppCompatActivity {
 
 
         //기본이미지 ***********************수정해야함**********************
-        Drawable d = getResources().getDrawable(R.drawable.main_on);
-        Bitmap bitmap = ((BitmapDrawable)d).getBitmap();
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.no_pic);
         image = bitmapToByteArray(bitmap);
 
 
@@ -69,25 +66,25 @@ public class BoardWriteActivity extends AppCompatActivity {
         extra = new Bundle();
         intent = getIntent();
 
-        mTextView = (TextView)findViewById(R.id.email);
+        mTextView = (TextView) findViewById(R.id.email);
         final String email = intent.getStringExtra("email");
 
 
         mTextView.setText(email);
 
-        Button imageButton = (Button)findViewById(R.id.boardWriteImage);
+        Button imageButton = (Button) findViewById(R.id.boardWriteImage);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,REQ_CODE_SELECT_IMAGE);
+                startActivityForResult(intent, REQ_CODE_SELECT_IMAGE);
             }
         });
 
 
-        Button bt = (Button)findViewById(R.id.enroll);
+        Button bt = (Button) findViewById(R.id.enroll);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
 
@@ -96,41 +93,38 @@ public class BoardWriteActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-
                 EditText edittitle = (EditText) findViewById(R.id.board_title);
                 String title = edittitle.getText().toString();
                 EditText editcontent = (EditText) findViewById(R.id.board_content);
                 String content = editcontent.getText().toString();
                 EditText editName = (EditText) findViewById(R.id.board_name);
                 String name = editName.getText().toString();
-                EditText editCost = (EditText)findViewById(R.id.board_cost);
+                EditText editCost = (EditText) findViewById(R.id.board_cost);
                 String cost = editCost.getText().toString();
 
-                if (title.equals("")){
-                    Toast toast = Toast.makeText(activity, "제목을 입력해주세요.",Toast.LENGTH_SHORT);
+                if (title.equals("")) {
+                    Toast toast = Toast.makeText(activity, "제목을 입력해주세요.", Toast.LENGTH_SHORT);
                     toast.show();
-                }
-                else if (content.equals("")){
-                    Toast toast = Toast.makeText(activity, "내용을 입력해주세요.",Toast.LENGTH_SHORT);
+                } else if (content.equals("")) {
+                    Toast toast = Toast.makeText(activity, "내용을 입력해주세요.", Toast.LENGTH_SHORT);
                     toast.show();
-                }
-                else if (name.equals("")){
-                    Toast toast = Toast.makeText(activity, "물품명을 입력해주세요.",Toast.LENGTH_SHORT);
+                } else if (name.equals("")) {
+                    Toast toast = Toast.makeText(activity, "물품명을 입력해주세요.", Toast.LENGTH_SHORT);
                     toast.show();
-                }
-                else if (cost.equals("")){
-                    Toast toast = Toast.makeText(activity, "가격을 입력해주세요.",Toast.LENGTH_SHORT);
+                } else if (cost.equals("")) {
+                    Toast toast = Toast.makeText(activity, "가격을 입력해주세요.", Toast.LENGTH_SHORT);
                     toast.show();
                 }
 
                 //칸들 다 채워져잇을때
                 else {
                     DisableEnableControler.call(false, getWindow());
-                    BoardWriteRequest.newInstance(image,email,title,content,cost,name,new Response.Listener<BaseModel>() {    @Override
-                                                                                                                                                 public void onResponse(BaseModel response) {
-                        SPLog.d("success");
-                        DisableEnableControler.call(true, getWindow());
-                    }
+                    BoardWriteRequest.newInstance(image, email, title, content, cost, name, new Response.Listener<BaseModel>() {
+                        @Override
+                        public void onResponse(BaseModel response) {
+                            SPLog.d("success");
+                            DisableEnableControler.call(true, getWindow());
+                        }
                     }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
@@ -203,9 +197,9 @@ public class BoardWriteActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==REQ_CODE_SELECT_IMAGE){
-            if(resultCode==Activity.RESULT_OK){
-                try{
+        if (requestCode == REQ_CODE_SELECT_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
+                try {
                     //Uri에서 이미지이름을 가져오기
                     String name_Str = getImageNameToUri(data.getData());
 
@@ -214,11 +208,10 @@ public class BoardWriteActivity extends AppCompatActivity {
 
 
                     //이미지 데이터를 비트맵으로 가져오기
-                    Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),data.getData());
+                    Bitmap image_bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
 
                     image = bitmapToByteArray(image_bitmap);
-                }
-                catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -227,27 +220,25 @@ public class BoardWriteActivity extends AppCompatActivity {
     }
 
 
-    public byte[] bitmapToByteArray( Bitmap $bitmap ) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream() ;
-        $bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream) ;
-        byte[] byteArray = stream.toByteArray() ;
-        return byteArray ;
+    public byte[] bitmapToByteArray(Bitmap $bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        $bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        return byteArray;
     }
 
-    public String getImageNameToUri(Uri data)
-    {
-        String[] proj = { MediaStore.Images.Media.DATA };
+    public String getImageNameToUri(Uri data) {
+        String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = managedQuery(data, proj, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 
         cursor.moveToFirst();
 
         String imgPath = cursor.getString(column_index);
-        String imgName = imgPath.substring(imgPath.lastIndexOf("/")+1);
+        String imgName = imgPath.substring(imgPath.lastIndexOf("/") + 1);
 
         return imgName;
     }
-
 
 
     @Override

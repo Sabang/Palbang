@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.NetworkImageView;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.sabang.sp.api.BaseModel;
+import com.sabang.sp.api.BoardDeleteRequest;
 import com.sabang.sp.api.BoardDetailRequest;
 import com.sabang.sp.api.BoardModel;
 import com.sabang.sp.api.CommentModel;
@@ -328,10 +329,36 @@ public class BoardContentActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int menu_id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (menu_id == R.id.action_sold) {
+
+            new AlertDialog.Builder(BoardContentActivity.this)
+                    .setTitle("판매 완료")
+                    .setMessage("글을 삭제하시겠습니까?")
+                    .setIcon(R.drawable.sold)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            BoardDeleteRequest.newInstance(id, new Response.Listener<BoardDeleteRequest.Model>() {
+                                @Override
+                                public void onResponse(BoardDeleteRequest.Model response) {
+                                    //activity끄고, boardlist도 update해줘야함
+                                    finish();
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    SPLog.e(error.toString());
+                                    //에러나도 finish
+                                    finish();
+                                }
+                            }).send();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, null).show();
+
             return true;
         }
 

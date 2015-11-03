@@ -19,7 +19,3 @@ public class BoardDetailRequest extends BaseRequest<BoardDetailRequest.Model>{
         public BoardModel boardDetail;
     }
 }
-
-/*
-* id를 준다
-* */

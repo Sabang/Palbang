@@ -213,26 +213,44 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     /*type -    MY_WRITE면 이메일로 내가 쓴 글 검색
                 SEARCH면 제목, 제품명으로 글 검색
      */
-    public void setSearchedDatas(int type){
-        searchedDatas.clear();
-        if(type == MY_WRITE){
-            for(int i=0;i<boardDatas.size();i++){
-                BoardModel temp = boardDatas.get(i);
-                if (temp.user.equals(MainActivity.email)) {
-                    searchedDatas.add(temp);
+    public void setSearchedDatas(final int type){
+        BoardRequest.newInstance(new Response.Listener<BoardRequest.Model>() {
+            @Override
+            public void onResponse(BoardRequest.Model model) {
+
+                boardDatas.clear();
+
+                for (int i = 0; i < model.boards.size(); i++) {
+                    SPLog.d(model.boards.get(i).toString());
+                    boardDatas.add(model.boards.get(i));
                 }
-            }
-        }
-        else if(type == SEARCH){
-            String text = searchEditText.getText().toString();
-            for(int i=0;i<boardDatas.size();i++){
-                BoardModel temp = boardDatas.get(i);
-                if (temp.title.contains(text) || temp.item.contains(text)) {
-                    searchedDatas.add(temp);
+                searchedDatas.clear();
+                if(type == MY_WRITE){
+                    for(int i=0;i<boardDatas.size();i++){
+                        BoardModel temp = boardDatas.get(i);
+                        if (temp.user.equals(MainActivity.email)) {
+                            searchedDatas.add(temp);
+                        }
+                    }
                 }
+                else if(type == SEARCH){
+                    String text = searchEditText.getText().toString();
+                    for(int i=0;i<boardDatas.size();i++){
+                        BoardModel temp = boardDatas.get(i);
+                        if (temp.title.contains(text) || temp.item.contains(text)) {
+                            searchedDatas.add(temp);
+                        }
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
             }
-        }
-        mAdapter.notifyDataSetChanged();
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                SPLog.e(error.toString());
+            }
+        }).send();
+
     }
     @Override
     public void onAttach(Activity activity) {
