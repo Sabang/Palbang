@@ -57,6 +57,7 @@ public class BoardContentActivity extends AppCompatActivity {
         id = getIntent().getIntExtra("BoardId", 0);
         user = getIntent().getStringExtra("User");
 
+        DisableEnableControler.call(false,getWindow());
         BoardDetailRequest.newInstance(id, new Response.Listener<BoardDetailRequest.Model>() {
             @Override
             public void onResponse(BoardDetailRequest.Model response) {
@@ -66,6 +67,12 @@ public class BoardContentActivity extends AppCompatActivity {
                 boardTitle.setText(board.title);
                 TextView boardEmail = (TextView) findViewById(R.id.board_email);
 
+                // 판매자일 경우에만 menu를 보여준다.
+                Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+                toolbar.getMenu().clear();
+                if(user.equals(board.user)){
+                    toolbar.inflateMenu(R.menu.actionbar_button_sold);
+                }
                 //이메일 뒤에 가려서 출력
                 boardEmail.setText(Util.hideEmailBack(board.user));
                 TextView boardDate = (TextView) findViewById(R.id.board_date);
@@ -94,6 +101,7 @@ public class BoardContentActivity extends AppCompatActivity {
                 SPLog.e(error.toString());
             }
         }).send();
+        DisableEnableControler.call(true, getWindow());
     }
 
     @Override
@@ -309,7 +317,9 @@ public class BoardContentActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
 
         toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.actionbar_button_sold); // 판매자일 경우만 보여준다. (수정해야함)
+        // 판매자일 경우만 보여준다.
+        /*if(!user.equals("") && user.equals(board_user))
+            toolbar.inflateMenu(R.menu.actionbar_button_sold); */
         return true;
     }
 

@@ -33,4 +33,6 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.18'
     compile 'com.google.code.gson:gson:2.3.1'
     compile project(':3rdparty_login_library_android_4.1.4')
+    compile files('gcm.jar')
+    compile 'com.google.android.gms:play-services:6.5.87'
 }
