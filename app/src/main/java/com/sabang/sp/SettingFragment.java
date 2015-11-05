@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -108,7 +107,7 @@ public class SettingFragment extends Fragment {
                 }
             }
         });
-
+/*
         Switch pushSwitch = (Switch)rootView.findViewById(R.id.setting_RoomPushSW);
         pushSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +134,7 @@ public class SettingFragment extends Fragment {
             }
         });
 
-
+*/
 
         return rootView;
     }
