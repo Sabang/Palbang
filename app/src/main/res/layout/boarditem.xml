@@ -57,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:textStyle="bold"
-                    android:text="제품명"
+                    android:text="@string/board_content_item"
                     android:gravity="left|center_vertical"
                     android:textSize="16dp"/>
                 <TextView
