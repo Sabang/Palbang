@@ -54,7 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="left|top"
-                android:background="#dcdcdc">
+                android:background="#dcdcdc"
+                android:padding="4dp">
 
 
                 <ListView

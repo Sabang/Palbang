@@ -17,6 +17,7 @@ public class RoomModel extends BaseModel implements Serializable{
     public int fireType;
     public int desk;
     public int elevator;
+    public int wardrobe;
     public String term;
     public String detail;
     public String hash1;

@@ -72,23 +72,6 @@
                 android:textSize="16dp"
                 android:gravity="center_vertical"
                 android:id="@+id/email"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="날짜"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:gravity="center_vertical"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="2015.11.21"
-                android:padding="8dp"
-                android:textSize="16dp"
-                android:singleLine="true"
-                android:gravity="center_vertical"/>
 
         </LinearLayout>
         <LinearLayout

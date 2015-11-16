@@ -225,6 +225,28 @@
                                 />
                         </TableRow>
 
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:textColor="@android:color/black"
+                                android:layout_margin="1dp"
+                                android:gravity="center_horizontal"
+                                android:layout_weight="1"
+                                android:background="#ffffff"
+                                android:text="@string/hash" />
+                            <TextView
+                                android:id="@+id/room_hashTag"
+                                android:textColor="@android:color/black"
+                                android:layout_margin="1dp"
+                                android:gravity="center_horizontal"
+                                android:layout_weight="11"
+                                android:background="#ffffff"
+                                android:text=""
+                                />
+                        </TableRow>
+
                         <TableRow
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">

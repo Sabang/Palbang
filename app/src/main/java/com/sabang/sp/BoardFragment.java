@@ -235,6 +235,7 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 }
                 else if(type == SEARCH){
                     String text = searchEditText.getText().toString();
+                    searchEditText.setText("");
                     for(int i=0;i<boardDatas.size();i++){
                         BoardModel temp = boardDatas.get(i);
                         if (temp.title.contains(text) || temp.item.contains(text)) {
@@ -273,8 +274,7 @@ public class BoardFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onRefresh() {
 
-        mAdapter.notifyDataSetChanged();
-
+        setSearchedDatas(SEARCH);
 
         mSwipeRefresh.setRefreshing(false);
     }

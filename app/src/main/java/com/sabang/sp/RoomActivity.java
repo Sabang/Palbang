@@ -91,7 +91,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
         TextView roomStructure = (TextView) findViewById(R.id.room_structure);
         String structure = "";
         if(room.veranda == 1)   structure += "베란다O, ";
-        if(room.kitchen == 1)   structure += "부엌분리형, ";
+        if(room.kitchen == 0)   structure += "부엌분리형, ";
         else                    structure += "부엌일체형, ";
         if(room.twoRoom == 1)   structure += "투룸, ";
         if(room.elevator == 1)  structure += "엘리베이터O, ";
@@ -103,6 +103,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
         String furniture = "";
         if(room.bed == 1)   furniture += "침대, ";
         if(room.desk == 1)  furniture += "책상, ";
+        if(room.wardrobe == 1)  furniture +="옷장, ";
 
         furniture = removeLastTwo(furniture);
         roomFur.setText(furniture);
@@ -114,7 +115,7 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
         if(room.microwave == 1)     gadget += "전자레인지, ";
         if(room.airConditioner == 1)gadget += "에어컨, ";
         if(room.washer == 1)        gadget += "세탁기, ";
-        if(room.fireType == 1)      gadget += "가스레인지, ";
+        if(room.fireType == 0)      gadget += "가스레인지, ";
         else                        gadget += "쿡탑(인덕션), ";
         gadget += "냉장고, ";
         gadget = removeLastTwo(gadget);
@@ -123,6 +124,14 @@ public class RoomActivity extends AppCompatActivity implements View.OnTouchListe
         //상세정보
         TextView roomInfo = (TextView) findViewById(R.id.room_information);
         roomInfo.setText(room.detail);
+
+        TextView roomHashTag = (TextView) findViewById(R.id.room_hashTag);
+        String hashTag = "";
+        if(!room.hash1.equals(""))  hashTag += room.hash1+", ";
+        if(!room.hash2.equals(""))  hashTag += room.hash2+", ";
+        if(!room.hash3.equals(""))  hashTag += room.hash3+", ";
+        hashTag = removeLastTwo(hashTag);
+        roomHashTag.setText(hashTag);
 
 
         mRes = room.images;
